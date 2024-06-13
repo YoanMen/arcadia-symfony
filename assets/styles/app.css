@@ -1,3 +1,55 @@
-body {
-    background-color: skyblue;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("./fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth\,wght.ttf");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./fonts/Montserrat/Montserrat-VariableFont_wght.ttf");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("./fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+:root {
+  --primary: #fdfffc;
+  --secondary: #29524a;
+  --btn-color: #db4c40;
+  --border-color: #a7abaa;
+  --text-color: #16302b;
+
+  --open-sans: "Open Sans", sans-serif;
+  --montserrat: "Montserrat", sans-serif;
+}
+
+p {
+  font-family: var(--open-sans);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--montserrat);
 }
