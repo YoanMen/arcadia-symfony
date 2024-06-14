@@ -37,6 +37,10 @@ class AnimalReport
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'animalReports')]
     private Collection $veterinary;
 
+    #[ORM\ManyToOne(inversedBy: 'animalReports')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Animal $animal = null;
+
     public function __construct()
     {
         $this->veterinary = new ArrayCollection();
@@ -127,6 +131,18 @@ class AnimalReport
     public function removeVeterinary(User $veterinary): static
     {
         $this->veterinary->removeElement($veterinary);
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->animal;
+    }
+
+    public function setAnimal(?Animal $animal): static
+    {
+        $this->animal = $animal;
 
         return $this;
     }

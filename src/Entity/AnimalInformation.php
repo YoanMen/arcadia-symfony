@@ -17,15 +17,13 @@ class AnimalInformation
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 255)]
     private ?string $sizeAndHeight = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
     private ?string $lifespan = null;
 
-    #[ORM\ManyToOne(inversedBy: 'animalInformation')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Species $species = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]
     #[ORM\JoinColumn(nullable: false)]
@@ -34,6 +32,20 @@ class AnimalInformation
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Region $region = null;
+
+    #[ORM\OneToOne(mappedBy: 'information', cascade: ['persist', 'remove'])]
+    private ?Animal $animal = null;
+
+    #[ORM\OneToOne(inversedBy: 'animalInformation', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Species $species = null;
+
+
+
+
+    public function __construct()
+    {
+    }
 
     public function getId(): ?int
     {
@@ -76,17 +88,6 @@ class AnimalInformation
         return $this;
     }
 
-    public function getSpecies(): ?Species
-    {
-        return $this->species;
-    }
-
-    public function setSpecies(?Species $species): static
-    {
-        $this->species = $species;
-
-        return $this;
-    }
 
     public function getUicn(): ?UICN
     {
@@ -108,6 +109,35 @@ class AnimalInformation
     public function setRegion(?Region $region): static
     {
         $this->region = $region;
+
+        return $this;
+    }
+
+    public function getAnimal(): ?Animal
+    {
+        return $this->animal;
+    }
+
+    public function setAnimal(Animal $animal): static
+    {
+        // set the owning side of the relation if necessary
+        if ($animal->getInformation() !== $this) {
+            $animal->setInformation($this);
+        }
+
+        $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getSpecies(): ?Species
+    {
+        return $this->species;
+    }
+
+    public function setSpecies(Species $species): static
+    {
+        $this->species = $species;
 
         return $this;
     }

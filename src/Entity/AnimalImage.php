@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AnimalImageRepository::class)]
+#[Vich\Uploadable]
 class AnimalImage
 {
     #[ORM\Id]
@@ -18,23 +19,26 @@ class AnimalImage
     #[Vich\UploadableField(mapping: 'animals', fileNameProperty: 'imageName', size: 'imageSize')]
 
     private ?File $imageFile = null;
-    #[ORM\Column(length: 255)]
+
+    #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalImages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
@@ -50,40 +54,25 @@ class AnimalImage
     {
         return $this->imageFile;
     }
+
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): static
+    public function setImageSize(?int $imageSize): void
     {
-        $this->imageName = $imageName;
-
-        return $this;
+        $this->imageSize = $imageSize;
     }
 
     public function getImageSize(): ?int
     {
         return $this->imageSize;
-    }
-
-    public function setImageSize(int $imageSize): static
-    {
-        $this->imageSize = $imageSize;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     public function getAnimal(): ?Animal

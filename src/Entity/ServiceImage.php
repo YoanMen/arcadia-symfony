@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: ServiceImageRepository::class)]
+#[Vich\Uploadable]
 class ServiceImage
 {
     #[ORM\Id]
@@ -16,20 +17,22 @@ class ServiceImage
     private ?int $id = null;
 
     #[Vich\UploadableField(mapping: 'services', fileNameProperty: 'imageName', size: 'imageSize')]
+
     private ?File $imageFile = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(nullable: true)]
     private ?string $imageName = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'serviceImages')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Service $service = null;
+
 
     public function getId(): ?int
     {
@@ -52,40 +55,24 @@ class ServiceImage
         return $this->imageFile;
     }
 
+    public function setImageName(?string $imageName): void
+    {
+        $this->imageName = $imageName;
+    }
+
     public function getImageName(): ?string
     {
         return $this->imageName;
     }
 
-    public function setImageName(string $imageName): static
+    public function setImageSize(?int $imageSize): void
     {
-        $this->imageName = $imageName;
-
-        return $this;
+        $this->imageSize = $imageSize;
     }
 
     public function getImageSize(): ?int
     {
         return $this->imageSize;
-    }
-
-    public function setImageSize(int $imageSize): static
-    {
-        $this->imageSize = $imageSize;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeImmutable
-    {
-        return $this->updatedAt;
-    }
-
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
-    {
-        $this->updatedAt = $updatedAt;
-
-        return $this;
     }
 
     public function getService(): ?Service

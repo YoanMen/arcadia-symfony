@@ -25,8 +25,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var list<string> The user roles
      */
-    #[ORM\Column]
+    #[ORM\Column()]
     private array $roles = [];
+
+    private string $selectedRole;
+
 
     /**
      * @var string The hashed password
@@ -68,6 +71,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getSelectedRole(): string
+    {
+        return $this->selectedRole;
+    }
+
+    public function setSelectedRole(string $role)
+    {
+        $this->selectedRole = $role;
     }
 
     public function getUsername(): ?string
@@ -113,6 +126,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function addRole($role)
+    {
+        $this->roles[] = $role;
     }
 
     /**

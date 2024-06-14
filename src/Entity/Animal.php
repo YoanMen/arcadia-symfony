@@ -6,6 +6,7 @@ use App\Repository\AnimalRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 class Animal
@@ -25,15 +26,28 @@ class Animal
     #[ORM\JoinColumn(nullable: false)]
     private ?Habitat $habitat = null;
 
-    /**
-     * @var Collection<int, AnimalImage>
-     */
-    #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', orphanRemoval: true)]
+
+
+
+    #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', orphanRemoval: true, cascade: ['persist'])]
+    #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'animal')]
     private Collection $animalImages;
+
+    #[ORM\OneToOne(inversedBy: 'animal', cascade: ['persist', 'remove'])]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?AnimalInformation $information = null;
+
+    /**
+     * @var Collection<int, AnimalReport>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalReport::class, mappedBy: 'animal', orphanRemoval: true)]
+    private Collection $animalReports;
+
 
     public function __construct()
     {
         $this->animalImages = new ArrayCollection();
+        $this->animalReports = new ArrayCollection();
     }
 
 
@@ -102,6 +116,48 @@ class Animal
             // set the owning side to null (unless already changed)
             if ($animalImage->getAnimal() === $this) {
                 $animalImage->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getInformation(): ?AnimalInformation
+    {
+        return $this->information;
+    }
+
+    public function setInformation(AnimalInformation $information): static
+    {
+        $this->information = $information;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalReport>
+     */
+    public function getAnimalReports(): Collection
+    {
+        return $this->animalReports;
+    }
+
+    public function addAnimalReport(AnimalReport $animalReport): static
+    {
+        if (!$this->animalReports->contains($animalReport)) {
+            $this->animalReports->add($animalReport);
+            $animalReport->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalReport(AnimalReport $animalReport): static
+    {
+        if ($this->animalReports->removeElement($animalReport)) {
+            // set the owning side to null (unless already changed)
+            if ($animalReport->getAnimal() === $this) {
+                $animalReport->setAnimal(null);
             }
         }
 

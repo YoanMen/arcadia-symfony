@@ -28,6 +28,10 @@ class HabitatComment
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'habitatComments')]
     private Collection $veterinary;
 
+    #[ORM\ManyToOne(inversedBy: 'habitatComments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Habitat $habitat = null;
+
     public function __construct()
     {
         $this->veterinary = new ArrayCollection();
@@ -82,6 +86,18 @@ class HabitatComment
     public function removeVeterinary(User $veterinary): static
     {
         $this->veterinary->removeElement($veterinary);
+
+        return $this;
+    }
+
+    public function getHabitat(): ?Habitat
+    {
+        return $this->habitat;
+    }
+
+    public function setHabitat(?Habitat $habitat): static
+    {
+        $this->habitat = $habitat;
 
         return $this;
     }

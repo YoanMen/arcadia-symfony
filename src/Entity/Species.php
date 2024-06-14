@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\SpeciesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SpeciesRepository::class)]
@@ -15,63 +13,95 @@ class Species
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
-    private ?string $species = null;
+    #[ORM\Column(length: 80)]
+    private ?string $communName = null;
 
-    /**
-     * @var Collection<int, AnimalInformation>
-     */
-    #[ORM\OneToMany(targetEntity: AnimalInformation::class, mappedBy: 'species')]
-    private Collection $animalInformation;
+    #[ORM\Column(length: 60)]
+    private ?string $genre = null;
 
-    public function __construct()
-    {
-        $this->animalInformation = new ArrayCollection();
-    }
+    #[ORM\Column(length: 60)]
+    private ?string $family = null;
+
+    #[ORM\Column(length: 60)]
+    private ?string $ordre = null;
+
+    #[ORM\OneToOne(mappedBy: 'species', cascade: ['persist', 'remove'])]
+    private ?AnimalInformation $animalInformation = null;
+
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getSpecies(): ?string
+    public function getCommunName(): ?string
     {
-        return $this->species;
+        return $this->communName;
     }
 
-    public function setSpecies(string $species): static
+    public function setCommunName(string $communName): static
     {
-        $this->species = $species;
+        $this->communName = $communName;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, AnimalInformation>
-     */
-    public function getAnimalInformation(): Collection
+    public function getGenre(): ?string
+    {
+        return $this->genre;
+    }
+
+    public function setGenre(string $genre): static
+    {
+        $this->genre = $genre;
+
+        return $this;
+    }
+
+    public function getFamily(): ?string
+    {
+        return $this->family;
+    }
+
+    public function setFamily(string $family): static
+    {
+        $this->family = $family;
+
+        return $this;
+    }
+
+    public function getOrdre(): ?string
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(string $ordre): static
+    {
+        $this->ordre = $ordre;
+
+        return $this;
+    }
+
+
+
+    public function __toString(): string
+    {
+        return $this->communName;
+    }
+
+    public function getAnimalInformation(): ?AnimalInformation
     {
         return $this->animalInformation;
     }
 
-    public function addAnimalInformation(AnimalInformation $animalInformation): static
+    public function setAnimalInformation(AnimalInformation $animalInformation): static
     {
-        if (!$this->animalInformation->contains($animalInformation)) {
-            $this->animalInformation->add($animalInformation);
+        // set the owning side of the relation if necessary
+        if ($animalInformation->getSpecies() !== $this) {
             $animalInformation->setSpecies($this);
         }
 
-        return $this;
-    }
-
-    public function removeAnimalInformation(AnimalInformation $animalInformation): static
-    {
-        if ($this->animalInformation->removeElement($animalInformation)) {
-            // set the owning side to null (unless already changed)
-            if ($animalInformation->getSpecies() === $this) {
-                $animalInformation->setSpecies(null);
-            }
-        }
+        $this->animalInformation = $animalInformation;
 
         return $this;
     }

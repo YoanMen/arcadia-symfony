@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
 class Habitat
@@ -17,12 +18,17 @@ class Habitat
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank()]
+
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+
     private ?string $description = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
     private ?string $slug = null;
 
     /**
@@ -34,8 +40,15 @@ class Habitat
     /**
      * @var Collection<int, HabitatImage>
      */
-    #[ORM\OneToMany(targetEntity: HabitatImage::class, mappedBy: 'habitat', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: HabitatImage::class, mappedBy: 'habitat', orphanRemoval: true, cascade: ['persist'])]
+    #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'habitat')]
     private Collection $habitatImages;
+
+    /**
+     * @var Collection<int, HabitatComment>
+     */
+    #[ORM\OneToMany(targetEntity: HabitatComment::class, mappedBy: 'habitat', orphanRemoval: true)]
+    private Collection $habitatComments;
 
 
 
@@ -43,6 +56,7 @@ class Habitat
     {
         $this->animals = new ArrayCollection();
         $this->habitatImages = new ArrayCollection();
+        $this->habitatComments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,6 +154,41 @@ class Habitat
             // set the owning side to null (unless already changed)
             if ($habitatImage->getHabitat() === $this) {
                 $habitatImage->setHabitat(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return  $this->getName();
+    }
+
+    /**
+     * @return Collection<int, HabitatComment>
+     */
+    public function getHabitatComments(): Collection
+    {
+        return $this->habitatComments;
+    }
+
+    public function addHabitatComment(HabitatComment $habitatComment): static
+    {
+        if (!$this->habitatComments->contains($habitatComment)) {
+            $this->habitatComments->add($habitatComment);
+            $habitatComment->setHabitat($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHabitatComment(HabitatComment $habitatComment): static
+    {
+        if ($this->habitatComments->removeElement($habitatComment)) {
+            // set the owning side to null (unless already changed)
+            if ($habitatComment->getHabitat() === $this) {
+                $habitatComment->setHabitat(null);
             }
         }
 

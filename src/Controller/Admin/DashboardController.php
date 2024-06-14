@@ -2,6 +2,13 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Animal;
+use App\Entity\AnimalReport;
+use App\Entity\Habitat;
+use App\Entity\HabitatComment;
+use App\Entity\Schedules;
+use App\Entity\Service;
+use App\Entity\User;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -47,6 +54,12 @@ class DashboardController extends AbstractDashboardController
         }
 
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
+        yield MenuItem::linkToCrud('Habitat', 'fas fa-list', Habitat::class);
+        yield MenuItem::linkToCrud('Animal', 'fas fa-list', Animal::class);
+        yield MenuItem::linkToCrud('Service', 'fas fa-list', Service::class);
+        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
+        yield MenuItem::linkToCrud('Schedules', 'fas fa-list', Schedules::class);
+        yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-list', AnimalReport::class);
+        yield MenuItem::linkToCrud('Commentaire sur les habitats', 'fas fa-list', HabitatComment::class);
     }
 }
