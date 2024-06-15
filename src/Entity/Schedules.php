@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SchedulesRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SchedulesRepository::class)]
 class Schedules
@@ -15,6 +16,9 @@ class Schedules
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 500, maxMessage: 'Le texte des horaires ne doit pas dépasser 500 caractères')]
+
     private ?string $schedules = null;
 
     public function getId(): ?int

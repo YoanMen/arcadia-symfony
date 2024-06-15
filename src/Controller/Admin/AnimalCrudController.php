@@ -4,12 +4,16 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Form\AnimalImageType;
+use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AnimalCrudController extends AbstractCrudController
 {
@@ -18,22 +22,46 @@ class AnimalCrudController extends AbstractCrudController
         return Animal::class;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $actions
+                ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+                    return $action->setIcon('fa fa-plus')->setLabel('Ajouter un animal');
+                });
+        }
+
+        return $actions->disable(Action::NEW, Action::EDIT, Action::DELETE,);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setPageTitle("index", "Gestion des animaux")
+            ->setPageTitle('edit', 'Modifier un animal')
+            ->setPageTitle('new', 'Création d\'un animal');
+    }
 
     public function configureFields(string $pageName): iterable
     {
         return [
-            IdField::new('name'),
-            SlugField::new('slug')->setTargetFieldName('name'),
-            CollectionField::new('animalImages', 'Ajouter une image')
-                ->setEntryType(AnimalImageType::class)->onlyOnForms(),
+
+            TextField::new('name', 'Nom')->setColumns(6),
+            SlugField::new('slug')->setTargetFieldName('name')->onlyOnForms(),
             AssociationField::new('habitat'),
-            AssociationField::new('information', 'Information animal')
-                ->setCrudController(AnimalInformationCrudController::class)
-                ->renderAsEmbeddedForm()
-                ->onlyOnForms()
+            AssociationField::new('animalImages', 'Images')->onlyOnIndex(),
 
-
+            AssociationField::new('information', 'Information sur l\'animal')
+                ->setColumns(12)
+                ->onlyOnForms()->renderAsEmbeddedForm(),
+            CollectionField::new('animalImages', 'Image de l\'animal')
+                ->setEntryType(AnimalImageType::class)->onlyOnForms(),
 
         ];
+    }
+
+    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof Animal) {
+        }
     }
 }

@@ -12,11 +12,10 @@ class SpeciesType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('communName')
+            ->add('communName', options: ['label' => 'Nom commun'])
             ->add('genre')
             ->add('family')
-            ->add('ordre')
-        ;
+            ->add('ordre');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

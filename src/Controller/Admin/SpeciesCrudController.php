@@ -4,8 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Species;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class SpeciesCrudController extends AbstractCrudController
@@ -20,10 +18,10 @@ class SpeciesCrudController extends AbstractCrudController
     {
         return [
 
-            TextField::new('communName'),
-            TextField::new('genre'),
-            TextField::new('family'),
-            TextField::new('ordre'),
+            TextField::new('communName', 'Nom Commun')->setColumns(6),
+            TextField::new('genre', 'Genre')->setColumns(6),
+            TextField::new('family', 'Famille')->setColumns(6),
+            TextField::new('ordre', 'Ordre')->setColumns(6),
 
         ];
     }

@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HabitatCommentRepository::class)]
 class HabitatComment
@@ -17,24 +18,27 @@ class HabitatComment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\DateValidator()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 255, maxMessage: 'Le détail doit être de 255 caractères maximum ')]
     private ?string $detail = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'habitatComments')]
-    private Collection $veterinary;
+
 
     #[ORM\ManyToOne(inversedBy: 'habitatComments')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull()]
     private ?Habitat $habitat = null;
+
+    #[ORM\ManyToOne(inversedBy: 'habitatComments')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $veterinary = null;
 
     public function __construct()
     {
-        $this->veterinary = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -66,29 +70,6 @@ class HabitatComment
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getVeterinary(): Collection
-    {
-        return $this->veterinary;
-    }
-
-    public function addVeterinary(User $veterinary): static
-    {
-        if (!$this->veterinary->contains($veterinary)) {
-            $this->veterinary->add($veterinary);
-        }
-
-        return $this;
-    }
-
-    public function removeVeterinary(User $veterinary): static
-    {
-        $this->veterinary->removeElement($veterinary);
-
-        return $this;
-    }
 
     public function getHabitat(): ?Habitat
     {
@@ -101,5 +82,16 @@ class HabitatComment
 
         return $this;
     }
-    
+
+    public function getVeterinary(): ?User
+    {
+        return $this->veterinary;
+    }
+
+    public function setVeterinary(?User $veterinary): static
+    {
+        $this->veterinary = $veterinary;
+
+        return $this;
+    }
 }

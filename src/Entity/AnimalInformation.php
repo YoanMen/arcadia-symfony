@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AnimalInformationRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalInformationRepository::class)]
 class AnimalInformation
@@ -15,22 +16,31 @@ class AnimalInformation
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 320, maxMessage: 'La description de l\'animal doit faire moins de 320 caractères')]
+
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 255, maxMessage: 'Le texte de la taille et el poids doit faire moins de 255 caractères')]
     private ?string $sizeAndHeight = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 255, maxMessage: 'Le texte de l\'espérance de vie doit faire moins de 255 caractères')]
     private ?string $lifespan = null;
 
 
 
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull()]
     private ?UICN $uicn = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull()]
     private ?Region $region = null;
 
     #[ORM\OneToOne(mappedBy: 'information', cascade: ['persist', 'remove'])]
@@ -38,14 +48,11 @@ class AnimalInformation
 
     #[ORM\OneToOne(inversedBy: 'animalInformation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Valid()]
+
     private ?Species $species = null;
 
 
-
-
-    public function __construct()
-    {
-    }
 
     public function getId(): ?int
     {

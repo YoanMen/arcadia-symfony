@@ -3,27 +3,20 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use App\Form\UserRoleType;
 use Doctrine\ORM\QueryBuilder;
-use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
-use Symfony\Component\Validator\Constraints\Choice;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Orm\EntityRepositoryInterface;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -38,20 +31,41 @@ class UserCrudController extends AbstractCrudController
         return User::class;
     }
 
+    public function configureActions(Actions $actions): Actions
+    {
 
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $actions
+                ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
+                    return $action->setIcon('fa fa-plus')->setLabel('Ajouter un compte');
+                });
+        }
+        return $actions->disable(Action::NEW, Action::EDIT, Action::DELETE, Action::DETAIL);
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        return $crud->setPageTitle("index", "Gestion des utilisateurs")
+            ->setPageTitle('edit', 'Modifier un utilisateur')
+            ->setPageTitle('new', 'Création d\'un utilisateur');
+    }
     public function configureFields(string $pageName): iterable
     {
         return [
 
-            TextField::new('username'),
-            TextField::new('email'),
-            TextField::new('password')->setFormTypeOption('data', '')->onlyOnForms(),
+            TextField::new('username', 'Nom d\'utilisateur')->setColumns(6),
+            TextField::new('email')->setColumns(6),
+            TextField::new('password', 'Mot de passe')
+                ->setColumns(6)
+                ->setFormTypeOption('data', '')
+                ->setFormTypeOption('attr', ['autocomplete' => 'off'])
+                ->onlyOnForms(),
             ChoiceField::new('roles', 'role de l\'utilisateur')
                 ->setChoices([
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE'
                 ])->onlyOnIndex(),
-            ChoiceField::new('selectedRole', 'role de l\'utilisateur')
+            ChoiceField::new('selectedRole', 'role de l\'utilisateur')->setColumns(6)
                 ->setChoices([
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE'
@@ -73,8 +87,26 @@ class UserCrudController extends AbstractCrudController
                 $entityInstance->getPassword()
             );
 
+
             $entityInstance->setPassword($hashedPassword);
             $entityInstance->addRole($selectedRole);
+        }
+
+        parent::persistEntity($entityManager, $entityInstance);
+    }
+
+    public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    {
+        if ($entityInstance instanceof User) {
+
+
+            $hashedPassword = $this->passwordHasher->hashPassword(
+                $entityInstance,
+                $entityInstance->getPassword()
+            );
+
+
+            $entityInstance->setPassword($hashedPassword);
         }
 
         parent::persistEntity($entityManager, $entityInstance);

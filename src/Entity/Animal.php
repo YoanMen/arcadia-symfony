@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\AnimalRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Entity\AnimalImage;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\AnimalRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
@@ -17,12 +18,18 @@ class Animal
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 80, maxMessage: 'Le nom est trop long, 80 caractères maximum')]
+
     private ?string $name = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 100, maxMessage: 'Le texte pour l\'url est trop long, 100 caractères maximum')]
     private ?string $slug = null;
 
     #[ORM\ManyToOne(inversedBy: 'animals')]
+    #[Assert\NotBlank()]
     #[ORM\JoinColumn(nullable: false)]
     private ?Habitat $habitat = null;
 
@@ -35,19 +42,28 @@ class Animal
 
     #[ORM\OneToOne(inversedBy: 'animal', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
+    #[Assert\Valid()]
     private ?AnimalInformation $information = null;
 
     /**
      * @var Collection<int, AnimalReport>
      */
     #[ORM\OneToMany(targetEntity: AnimalReport::class, mappedBy: 'animal', orphanRemoval: true)]
+    #[Assert\NotBlank()]
     private Collection $animalReports;
+
+    /**
+     * @var Collection<int, AnimalFood>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalFood::class, mappedBy: 'animal', orphanRemoval: true)]
+    private Collection $animalFood;
 
 
     public function __construct()
     {
         $this->animalImages = new ArrayCollection();
         $this->animalReports = new ArrayCollection();
+        $this->animalFood = new ArrayCollection();
     }
 
 
@@ -162,5 +178,40 @@ class Animal
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalFood>
+     */
+    public function getAnimalFood(): Collection
+    {
+        return $this->animalFood;
+    }
+
+    public function addAnimalFood(AnimalFood $animalFood): static
+    {
+        if (!$this->animalFood->contains($animalFood)) {
+            $this->animalFood->add($animalFood);
+            $animalFood->setAnimal($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalFood(AnimalFood $animalFood): static
+    {
+        if ($this->animalFood->removeElement($animalFood)) {
+            // set the owning side to null (unless already changed)
+            if ($animalFood->getAnimal() === $this) {
+                $animalFood->setAnimal(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 }

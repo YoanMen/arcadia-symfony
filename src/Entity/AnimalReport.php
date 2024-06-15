@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AnimalReportRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalReportRepository::class)]
 class AnimalReport
@@ -17,33 +16,41 @@ class AnimalReport
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\DateValidator()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'Le statut est trop long, 60 caractères maximum')]
+
     private ?string $statut = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'La nourriture  est trop longue, 60 caractères maximum')]
     private ?string $food = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
     private ?string $quantity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'Le detail  est trop long, 255 caractères maximum')]
     private ?string $detail = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'animalReports')]
-    private Collection $veterinary;
 
     #[ORM\ManyToOne(inversedBy: 'animalReports')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+    #[ORM\ManyToOne(inversedBy: 'animalReports')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $veterinary = null;
+
     public function __construct()
     {
-        $this->veterinary = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -92,6 +99,11 @@ class AnimalReport
         return $this->quantity;
     }
 
+    public function getQuantityFormatted(): string
+    {
+        return $this->quantity . ' kilogrammes';
+    }
+
     public function setQuantity(string $quantity): static
     {
         $this->quantity = $quantity;
@@ -111,29 +123,6 @@ class AnimalReport
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getVeterinary(): Collection
-    {
-        return $this->veterinary;
-    }
-
-    public function addVeterinary(User $veterinary): static
-    {
-        if (!$this->veterinary->contains($veterinary)) {
-            $this->veterinary->add($veterinary);
-        }
-
-        return $this;
-    }
-
-    public function removeVeterinary(User $veterinary): static
-    {
-        $this->veterinary->removeElement($veterinary);
-
-        return $this;
-    }
 
     public function getAnimal(): ?Animal
     {
@@ -143,6 +132,18 @@ class AnimalReport
     public function setAnimal(?Animal $animal): static
     {
         $this->animal = $animal;
+
+        return $this;
+    }
+
+    public function getVeterinary(): ?User
+    {
+        return $this->veterinary;
+    }
+
+    public function setVeterinary(?User $veterinary): static
+    {
+        $this->veterinary = $veterinary;
 
         return $this;
     }

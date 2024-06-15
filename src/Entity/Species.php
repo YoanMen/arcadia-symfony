@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SpeciesRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: SpeciesRepository::class)]
 class Species
@@ -14,15 +15,23 @@ class Species
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 80, maxMessage: 'Le nom commun ne doit pas dépasser 80 caractères')]
     private ?string $communName = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'Le genre ne doit pas dépasser 60 caractères')]
     private ?string $genre = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'La famille ne doit pas dépasser 60 caractères')]
     private ?string $family = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'L\'ordre ne doit pas dépasser 60 caractères')]
     private ?string $ordre = null;
 
     #[ORM\OneToOne(mappedBy: 'species', cascade: ['persist', 'remove'])]

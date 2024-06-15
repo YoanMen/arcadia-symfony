@@ -6,6 +6,7 @@ use App\Repository\UICNRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UICNRepository::class)]
 class UICN
@@ -16,6 +17,9 @@ class UICN
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 255, maxMessage: 'L\'UICN ne doit pas dépasser 255 caractères')]
+
     private ?string $uicn = null;
 
     /**

@@ -2,13 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\ServiceRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
+#[UniqueEntity('name')]
+
 class Service
 {
     #[ORM\Id]
@@ -17,21 +21,30 @@ class Service
     private ?int $id = null;
 
     #[ORM\Column(length: 80)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 80, maxMessage: 'Le nom est trop long, 80 caractères maximum')]
     private ?string $name = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le nom ne doit pas être vide')]
+    #[Assert\Length(max: 80, maxMessage: 'Le slug est trop long, 100 caractères maximum')]
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'La description ne doit pas être vide')]
+    #[Assert\Length(max: 255, maxMessage: 'La description est trop longue, 255 caractères maximum')]
     private ?string $description = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 500, maxMessage: 'Le texte d\'information  est trop long, 500 caractères maximum')]
     private ?string $information = null;
 
     /**
      * @var Collection<int, ServiceImage>
      */
     #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true)]
+    #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour le service')]
     private Collection $serviceImages;
 
     public function __construct()

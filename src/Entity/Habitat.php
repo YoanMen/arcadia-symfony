@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
-use App\Repository\HabitatRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\HabitatRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
+#[UniqueEntity('name')]
+
 class Habitat
 {
     #[ORM\Id]
@@ -19,16 +22,19 @@ class Habitat
 
     #[ORM\Column(length: 80)]
     #[Assert\NotBlank()]
+    #[Assert\Length(max: 80, maxMessage: 'Le nom  est trop long, 80 caractères maximum')]
 
     private ?string $name = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
+    #[Assert\Length(max: 500, maxMessage: 'La description est trop longue, 500 caractères maximum')]
 
     private ?string $description = null;
 
     #[ORM\Column(length: 100)]
     #[Assert\NotBlank()]
+    #[Assert\Length(max: 100, maxMessage: 'Le texte pour l\'url est trop long, 100 caractères maximum')]
     private ?string $slug = null;
 
     /**
@@ -160,10 +166,6 @@ class Habitat
         return $this;
     }
 
-    public function __toString(): string
-    {
-        return  $this->getName();
-    }
 
     /**
      * @return Collection<int, HabitatComment>
@@ -193,5 +195,11 @@ class Habitat
         }
 
         return $this;
+    }
+
+
+    public function __toString(): string
+    {
+        return  $this->getName();
     }
 }

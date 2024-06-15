@@ -1,0 +1,153 @@
+@font-face {
+  font-family: "Eudoxus";
+  src: url("./fonts/Eudoxus-Sans-font/Variable/EudoxusSansGX.ttf");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  --primary: #fdfffc;
+  --secondary: #29524a;
+  --btn-color: #db4c40;
+  --border-color: #a7abaa;
+  --text-color: #16302b;
+
+  --eudoxus: "Eudoxus", sans-serif;
+
+  --bs-body-bg: var(--primary);
+  --body-bg: var(--primary);
+  --border-radius: 3px;
+  --font-family-base: var(--eudoxus);
+  --text-color: var(--text-color);
+  --button-shadow: none;
+  --button-hover-shadow: none;
+  --button-hover-color: none;
+
+  --button-primary-bg: var(--btn-color);
+  --button-secondary-bg: var(--btn-color);
+  --button-hover-secondary-bg: white;
+  --button-secondary-color: white;
+
+  --link-color: var(--btn-color);
+  --link-hover-color: #d14538 !important;
+  --link-hover-decoration: var(--btn-color);
+  --sidebar-border-color: var(--border-color);
+  --sidebar-bg: var(--primary);
+  --resize-handler-hover-bg: var(--btn-color);
+  --responsive-header-bg: --primary;
+  --responsive-header-border-color: var(--border-color);
+  --responsive-header-logo-color: white;
+
+  --sidebar-menu-active-item-color: white;
+  --sidebar-menu-active-item-bg: var(--btn-color);
+  --sidebar-menu-icon-color: var(--border-color);
+  --datagrid-noresults-placeholder-bg: #a7abaa1a;
+
+  --shadow-xl: none;
+  --dropdown-color: var(--border-color);
+  --dropdown-bg: var(--primary);
+  --dropdown-border-color: var(--border-color);
+  --dropdown-link-hover-bg: #a7abaa1a;
+  --dropdown-toggle-hover-border-color: var(--border-color);
+  --button-active-shadow: none;
+
+  --content-top-border-color: var(--border-color);
+
+  --table-thead-sorted-color: var(--btn-color);
+  --table-thead-sorted-marker-color: var(--btn-color);
+  --table-hover-cell-bg: #a7abaa1a;
+  --table-cell-border-color: #a7abaa3b;
+  --color-primary: var(--btn-color);
+
+  --badge-secondary-bg: #a7abaa3b;
+
+  --form-input-shadow: none;
+  --form-input-border-color: var(--border-color);
+  --form-type-text-editor-toolbar-button-hover-color: #a7abaa1a;
+  --form-type-text-editor-toolbar-bg: none;
+  --form-type-text-editor-toolbar-button-active-bg: var(--btn-color);
+  --form-type-text-editor-toolbar-button-active-color: var(--primary);
+  --form-type-check-input-checked-bg: var(--btn-color);
+  --form-input-border-color: var(--border-color);
+  --form-type-collection-item-collapsed-hover-bg: #a7abaa1a;
+  --form-control-disabled-bg: #a7abaa1a;
+  --form-type-autocomplete-dropdown-active-item-bg: #a7abaa1a;
+  --dropdown-color: --border-color;
+  --text-muted: #a7abaaf1;
+  --user-avatar-icon-bg: #a7abaa1a;
+  --form-collection-item-collapse-marker-color: var(--btn-color);
+  --form-input-hover-shadow: 0 0 0 1px var(--border-color);
+  --form-input-error-shadow: 0 0 0 1px red;
+  --form-control-bg: none;
+  --form-type-autocomplete-dropdown-input-wrapper-bg: #a7abaa1a;
+  --modal-footer-bg: var(--primary);
+  --modal-border-color: var(--border-color);
+  --modal-footer-bg: var(--primary);
+  --modal-bg: var(--primary);
+}
+
+.alert {
+  z-index: 10;
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  position: fixed;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid #f5c6cb;
+  width: 100%;
+  font-size: 1rem;
+}
+
+.btn-primary:hover {
+  background-color: #d14538 !important;
+}
+
+.btn-secondary:hover,
+.btn-secondary:not(:disabled):not(.disabled):active,
+.btn-secondary:not(:disabled):not(.disabled):active:focus,
+.btn-secondary:not(:disabled):not(.disabled):focus {
+  background-color: #d14538;
+}
+
+.btn-primary:active {
+  background-color: #f5c6cb;
+}
+
+.btn-secondary:hover span {
+  color: var(--primary);
+}
+
+.input-file-container:hover {
+  color: var(--primary) !important;
+}
+
+.user-menu-wrapper .dropdown-menu {
+  max-width: 600px;
+
+  min-width: 256px;
+}
+
+.menu-item:hover:not(.active) span {
+  color: var(--btn-color);
+}
+
+.action-delete,
+.action-delete:hover {
+  background-color: transparent !important;
+}
+
+.action-delete:hover span {
+  color: rgb(141, 3, 3);
+}
+
+.action-saveAndAddAnother:hover,
+.action-saveAndAddAnother:active {
+  color: var(--primary) !important;
+}
+
+.plugin-dropdown_input.focus .ts-dropdown .dropdown-input {
+  border-color: var(--border-color);
+  box-shadow: 0 0 0 1px var(--border-color);
+  outline: 0;
+}

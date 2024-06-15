@@ -3,10 +3,9 @@
 namespace App\Entity;
 
 use App\Repository\AnimalFoodRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalFoodRepository::class)]
 class AnimalFood
@@ -17,24 +16,32 @@ class AnimalFood
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\DateTimeValidator()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 60, maxMessage: 'Le text de la nourriture est trop long, 60 caractères maximum')]
     private ?string $food = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[Assert\NotBlank()]
+    #[Assert\Positive()]
+
     private ?string $quantity = null;
 
-    /**
-     * @var Collection<int, User>
-     */
-    #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'animalFood')]
-    private Collection $employee;
+    private string $QuantityFormatted;
 
-    public function __construct()
-    {
-        $this->employee = new ArrayCollection();
-    }
+    #[ORM\ManyToOne(inversedBy: 'animalFood')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $employee = null;
+
+    #[ORM\ManyToOne(inversedBy: 'animalFood')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Assert\NotNull(message: "Il faut sélectionner un animal")]
+    private ?Animal $animal = null;
+
+
 
     public function getId(): ?int
     {
@@ -70,6 +77,10 @@ class AnimalFood
         return $this->quantity;
     }
 
+    public function getQuantityFormatted(): string
+    {
+        return $this->quantity . ' kilogrammes';
+    }
     public function setQuantity(string $quantity): static
     {
         $this->quantity = $quantity;
@@ -77,27 +88,32 @@ class AnimalFood
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getEmployee(): Collection
+    public function getEmployee(): ?User
     {
         return $this->employee;
     }
 
-    public function addEmployee(User $employee): static
+    public function setEmployee(?User $employee): static
     {
-        if (!$this->employee->contains($employee)) {
-            $this->employee->add($employee);
-        }
+        $this->employee = $employee;
 
         return $this;
     }
 
-    public function removeEmployee(User $employee): static
+    public function getAnimal(): ?Animal
     {
-        $this->employee->removeElement($employee);
+        return $this->animal;
+    }
+
+    public function setAnimal(?Animal $animal): static
+    {
+        $this->animal = $animal;
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return 'test';
     }
 }

@@ -2,19 +2,21 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\Animal;
-use App\Entity\AnimalReport;
-use App\Entity\Habitat;
-use App\Entity\HabitatComment;
-use App\Entity\Schedules;
-use App\Entity\Service;
+use App\Entity\Advice;
+use App\Entity\AnimalFood;
 use App\Entity\User;
+use App\Entity\Animal;
+use App\Entity\Habitat;
+use App\Entity\Service;
+use App\Entity\Schedules;
+use App\Entity\AnimalReport;
+use App\Entity\HabitatComment;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 
 class DashboardController extends AbstractDashboardController
@@ -23,43 +25,71 @@ class DashboardController extends AbstractDashboardController
     public function index(): Response
     {
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        return $this->redirect($adminUrlGenerator->setController(HabitatCrudController::class)->generateUrl());
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return $this->render('admin/dashboard.html.twig');
+        }
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
+        if ($this->isGranted('ROLE_EMPLOYEE')) {
+            $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+            return $this->redirect($adminUrlGenerator->setController(AnimalFoodCrudController::class)->generateUrl());
+        }
+        if ($this->isGranted('ROLE_VETERINARY')) {
+            $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+            return $this->redirect($adminUrlGenerator->setController(HabitatCommentCrudController::class)->generateUrl());
+        }
 
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
+
+        return $this->redirect('/');
     }
+
+
+
+
 
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
-            ->setTitle('Arcadia Symfony');
+            ->disableDarkMode()
+            ->setTitle('<img src="/images/arcadia_png.png" class="img-fluid d-block mx-auto" style="max-width:64px; width:100%;">');
     }
 
     public function configureMenuItems(): iterable
     {
 
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            throw new AccessDeniedException();
+
+
+        yield MenuItem::linkToUrl('Retour au site', 'fa fa-caret-left', '/');
+        yield MenuItem::section("");
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            yield MenuItem::linkToDashboard('Dashboard', 'fa fa-chart-line');
+            yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-clipboard', AnimalReport::class);
+            yield MenuItem::linkToCrud('Commentaire habitats', 'fas fa-comment', HabitatComment::class);
+            yield MenuItem::section("Gestion");
+            yield MenuItem::linkToCrud('Habitats', 'fas fa-house', Habitat::class);
+            yield MenuItem::linkToCrud('Animaux', 'fas fa-hippo', Animal::class);
+            yield MenuItem::linkToCrud('Services', 'fas fa-list', Service::class);
+            yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
+            yield MenuItem::linkToCrud('Horaires', 'fas fa-clock', Schedules::class);
         }
 
-        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
-        yield MenuItem::linkToCrud('Habitat', 'fas fa-list', Habitat::class);
-        yield MenuItem::linkToCrud('Animal', 'fas fa-list', Animal::class);
-        yield MenuItem::linkToCrud('Service', 'fas fa-list', Service::class);
-        yield MenuItem::linkToCrud('User', 'fas fa-list', User::class);
-        yield MenuItem::linkToCrud('Schedules', 'fas fa-list', Schedules::class);
-        yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-list', AnimalReport::class);
-        yield MenuItem::linkToCrud('Commentaire sur les habitats', 'fas fa-list', HabitatComment::class);
+        if ($this->isGranted('ROLE_VETERINARY')) {
+            yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-clipboard', AnimalReport::class);
+            yield MenuItem::linkToCrud('Commentaire habitats', 'fas fa-comment', HabitatComment::class);
+            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-comment', AnimalFood::class);
+        }
+
+        if ($this->isGranted('ROLE_EMPLOYEE')) {
+            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-comment', AnimalFood::class);
+            yield MenuItem::section("Gestion");
+            yield MenuItem::linkToCrud('Avis', 'fas fa-message', Advice::class);
+            yield MenuItem::linkToCrud('Services', 'fas fa-list', Service::class);
+        }
+    }
+
+    public function configureAssets(): Assets
+    {
+        return parent::configureAssets()
+            ->addAssetMapperEntry('admin/app');
     }
 }

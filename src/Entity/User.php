@@ -2,15 +2,19 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use App\Repository\UserRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
+#[UniqueEntity('email', message: "Un compte avec cette adresse existe déjà")]
+
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -20,6 +24,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(max: 180, maxMessage: "Le nom de l\'utilisateur ne doit pas dépasser 180 caractères")]
+
     private ?string $username = null;
 
     /**
@@ -27,7 +34,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column()]
     private array $roles = [];
-
     private string $selectedRole;
 
 
@@ -35,22 +41,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\Regex("/^(?=.*\d)(?=.*[A-Z])(?=.*[@#$%])(?!.*(.)\1{2}).*[a-z]/m", message: 'Le mot de passe doit faire entre 8 et 32 caractères et contenir des caractères spéciaux')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank()]
+    #[Assert\Email(message: "L'adresse email n'est pas valide")]
+    #[Assert\Length(max: 255, maxMessage: "L\'adresse email  ne doit pas dépasser 255 caractères")]
+
     private ?string $email = null;
 
-    /**
-     * @var Collection<int, AnimalReport>
-     */
-    #[ORM\ManyToMany(targetEntity: AnimalReport::class, mappedBy: 'veterinary')]
-    private Collection $animalReports;
 
-    /**
-     * @var Collection<int, AnimalFood>
-     */
-    #[ORM\ManyToMany(targetEntity: AnimalFood::class, mappedBy: 'employee')]
-    private Collection $animalFood;
 
     #[ORM\OneToOne(mappedBy: 'account', cascade: ['persist', 'remove'])]
     private ?AuthAttempt $authAttempt = null;
@@ -58,12 +59,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var Collection<int, HabitatComment>
      */
-    #[ORM\ManyToMany(targetEntity: HabitatComment::class, mappedBy: 'veterinary')]
+    #[ORM\OneToMany(targetEntity: HabitatComment::class, mappedBy: 'veterinary')]
     private Collection $habitatComments;
+
+    /**
+     * @var Collection<int, AnimalFood>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalFood::class, mappedBy: 'employee')]
+    private Collection $animalFood;
+
+    /**
+     * @var Collection<int, AnimalReport>
+     */
+    #[ORM\OneToMany(targetEntity: AnimalReport::class, mappedBy: 'veterinary')]
+    private Collection $animalReports;
+
 
     public function __construct()
     {
         $this->habitatComments = new ArrayCollection();
+        $this->animalFood = new ArrayCollection();
+        $this->animalReports = new ArrayCollection();
     }
 
 
@@ -169,59 +185,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, AnimalReport>
-     */
-    public function getAnimalReports(): Collection
-    {
-        return $this->animalReports;
-    }
 
-    public function addAnimalReport(AnimalReport $animalReport): static
-    {
-        if (!$this->animalReports->contains($animalReport)) {
-            $this->animalReports->add($animalReport);
-            $animalReport->addVeterinary($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimalReport(AnimalReport $animalReport): static
-    {
-        if ($this->animalReports->removeElement($animalReport)) {
-            $animalReport->removeVeterinary($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, AnimalFood>
-     */
-    public function getAnimalFood(): Collection
-    {
-        return $this->animalFood;
-    }
-
-    public function addAnimalFood(AnimalFood $animalFood): static
-    {
-        if (!$this->animalFood->contains($animalFood)) {
-            $this->animalFood->add($animalFood);
-            $animalFood->addEmployee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAnimalFood(AnimalFood $animalFood): static
-    {
-        if ($this->animalFood->removeElement($animalFood)) {
-            $animalFood->removeEmployee($this);
-        }
-
-        return $this;
-    }
 
     public function getAuthAttempt(): ?AuthAttempt
     {
@@ -240,6 +204,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+
+    public function __toString(): string
+    {
+        return $this->username;
+    }
+
     /**
      * @return Collection<int, HabitatComment>
      */
@@ -252,7 +222,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         if (!$this->habitatComments->contains($habitatComment)) {
             $this->habitatComments->add($habitatComment);
-            $habitatComment->addVeterinary($this);
+            $habitatComment->setVeterinary($this);
         }
 
         return $this;
@@ -261,7 +231,70 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeHabitatComment(HabitatComment $habitatComment): static
     {
         if ($this->habitatComments->removeElement($habitatComment)) {
-            $habitatComment->removeVeterinary($this);
+            // set the owning side to null (unless already changed)
+            if ($habitatComment->getVeterinary() === $this) {
+                $habitatComment->setVeterinary(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalFood>
+     */
+    public function getAnimalFood(): Collection
+    {
+        return $this->animalFood;
+    }
+
+    public function addAnimalFood(AnimalFood $animalFood): static
+    {
+        if (!$this->animalFood->contains($animalFood)) {
+            $this->animalFood->add($animalFood);
+            $animalFood->setEmployee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalFood(AnimalFood $animalFood): static
+    {
+        if ($this->animalFood->removeElement($animalFood)) {
+            // set the owning side to null (unless already changed)
+            if ($animalFood->getEmployee() === $this) {
+                $animalFood->setEmployee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnimalReport>
+     */
+    public function getAnimalReports(): Collection
+    {
+        return $this->animalReports;
+    }
+
+    public function addAnimalReport(AnimalReport $animalReport): static
+    {
+        if (!$this->animalReports->contains($animalReport)) {
+            $this->animalReports->add($animalReport);
+            $animalReport->setVeterinary($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnimalReport(AnimalReport $animalReport): static
+    {
+        if ($this->animalReports->removeElement($animalReport)) {
+            // set the owning side to null (unless already changed)
+            if ($animalReport->getVeterinary() === $this) {
+                $animalReport->setVeterinary(null);
+            }
         }
 
         return $this;
