@@ -19,6 +19,7 @@
   --border-radius: 3px;
   --font-family-base: var(--eudoxus);
   --text-color: var(--text-color);
+  --text-color-light: var(--primary);
   --button-shadow: none;
   --button-hover-shadow: none;
   --button-hover-color: none;
@@ -61,6 +62,8 @@
 
   --badge-secondary-bg: #a7abaa3b;
 
+  --form-switch-checked-bg: var(--btn-color);
+
   --form-input-shadow: none;
   --form-input-border-color: var(--border-color);
   --form-type-text-editor-toolbar-button-hover-color: #a7abaa1a;
@@ -98,11 +101,32 @@
   width: 100%;
   font-size: 1rem;
 }
+.action-filters-button,
+.action-filters-applied,
+.action-filters-button:hover,
+.action-filters-applied:hover {
+  color: var(--primary);
+}
+.btn-primary,
+.btn-danger,
+.btn-secondary:not(.action-filters-reset) {
+  min-width: 140px;
+  padding: 6px;
+}
+
+.btn:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+  color: var(--primary);
+}
 
 .btn-primary:hover {
   background-color: #d14538 !important;
 }
 
+.btn:not(:disabled):not(.disabled):not(.btn-link):active,
+.btn:not(:disabled):not(.disabled):not(.btn-link):active:focus,
+.btn:not(:disabled):not(.disabled):not(.btn-link):focus {
+  color: var(--primary);
+}
 .btn-secondary:hover,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .btn-secondary:not(:disabled):not(.disabled):active:focus,
@@ -110,8 +134,13 @@
   background-color: #d14538;
 }
 
-.btn-primary:active {
-  background-color: #f5c6cb;
+.action-filters-button.action-filters-applied i {
+  color: var(--primary);
+}
+
+.action-filters-button .action-filters-button-count {
+  color: var(--primary);
+  font-weight: 600;
 }
 
 .btn-secondary:hover span {

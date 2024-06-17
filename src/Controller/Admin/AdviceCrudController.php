@@ -31,7 +31,11 @@ class AdviceCrudController extends AbstractCrudController
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setPageTitle("index", "Avis des visiteurs");
+        return $crud
+            ->setPageTitle("index", "Avis des visiteurs")
+            ->setDefaultSort([
+                'id' => 'DESC',
+            ]);
     }
 
     public function configureFields(string $pageName): iterable

@@ -30,13 +30,12 @@ class AnimalReport
     #[Assert\Length(max: 60, maxMessage: 'La nourriture  est trop longue, 60 caractères maximum')]
     private ?string $food = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 3)]
     #[Assert\NotBlank()]
     #[Assert\Positive()]
     private ?string $quantity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank()]
     #[Assert\Length(max: 60, maxMessage: 'Le detail  est trop long, 255 caractères maximum')]
     private ?string $detail = null;
 
@@ -45,18 +44,18 @@ class AnimalReport
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
+
     #[ORM\ManyToOne(inversedBy: 'animalReports')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?User $veterinary = null;
 
-    public function __construct()
-    {
-    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
+
+
 
     public function getDate(): ?\DateTimeImmutable
     {
@@ -99,11 +98,6 @@ class AnimalReport
         return $this->quantity;
     }
 
-    public function getQuantityFormatted(): string
-    {
-        return $this->quantity . ' kilogrammes';
-    }
-
     public function setQuantity(string $quantity): static
     {
         $this->quantity = $quantity;
@@ -128,6 +122,7 @@ class AnimalReport
     {
         return $this->animal;
     }
+
 
     public function setAnimal(?Animal $animal): static
     {

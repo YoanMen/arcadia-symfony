@@ -35,10 +35,8 @@ class AnimalInformationCrudController extends AbstractCrudController
             TextField::new('sizeAndHeight', 'Taille et poids'),
             TextField::new('lifespan', 'Espérance de vie'),
             AssociationField::new('region', 'Région'),
-
             AssociationField::new('uicn', 'UICN'),
             FormField::addFieldset()->addColumn(6),
-
             AssociationField::new('species', 'Espèce')
                 ->renderAsEmbeddedForm()
                 ->onlyOnForms()->setColumns(15)

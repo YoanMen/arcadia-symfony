@@ -24,20 +24,20 @@ class AnimalFood
     #[Assert\Length(max: 60, maxMessage: 'Le text de la nourriture est trop long, 60 caractères maximum')]
     private ?string $food = null;
 
-    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 2)]
+    #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 3)]
     #[Assert\NotBlank()]
     #[Assert\Positive()]
 
     private ?string $quantity = null;
 
-    private string $QuantityFormatted;
+
 
     #[ORM\ManyToOne(inversedBy: 'animalFood')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
+
     private ?User $employee = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalFood')]
-    #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull(message: "Il faut sélectionner un animal")]
     private ?Animal $animal = null;
 
@@ -77,10 +77,6 @@ class AnimalFood
         return $this->quantity;
     }
 
-    public function getQuantityFormatted(): string
-    {
-        return $this->quantity . ' kilogrammes';
-    }
     public function setQuantity(string $quantity): static
     {
         $this->quantity = $quantity;
@@ -110,10 +106,5 @@ class AnimalFood
         $this->animal = $animal;
 
         return $this;
-    }
-
-    public function __toString()
-    {
-        return 'test';
     }
 }

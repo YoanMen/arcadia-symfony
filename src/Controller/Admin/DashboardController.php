@@ -35,7 +35,7 @@ class DashboardController extends AbstractDashboardController
         }
         if ($this->isGranted('ROLE_VETERINARY')) {
             $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-            return $this->redirect($adminUrlGenerator->setController(HabitatCommentCrudController::class)->generateUrl());
+            return $this->redirect($adminUrlGenerator->setController(AnimalReportCrudController::class)->generateUrl());
         }
 
 
@@ -76,11 +76,11 @@ class DashboardController extends AbstractDashboardController
         if ($this->isGranted('ROLE_VETERINARY')) {
             yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-clipboard', AnimalReport::class);
             yield MenuItem::linkToCrud('Commentaire habitats', 'fas fa-comment', HabitatComment::class);
-            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-comment', AnimalFood::class);
+            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-utensils', AnimalFood::class);
         }
 
         if ($this->isGranted('ROLE_EMPLOYEE')) {
-            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-comment', AnimalFood::class);
+            yield MenuItem::linkToCrud('Nourriture des animaux', 'fas fa-utensils', AnimalFood::class);
             yield MenuItem::section("Gestion");
             yield MenuItem::linkToCrud('Avis', 'fas fa-message', Advice::class);
             yield MenuItem::linkToCrud('Services', 'fas fa-list', Service::class);

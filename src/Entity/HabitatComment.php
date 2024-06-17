@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\HabitatCommentRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -34,12 +32,10 @@ class HabitatComment
     private ?Habitat $habitat = null;
 
     #[ORM\ManyToOne(inversedBy: 'habitatComments')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?User $veterinary = null;
 
-    public function __construct()
-    {
-    }
+
 
     public function getId(): ?int
     {

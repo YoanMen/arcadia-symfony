@@ -7,8 +7,8 @@ use App\Form\AnimalImageType;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
-use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
@@ -22,6 +22,10 @@ class AnimalCrudController extends AbstractCrudController
         return Animal::class;
     }
 
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters->add('habitat');
+    }
     public function configureActions(Actions $actions): Actions
     {
         if ($this->isGranted('ROLE_ADMIN')) {
@@ -57,11 +61,5 @@ class AnimalCrudController extends AbstractCrudController
                 ->setEntryType(AnimalImageType::class)->onlyOnForms(),
 
         ];
-    }
-
-    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
-    {
-        if ($entityInstance instanceof Animal) {
-        }
     }
 }

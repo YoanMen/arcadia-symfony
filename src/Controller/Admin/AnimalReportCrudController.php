@@ -4,22 +4,38 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\AnimalReport;
+
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Controller\Admin\Filter\VeterinaryFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use App\Controller\Admin\Filter\AnimalRapportHabitatFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+
 
 class AnimalReportCrudController extends AbstractCrudController
 {
     public static function getEntityFqcn(): string
     {
         return AnimalReport::class;
+    }
+
+    public function configureFilters(Filters $filters): Filters
+    {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $filters->add(VeterinaryFilter::new('veterinary'));
+        }
+
+        return $filters->add('animal')
+            ->add('date')
+            ->add(AnimalRapportHabitatFilter::new('habitat'));
     }
 
     public function configureActions(Actions $actions): Actions
@@ -47,22 +63,42 @@ class AnimalReportCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-
             DateField::new('date')
-                ->setFormTypeOption('data', new \DateTimeImmutable('now'))
-                ->setColumns(12)->setColumns(12),
-            TextField::new('statut', 'Etat de l\'animal')->setColumns(4),
+                ->onlyOnIndex(),
             AssociationField::new('veterinary', 'Vétérinaire')
                 ->onlyOnIndex()
                 ->setPermission('ROLE_ADMIN'),
-            AssociationField::new("animal")->setColumns(2),
-            TextField::new('food', 'Nourriture')->setColumns(3),
-            TextField::new('QuantityFormatted', 'Quantité')->onlyOnIndex(),
+            TextField::new('animal.habitat', 'Habitat')
+                ->setSortable(true)
+                ->onlyOnIndex(),
+            AssociationField::new("animal", "Animal")
+                ->setColumns(2)
+                ->setSortable(true)
+                ->setFormTypeOption('choice_label', function ($animal) {
+                    return $animal->getName() . ' (' . $animal->getHabitat()->getName() . ')';
+                }),
+            TextField::new('statut', 'État de l\'animal')
+                ->setSortable(false)
+                ->setColumns(4)
+                ->setHelp('malade, bien, mal a la patte etc..'),
+            TextField::new('food', 'Nourriture')
+                ->setSortable(false)
+                ->setHelp('viande, foin, fruits etc ...')
+                ->setColumns(3),
+            TextField::new('quantity', 'Quantité')
+                ->formatValue(function ($value) {
+                    return $value . ' Kg';
+                })
+                ->setSortable(false),
             NumberField::new('quantity', 'Quantité')
-                ->setStoredAsString()->onlyOnForms()
+                ->onlyOnForms()
                 ->setHelp('en kilogrammes')
                 ->setColumns(3),
-            TextareaField::new('detail')->setColumns(12)->setRequired(false)
+            TextareaField::new('detail')
+                ->setColumns(12)
+                ->setSortable(false)
+                ->setRequired(false),
+
         ];
     }
 

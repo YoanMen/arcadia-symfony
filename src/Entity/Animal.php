@@ -34,8 +34,6 @@ class Animal
     private ?Habitat $habitat = null;
 
 
-
-
     #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'animal')]
     private Collection $animalImages;

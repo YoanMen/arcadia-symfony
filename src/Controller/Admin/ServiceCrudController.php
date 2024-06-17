@@ -39,16 +39,24 @@ class ServiceCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name')->setColumns(6),
+            TextField::new('name', 'Nom')
+                ->setColumns(6)
+                ->setHelp('nom du service'),
             SlugField::new('slug', 'Texte dans l\'url')
                 ->setTargetFieldName('name')
+                ->setHelp('généralement à ne pas changer')
                 ->onlyOnForms()->setColumns(6),
-
-            TextareaField::new('description')->setColumns(12),
-            TextEditorField::new('information')->setColumns(12)->setNumOfRows(12),
+            TextareaField::new('description')
+                ->setColumns(12)
+                ->setHelp('description du service'),
+            TextEditorField::new('information')
+                ->setColumns(12)
+                ->setNumOfRows(12)
+                ->setHelp('informations utile au visiteurs, comme les horaires'),
             CollectionField::new('serviceImages', 'Ajouter une image')
                 ->setRequired(true)
-                ->setEntryType(ServiceImageType::class)->onlyOnForms(),
+                ->setEntryType(ServiceImageType::class)
+                ->onlyOnForms(),
         ];
     }
 }
