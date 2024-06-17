@@ -9,7 +9,7 @@
   --primary: #fdfffc;
   --secondary: #29524a;
   --btn-color: #db4c40;
-  --border-color: #a7abaa;
+  --border-color: #dbe3df;
   --text-color: #16302b;
 
   --eudoxus: "Eudoxus", sans-serif;
@@ -72,17 +72,18 @@
   --form-type-text-editor-toolbar-button-active-color: var(--primary);
   --form-type-check-input-checked-bg: var(--btn-color);
   --form-input-border-color: var(--border-color);
+  --form-input-hover-border-color: var(--btn-color);
   --form-type-collection-item-collapsed-hover-bg: #a7abaa1a;
   --form-control-disabled-bg: #a7abaa1a;
   --form-type-autocomplete-dropdown-active-item-bg: #a7abaa1a;
+  --form-collection-item-collapse-marker-color: var(--btn-color);
+  --form-input-hover-shadow: 0 0 0 1px var(--btn-color);
+  --form-input-error-shadow: 0 0 0 1px red;
+  --form-control-bg: #dbe3df20;
+  --form-type-autocomplete-dropdown-input-wrapper-bg: #a7abaa1a;
   --dropdown-color: --border-color;
   --text-muted: #a7abaaf1;
   --user-avatar-icon-bg: #a7abaa1a;
-  --form-collection-item-collapse-marker-color: var(--btn-color);
-  --form-input-hover-shadow: 0 0 0 1px var(--border-color);
-  --form-input-error-shadow: 0 0 0 1px red;
-  --form-control-bg: none;
-  --form-type-autocomplete-dropdown-input-wrapper-bg: #a7abaa1a;
   --modal-footer-bg: var(--primary);
   --modal-border-color: var(--border-color);
   --modal-footer-bg: var(--primary);
