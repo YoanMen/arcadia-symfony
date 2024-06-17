@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Form\AnimalImageType;
-use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -50,15 +49,20 @@ class AnimalCrudController extends AbstractCrudController
         return [
 
             TextField::new('name', 'Nom')->setColumns(6),
-            SlugField::new('slug')->setTargetFieldName('name')->onlyOnForms(),
+            SlugField::new('slug')
+                ->setTargetFieldName('name')
+                ->onlyOnForms()
+                ->setHelp('généralement à ne pas changer'),
             AssociationField::new('habitat'),
-            AssociationField::new('animalImages', 'Images')->onlyOnIndex(),
-
+            AssociationField::new('animalImages', 'Images')
+                ->onlyOnIndex(),
             AssociationField::new('information', 'Information sur l\'animal')
                 ->setColumns(12)
-                ->onlyOnForms()->renderAsEmbeddedForm(),
+                ->onlyOnForms()
+                ->renderAsEmbeddedForm(),
             CollectionField::new('animalImages', 'Image de l\'animal')
-                ->setEntryType(AnimalImageType::class)->onlyOnForms(),
+                ->setEntryType(AnimalImageType::class)
+                ->onlyOnForms(),
 
         ];
     }

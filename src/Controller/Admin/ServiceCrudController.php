@@ -54,7 +54,6 @@ class ServiceCrudController extends AbstractCrudController
                 ->setNumOfRows(12)
                 ->setHelp('informations utile au visiteurs, comme les horaires'),
             CollectionField::new('serviceImages', 'Ajouter une image')
-                ->setRequired(true)
                 ->setEntryType(ServiceImageType::class)
                 ->onlyOnForms(),
         ];

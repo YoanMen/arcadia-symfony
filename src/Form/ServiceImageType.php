@@ -22,7 +22,7 @@ class ServiceImageType extends AbstractType
           new Assert\File(
             maxSize: "5M",
             mimeTypes: ["image/png", "image/jpg", "image/jpeg"],
-            maxSizeMessage: "L'image ne doit pas dépassée 10M.",
+            maxSizeMessage: "L'image ne doit pas dépassée 5M.",
             mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpj, jpeg",
           ),
 

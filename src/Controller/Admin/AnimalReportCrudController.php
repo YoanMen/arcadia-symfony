@@ -55,7 +55,7 @@ class AnimalReportCrudController extends AbstractCrudController
     public function configureCrud(Crud $crud): Crud
     {
         return $crud->setPageTitle("index", "Les rapports sur les animaux")
-            ->setPageTitle('new', 'Création d\'un rapport sur un animal');
+            ->setPageTitle('new', 'Création d\'un rapport pour un animal');
     }
 
 
@@ -83,12 +83,13 @@ class AnimalReportCrudController extends AbstractCrudController
                 ->setHelp('malade, bien, mal a la patte etc..'),
             TextField::new('food', 'Nourriture')
                 ->setSortable(false)
-                ->setHelp('viande, foin, fruits etc ...')
+                ->setHelp('nourriture recommandée ex: viande, foin, fruits etc ...')
                 ->setColumns(3),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
                     return $value . ' Kg';
                 })
+                ->setHelp('quantité recommandée')
                 ->setSortable(false),
             NumberField::new('quantity', 'Quantité')
                 ->onlyOnForms()
