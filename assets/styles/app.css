@@ -36,14 +36,20 @@
   --primary: #fdfffc;
   --secondary: #29524a;
   --btn-color: #db4c40;
-  --border-color: #a7abaa;
+  --border-color: #dbe3df;
   --text-color: #16302b;
 
   --open-sans: "Open Sans", sans-serif;
   --montserrat: "Montserrat", sans-serif;
 }
 
-p {
+body  {
+  background-color: var(--primary);
+}
+
+p,
+label,
+input {
   font-family: var(--open-sans);
 }
 
@@ -52,4 +58,55 @@ h2,
 h3,
 h4 {
   font-family: var(--montserrat);
+}
+
+/* background */
+.bg-primary {
+  background-color: var(--primary);
+}
+
+/* button */
+.btn-primary {
+  background-color: var(--btn-color);
+  color: var(--primary);
+  transition: all ease-in-out 150ms;
+}
+
+.btn-primary:hover {
+  background-color: #e95345;
+}
+
+.btn-primary:active {
+  background-color: #cc4336;
+}
+
+/* text  */
+.text-color {
+  color: var(--text-color);
+}
+
+.text-color--btn {
+  color: var(--btn-color);
+}
+
+.font-montserrat {
+  font-family: var(--montserrat);
+}
+
+.font-open-sans {
+  font-family: var(--open-sans);
+}
+
+/* border */
+.border-color {
+  border: solid 1px var(--border-color);
+}
+
+.border-color:focus {
+  border-color: var(--btn-color);
+  border: solid 2px var(--btn-color);
+}
+
+.bg-border {
+  background: #dbe3df20;
 }

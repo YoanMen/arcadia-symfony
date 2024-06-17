@@ -1,41 +1,30 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}
+	Zoo Arcadia - Connexion
+{% endblock %}
 
-{% block body %}
-    <form method="post">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+{% block main %}
+	<main class="min-h-screen bg-primary flex items-center p-4">
+		<div class="bg-secondary max-w-md w-full py-2 px-10 rounded m-auto border-color max-sm:px-4">
+			<form method="post" class="flex flex-col h-full justify-around gap-2 text-color">
+				<h1 class="h3 mb-3 mt-6 font-semibold text-center text-3xl">Connexion</h1>
+				{% if error %}
+					<div class="text-red-400">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				{% endif %}
+				<label class="font-montserrat font-medium" for="username">adresse email</label>
+				<input class="w-full h-10 p-2 border-color outline-0 rounded bg-border" type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
+				<label class=" mt-2 font-montserrat font-medium" for="password">mot de passe</label>
+				<input class="w-full h-10 p-2 border-color outline-0 rounded bg-border" type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+				<button class="w-full rounded text-sm p-3 px-3 btn-primary  mt-16 mb-9" type="submit">
+					Se connecter
+				</button>
+				<p class="mx-auto text-xs text-color--btn">
+					réservé au personnel du zoo Arcadia
+				</p>
+			</form>
+		</div>
+	</main>
 
-        {% if app.user %}
-            <div class="mb-3">
-                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
-            </div>
-        {% endif %}
-
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-        <label for="username">Username</label>
-        <input type="text" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
-        <label for="password">Password</label>
-        <input type="password" name="_password" id="password" class="form-control" autocomplete="current-password" required>
-
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-
-        {#
-            Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-            See https://symfony.com/doc/current/security/remember_me.html
-
-            <div class="checkbox mb-3">
-                <input type="checkbox" name="_remember_me" id="_remember_me">
-                <label for="_remember_me">Remember me</label>
-            </div>
-        #}
-
-        <button class="btn btn-lg btn-primary" type="submit">
-            Sign in
-        </button>
-    </form>
 {% endblock %}
