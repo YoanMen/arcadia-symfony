@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!
+{% block title %}Zoo Arcadia - Accueil
 {% endblock %}
 
-{% block main %}{% endblock %}
+{% block main %}
+	{% include "partials/_homeCarousel.html.twig" %}
+
+{% endblock %}

@@ -65,6 +65,9 @@ h4 {
   background-color: var(--primary);
 }
 
+.bg-secondary {
+  background-color: var(--secondary);
+}
 /* button */
 .btn-primary {
   background-color: var(--btn-color);
