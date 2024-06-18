@@ -1,0 +1,43 @@
+<footer class="min-h-48 border-t-[1px] border-color bg-primary">
+	<nav class="flex flex-col text-color gap-8 mx-auto max-w-screen-2xl w-full items-center p-4">
+		<a aria-label='Arcadia logo' href="{{ url('app_home') }}">
+			<img class="menu-logo-js w-16 max-lg:w-10 " src="{{ asset('images/logo/arcadia_green.svg') }}" alt="">
+		</a>
+		<ul class="menu-links-js flex gap-2 max-lg:flex-col text-center lg:gap-16 font-montserrat text-sm  ">
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_habitat') }}">
+					habitats
+				</a>
+			</li>
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_service') }}">
+					services
+				</a>
+			</li>
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_contact') }}">
+					contact
+				</a>
+			</li>
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_login') }}">
+					connexion
+				</a>
+			</li>
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_about') }}">
+					à propos
+				</a>
+			</li>
+			<li>
+				<a class="text-color--hover transition-all duration-150" href="{{ url('app_mentions') }}">
+					mentions légales
+				</a>
+			</li>
+		</ul>
+		<p class="text-xs opacity-70">
+			© Copyright 2024 Arcadia
+		</p>
+	</nav>
+
+</footer>

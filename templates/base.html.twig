@@ -17,10 +17,14 @@
 		{% endblock %}
 	</head>
 
-	{%  block menu %}
-		{% include 'partials/_menu.html.twig' %}
-	{%  endblock %}
 	<body>
+		{%  block menu %}
+			{% include 'partials/_menu.html.twig' %}
+		{%  endblock %}
 		{% block main %}{% endblock %}
+
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
 	</body>
 </html>
