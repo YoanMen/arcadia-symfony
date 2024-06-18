@@ -27,6 +27,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.menuIcon
         .closest("header")
         .classList.remove("border-b-[1px]", "border-color", "bg-primary");
+      this.menuIcon
+        .closest("header")
+        .classList.add("bg-gradient-to-b", "from-black");
       this.menuLinks.classList.add("text-primary");
       this.menuLogo.src = "images/logo/arcadia_white.svg";
       this.menuIcon.parentElement.classList.add("fill-white");
@@ -36,6 +39,9 @@ document.addEventListener("DOMContentLoaded", () => {
       this.menuIcon
         .closest("header")
         .classList.add("bg-primary", "border-b-[1px]", "border-color");
+      this.menuIcon
+        .closest("header")
+        .classList.remove("bg-gradient-to-b", "from-black");
       this.menuLinks.classList.remove("text-primary");
       this.menuLogo.src = "images/logo/arcadia_green.svg";
       this.menuIcon.parentElement.classList.remove("fill-white");
