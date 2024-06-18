@@ -60,6 +60,17 @@ h4 {
   font-family: var(--montserrat);
 }
 
+.cards {
+  border-color: var(--secondary);
+  background-color: var(--secondary);
+  transition: all ease-in-out 150ms;
+}
+
+.cards:hover {
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+
 /* background */
 .bg-primary {
   background-color: var(--primary);
@@ -91,6 +102,11 @@ h4 {
 .text-primary {
   color: var(--primary);
 }
+
+.text-secondary {
+  color: var(--secondary);
+}
+
 
 .text-color--hover:hover,
 .text-color--hover:active {
