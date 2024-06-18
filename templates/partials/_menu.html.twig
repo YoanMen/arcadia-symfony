@@ -1,0 +1,39 @@
+{% block menu %}
+	<header
+		class="z-10 border-b-[1px] border-color lg:h-20 overflow-hidden w-full top-0 fixed bg-primary ">
+		{# Mobile button #}
+		<button class="menu-mobile-js absolute right-6 top-1 active:fill-[#db4c40] fill-black lg:hidden">
+			<svg class="size-8 menu-mobile-icon-js" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+				<path d="M3 18h18v-2H3zm0-5h18v-2H3zm0-7v2h18V6z"/>
+			</svg>
+			<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
+				<path d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6z"/>
+			</svg>
+		</button>
+		{# END Mobile button #}
+		<nav class="flex max-lg:flex-col max-lg:py-2 justify-between items-center mx-auto px-6 h-full max-w-screen-2xl ">
+			<a aria-label='Arcadia logo' href="{{ url('app_home') }}">
+				<img class="menu-logo-js w-20 max-lg:w-10 " src="{{ asset('images/logo/arcadia_green.svg') }}" alt="">
+			</a>
+			<ul class="menu-links-js flex max-lg:flex-col gap-2 max-lg:hidden max-lg:my-4 lg:gap-16 uppercase font-montserrat text-lg lg:ml-14 ">
+				<li>
+					<a class="text-color--hover transition-all duration-150" href="{{ url('app_habitat') }}">
+						habitats
+					</a>
+				</li>
+				<li>
+					<a class="text-color--hover transition-all duration-150" href="{{ url('app_service') }}">
+						services
+					</a>
+				</li>
+				<li>
+					<a class="text-color--hover transition-all duration-150" href="{{ url('app_contact') }}">
+						contact
+					</a>
+				</li>
+			</ul>
+			<a class="connection-btn-js btn-primary max-lg:hidden uppercase text-lg rounded px-4 py-2" href="{{ url('app_login') }}">connexion</a>
+		</nav>
+	</header>
+
+{% endblock %}

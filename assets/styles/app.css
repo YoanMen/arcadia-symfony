@@ -4,14 +4,14 @@
 
 @font-face {
   font-family: "Open Sans";
-  src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth\,wght.ttf");
+  src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf");
   font-weight: 100 900;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Open Sans";
-  src: url("./fonts/Open_Sans/OpenSans-Italic-VariableFont_wdth\,wght.ttf");
+  src: url("./fonts/Open_Sans/OpenSans-VariableFont_wdth_wght.ttf");
   font-weight: 100 900;
   font-style: italic;
   font-display: swap;
@@ -25,7 +25,7 @@
 }
 
 @font-face {
-  font-family: "Open Sans";
+  font-family: "Montserrat";
   src: url("./fonts/Montserrat/Montserrat-Italic-VariableFont_wght.ttf");
   font-weight: 100 900;
   font-style: italic;
@@ -43,7 +43,7 @@
   --montserrat: "Montserrat", sans-serif;
 }
 
-body  {
+body {
   background-color: var(--primary);
 }
 
@@ -83,6 +83,15 @@ h4 {
 /* text  */
 .text-color {
   color: var(--text-color);
+}
+
+.text-primary {
+  color: var(--primary);
+}
+
+.text-color--hover:hover,
+.text-color--hover:active {
+  color: var(--btn-color);
 }
 
 .text-color--btn {
