@@ -7,42 +7,41 @@
 	{% include "partials/_homeCarousel.html.twig" %}
 
 	<main>
-{# SECTION ABOUT #}
-		<section name="a propos" class="max-w-screen-xl mx-auto my-60 max-md:my-20 px-2">
+		{# SECTION ABOUT #}
+		<section name="a propos" class="max-w-screen-lg mx-auto mb-40 mt-20 max-md:my-20 px-2">
 			<div class="max-sm:mx-auto max-w-fit">
 				<p class="text-xs font-montserrat leading-3 font-medium text-secondary">A propos</p>
 				<h1 class="text-3xl text-color font-bold text-secondary">Le Zoo Arcadia</h1>
 			</div>
-			<p class="mt-10">Fondé en 1960, notre zoo offre une immersion authentique dans le monde naturel avec une collection d'animaux exceptionnels répartis sur différents habitats, y compris la savane africaine vibrante, l'introspection dense de la jungle et les eaux tranquilles des marais.
-			Notre engagement pour le bien-être animal est une priorité absolue, avec des équipes expertes qui se déplacent quotidiennement au zoo pour effectuer des contrôles médicaux préventifs et garantir un environnement sain. Nous avons également développé une approche de gestion financière solide, ce qui a permis à notre directeur éminent, José, d'acquérir l'ambition de nous rendre plus que seulement une attraction locale - c'est maintenant la porte vers un voyage sans limite dans le monde animal.
-			Nous avons hâte de vous accueillir au zoo Arcadia pour une aventure épique, des rencontres inoubliables et des leçons d'écologie qui vont changer votre vie. Découvrez nos parcours animaliers avec nous aujourd'hui !
+			<p class="mt-10">
+				Situé en Bretagne, en France, au cœur de la légendaire Forêt de Brocéliande, le zoo Arcadia accueille les visiteurs depuis 1960. <br> Notre zoo est le refuge d'une grande variété d'animaux, soigneusement regroupés par habitat.
+				Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin qu'il reçoive le bon équilibre de nutriments.
+				Grâce à notre équipe déterminée et à notre engagement envers l'excellence, l'Arcadia Zoo est un endroit où nos animaux vivent leur vie au mieux. <br> Cette réalisation nous inspire de la fierté que nous vondrions partager, venez explorer les merveilles du zoo Arcadia !
 			</p>
-			<img class="mx-auto w-44 my-16 rounded" src="{{ asset('images/portrait.jpg') }}" alt="">
-			<p class="mx-auto text-sm max-w-screen-md">
-				“Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500”
+			<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.png') }}" alt="">
+			<p class="mx-auto text-sm max-w-screen-md font-medium text-center">
+				“Les animaux sont les gardiens de notre planète. Il est donc essentiel de les protéger et de préserver leur habitat pour un meilleure futur”
 			</p>
 		</section>
 
-{# SECTION SERVICES #}
-		<section name="services" class='max-w-screen-xl w-full mx-auto'>
+		{# SECTION SERVICES #}
+		<section name="services" class='max-w-screen-lg w-full mx-auto'>
 			<div class="bg-secondary min-h-20 mx-2 flex items-center justify-between px-2 sm:px-6 max-sm:flex-col rounded max-sm:mx-2 max-sm:py-4 max-sm:gap-4">
 				<p class="uppercase font-montserrat text-xl text-primary font-medium">Découvrez nos Services</p>
 				<a class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='redirection vers les services' href="{{ url('app_service') }}">voir les services</a>
 			</div>
 		</section>
 
-{# SECTION HABITATS #}
-		<section name="habitats" class="max-w-screen-xl mx-auto my-60 max-md:my-20 px-2">
+		{# SECTION HABITATS #}
+		<section name="habitats" class="max-w-screen-lg mx-auto my-40 max-md:my-20 px-2">
 			<div class="max-sm:mx-auto max-w-fit">
 				<p class="text-xs font-montserrat leading-3 font-medium text-secondary">Nos habitats</p>
 				<h2 class="text-2xl text-color text-secondary font-bold">Des lieux à découvrir</h2>
 			</div>
-			<p class="mt-10 mx-auto ">Découvrez les habitats uniques qui abritent nos résidents exceptionnels.
-			Plongez dans un monde fascinant où chaque espace est soigneusement conçu pour recréer l'environnement naturel de nos animaux. Explorez des habitats divers, de la luxuriante jungle tropicale aux vastes plaines africaines.
-			À travers nos installations, nous nous engageons à offrir à chaque habitant un lieu sûr et confortable, où ils peuvent
-			s'épanouir et exprimer pleinement leur nature. Rejoignez-nous pour une immersion captivante dans la vie de nos pensionnaires, tout en soutenant notre engagement envers le bien-être animal et la conservation de la biodiversité.
+			<p class="mt-10 mx-auto ">
+				Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis. Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
 			</p>
-			<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-around mt-32 max-md:mt-20">
+			<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-around mt-20">
 				<a href="" class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
 					<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="{{ asset("images/homeCarousel/leopar.jpg") }}" alt="">
 					<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
@@ -67,32 +66,135 @@
 			</div>
 		</section>
 
-{# SECTION APPLICATION #}
-		<section name="application" class="max-w-screen-xl mx-auto my-60 max-md:my-20 px-2">
+		{# SECTION APPLICATION #}
+		<section name="application" class="max-w-screen-lg mx-auto my-40 max-md:my-20 px-2">
 			<div class="max-sm:mx-auto max-w-fit">
 				<p class="text-xs font-montserrat leading-3 font-medium text-secondary">Préparez votre visite</p>
 				<h2 class="text-2xl text-color text-secondary font-bold">L'application mobile</h2>
 			</div>
 			<div class="flex max-md:flex-col-reverse items-center max-w-screen-md mx-auto gap-10">
-
 				<div>
 					<p class="mx-auto ">
-						Utiliser notre appication afin de parcourir Arcadia, vous y retrouverez 
-						la carte du Zoo, les services et leurs horaires , les fiches sur les animaux et tant d’autre chose
+						Découvrez le zoo Arcadia Zoo grâce à notre application mobile ! Consultez la carte et les informations sur les différents animaux du zoo. Téléchargez notre application mobile maintenant pour vivre l'aventure du  zoo Arcadia !
 					</p>
 					<div class="flex max-md:flex-col max-md:gap-4 md:gap-10 mt-10">
-						<a class="btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center" href="#">
+						<a class="btn-primary w-40 max-md:w-full p-3 rounded flex gap-3 justify-center" href="#">
 							<svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"><path fill="currentColor" d="m3.637 3.434l8.74 8.571l-8.675 8.65a2.123 2.123 0 0 1-.326-.613a2.45 2.45 0 0 1 0-.755V4.567c-.026-.395.065-.79.26-1.133m12.506 4.833l-2.853 2.826L4.653 2.6c.28-.097.58-.124.873-.078c.46.126.899.32 1.302.573l7.816 4.325c.508.273 1.003.56 1.498.847M13.29 12.93l2.839 2.788l-2.058 1.146l-6.279 3.49c-.52.287-1.042.561-1.55.874a1.798 1.798 0 0 1-1.472.195zm7.36-.925a1.915 1.915 0 0 1-.99 1.72l-2.346 1.302l-3.087-3.022l3.1-3.074c.795.443 1.577.886 2.358 1.303a1.888 1.888 0 0 1 .964 1.771"/></svg>
 							Playstore
 						</a>
-						<a class="btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center" href="#">
+						<a class="btn-primary w-40 max-md:w-full p-3 rounded flex gap-3 justify-center" href="#">
 							<svg class="size-6" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"><path fill="currentColor" d="M17.05 20.28c-.98.95-2.05.8-3.08.35c-1.09-.46-2.09-.48-3.24 0c-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8c1.18-.24 2.31-.93 3.57-.84c1.51.12 2.65.72 3.4 1.8c-3.12 1.87-2.38 5.98.48 7.13c-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25c.29 2.58-2.34 4.5-3.74 4.25"/></svg>
 							l’App Store
 						</a>
 					</div>
 				</div>
-				<img class=" mt-10" src="{{ asset('images/mobileArcadia.png') }}" alt="">
+				<img class="max-sm:mt-10" src="{{ asset('images/mobileArcadia.png') }}" alt="">
 			</div>
 		</section>
-	</main>
-{% endblock %}
+
+		{# SECTION APPLICATION #}
+		<section name="avis" class="max-w-screen-lg mx-auto mt-40 mb-20 max-md:my-20 px-2">
+			<div class="max-sm:mx-auto max-w-fit">
+				<p class="text-xs font-montserrat leading-3 font-medium text-secondary">L'avis des visiteurs</p>
+				<h2 class="text-2xl text-color text-secondary font-bold">Ce qu'ils pensent d'Arcadia</h2>
+			</div>
+			<div class="flex max-md:flex-col items-center justify-center mt-10 mx-auto gap-10">
+				<div class="max-sm:hidden">
+					<button aria-label="avis précédent" class="pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12  ">
+						<svg class=" m-auto -rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+							<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+						</svg>
+					</button>
+				</div>
+				<div class="border-color max-w-screen-sm w-full h-50 p-4 ">
+					<div class="flex gap-2 items-center mb-4">
+						<div class="advise-avatar">
+							<div class="animate-pulse size-16 bg-gray-100"></div>
+							{# <img class=" size-16" src="https://api.dicebear.com/9.x/initials/svg?seed='felix'" alt="avatar du pseudo"> #}
+						</div>
+
+						<div class="advise-speudo">
+							<div class="animate-pulse h-4 w-40 bg-gray-100 rounded"></div>
+							{# <p class="uppercase font-medium text-base font-montserrat">speudo</p> #}
+						</div>
+					</div>
+					<div class="advice-container">
+						<div class="animate-pulse h-4 w-full bg-gray-100 rounded mb-4"></div>
+						<div class="animate-pulse h-4 w-full bg-gray-100 rounded"></div>
+						{# <p class="">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500</p>  #}
+					</div>
+				</div>
+				<div class="max-sm:hidden">
+					<button aria-label="avis suivant" class="pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12  ">
+						<svg class=" m-auto rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+							<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+						</svg>
+					</button>
+				</div>
+
+				<div class="sm:hidden flex gap-2 w-full">
+					<button aria-label="avis précédent" class="btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center">
+						précédent
+					</button>
+					<button aria-label="avis suivant" class="btn-primary w-full p-3 rounded flex gap-3 justify-center">
+						suivant
+					</button>
+				</div>
+			</section>
+			{# SECTION laisser un avis #}
+			<section name="laisser un avis" class='max-w-screen-lg w-full mx-auto'>
+				<div class="bg-secondary min-h-20 mx-2 flex items-center justify-between px-2 sm:px-6 max-sm:flex-col rounded max-sm:mx-2 max-sm:py-4 max-sm:gap-4">
+					<p class="uppercase font-montserrat text-xl text-primary font-medium">Laissez nous votre avis</p>
+					<a class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='redirection vers les services' href="{{ url('app_service') }}">donner mon avis</a>
+				</div>
+			</section>
+
+
+			{# SECTION HORAIRES #}
+			<section name="horaires" class="max-w-screen-lg mx-auto my-40 max-md:my-20 px-2">
+				<div class="max-sm:mx-auto max-w-fit">
+					<p class="text-xs font-montserrat leading-3 font-medium text-secondary">Les horaires</p>
+					<h2 class="text-2xl text-color text-secondary font-bold">Ouvert toute l'année</h2>
+				</div>
+
+				<div class="flex max-md:flex-col gap-10 justify-between mt-10">
+					<div class='w-full max-md:text-center'>
+
+						<h4 class="text-base uppercase font-montserrat font-medium mb-3">
+							adresse
+						</h4>
+						<ul class="mb-10">
+							<li>
+								Zoo Arcadia
+							</li>
+							<li>
+								Fôret de Brocéliande
+							</li>
+							<li>
+								35380 Paimpont
+							</li>
+						</ul>
+
+						<iframe class="rounded border-color" id='map' width="100%" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717"></iframe>
+
+					</div>
+					<div class='w-full'>
+						<h4 class="text-base uppercase font-montserrat font-medium mb-3 max-md:text-center">
+							horaires
+						</h4>
+
+						{% if schedules is not null  %}
+							{{ schedules[0].schedules	| raw }}
+						{% endif %}
+					</div>
+				</div>
+
+			</section>
+
+			{% block scripts %}
+
+				<script src="{{ asset("scripts/map.js") }}"></script>
+
+			{% endblock %}
+		</main>
+	{% endblock %}

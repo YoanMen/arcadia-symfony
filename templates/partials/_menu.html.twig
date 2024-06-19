@@ -1,6 +1,6 @@
 {% block menu %}
 	<header
-		class="z-10 border-b-[1px] border-color lg:h-20 overflow-hidden w-full top-0 fixed bg-primary">
+		class="z-10 border-b-color lg:h-20 overflow-hidden w-full top-0 fixed bg-primary">
 		{# Mobile button #}
 		<button class="menu-mobile-js absolute right-6 top-1 active:fill-[#db4c40] fill-black lg:hidden">
 			<svg class="size-8 menu-mobile-icon-js" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
@@ -11,7 +11,7 @@
 			</svg>
 		</button>
 		{# END Mobile button #}
-		<nav class="flex max-lg:flex-col max-lg:py-2 justify-between items-center mx-auto px-6 h-full max-w-screen-2xl ">
+		<nav class="flex max-lg:flex-col max-lg:py-2 justify-between items-center mx-auto px-6 h-full max-w-screen-xl ">
 			<a aria-label='Arcadia logo' href="{{ url('app_home') }}">
 				<img class="menu-logo-js w-20 max-lg:w-10 " src="{{ asset('images/logo/arcadia_green.svg') }}" alt="">
 			</a>
@@ -32,7 +32,14 @@
 					</a>
 				</li>
 			</ul>
-			<a class="connection-btn-js btn-primary max-lg:hidden uppercase text-lg rounded px-4 py-2" href="{{ url('app_login') }}">connexion</a>
+
+			<a class="connection-btn-js btn-primary max-w-36 max-lg:hidden uppercase text-lg rounded px-4 py-2" href="{{ url('app_login') }}">
+				{% if is_granted("ROLE_USER") %}
+					back-office
+				{% else %}
+					connexion
+				{% endif %}
+			</a>
 		</nav>
 	</header>
 

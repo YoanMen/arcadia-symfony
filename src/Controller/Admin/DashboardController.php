@@ -50,7 +50,7 @@ class DashboardController extends AbstractDashboardController
     {
         return Dashboard::new()
             ->disableDarkMode()
-            ->setTitle('<img src="/images/arcadia_png.png" class="img-fluid d-block mx-auto" style="max-width:64px; width:100%;">');
+            ->setTitle('<img src="/images/logo/arcadia_green.svg" class="img-fluid d-block mx-auto" style="max-width:64px; width:100%;">');
     }
 
     public function configureMenuItems(): iterable
