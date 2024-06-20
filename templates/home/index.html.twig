@@ -41,7 +41,7 @@
 			<p class="mt-10 mx-auto ">
 				Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis. Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
 			</p>
-			<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-around mt-20">
+			<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-between mt-20">
 				<a href="" class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
 					<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="{{ asset("images/homeCarousel/leopar.jpg") }}" alt="">
 					<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
@@ -92,7 +92,7 @@
 			</div>
 		</section>
 
-		{# SECTION APPLICATION #}
+		{# SECTION AVIS #}
 		<section name="avis" class="max-w-screen-lg mx-auto mt-40 mb-20 max-md:my-20 px-2">
 			<div class="max-sm:mx-auto max-w-fit">
 				<p class="text-xs font-montserrat leading-3 font-medium text-secondary">L'avis des visiteurs</p>
@@ -194,7 +194,6 @@
 			{% block scripts %}
 
 				<script src="{{ asset("scripts/map.js") }}"></script>
-
 			{% endblock %}
 		</main>
 	{% endblock %}
