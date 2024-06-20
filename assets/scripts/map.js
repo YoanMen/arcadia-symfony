@@ -4,7 +4,5 @@ document.addEventListener("DOMContentLoaded", () => {
   setTimeout(() => {
     // refresh url
     map.src = map.src;
-
-    console.log('reload');
   }, 500);
 });

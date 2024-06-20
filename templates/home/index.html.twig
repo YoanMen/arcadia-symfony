@@ -5,8 +5,9 @@
 
 {% block main %}
 	{% include "partials/_homeCarousel.html.twig" %}
-
+	
 	<main>
+		</div>
 		{# SECTION ABOUT #}
 		<section name="a propos" class="max-w-screen-lg mx-auto mb-40 mt-20 max-md:my-20 px-2">
 			<div class="max-sm:mx-auto max-w-fit">
@@ -16,7 +17,7 @@
 			<p class="mt-10">
 				Situé en Bretagne, en France, au cœur de la légendaire Forêt de Brocéliande, le zoo Arcadia accueille les visiteurs depuis 1960. <br> Notre zoo est le refuge d'une grande variété d'animaux, soigneusement regroupés par habitat.
 				Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin qu'il reçoive le bon équilibre de nutriments.
-				Grâce à notre équipe déterminée et à notre engagement envers l'excellence, l'Arcadia Zoo est un endroit où nos animaux vivent leur vie au mieux. <br> Cette réalisation nous inspire de la fierté que nous vondrions partager, venez explorer les merveilles du zoo Arcadia !
+				Grâce à notre équipe déterminée et à notre engagement envers l'excellence, Arcadia est un endroit où nos animaux vivent leur vie au mieux. <br> Cette réalisation nous inspire de la fierté que nous vondrions partager, venez explorer les merveilles du zoo Arcadia !
 			</p>
 			<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.png') }}" alt="">
 			<p class="mx-auto text-sm max-w-screen-md font-medium text-center">
@@ -100,32 +101,16 @@
 			</div>
 			<div class="flex max-md:flex-col items-center justify-center mt-10 mx-auto gap-10">
 				<div class="max-sm:hidden">
-					<button aria-label="avis précédent" class="pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12  ">
+					<button disabled aria-label="avis précédent" class="advice-previous-js pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12 disabled:opacity-30">
 						<svg class=" m-auto -rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
 							<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
 						</svg>
 					</button>
 				</div>
-				<div class="border-color max-w-screen-sm w-full h-50 p-4 ">
-					<div class="flex gap-2 items-center mb-4">
-						<div class="advise-avatar">
-							<div class="animate-pulse size-16 bg-gray-100"></div>
-							{# <img class=" size-16" src="https://api.dicebear.com/9.x/initials/svg?seed='felix'" alt="avatar du pseudo"> #}
-						</div>
-
-						<div class="advise-speudo">
-							<div class="animate-pulse h-4 w-40 bg-gray-100 rounded"></div>
-							{# <p class="uppercase font-medium text-base font-montserrat">speudo</p> #}
-						</div>
-					</div>
-					<div class="advice-container">
-						<div class="animate-pulse h-4 w-full bg-gray-100 rounded mb-4"></div>
-						<div class="animate-pulse h-4 w-full bg-gray-100 rounded"></div>
-						{# <p class="">Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500</p>  #}
-					</div>
+				<div class="advice-container-js border-color max-w-screen-sm w-full min-h-52 p-4 ">
 				</div>
 				<div class="max-sm:hidden">
-					<button aria-label="avis suivant" class="pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12  ">
+					<button disabled aria-label="avis suivant" class="advice-next-js pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 disabled:opacity-30 size-12  ">
 						<svg class=" m-auto rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
 							<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
 						</svg>
@@ -133,10 +118,10 @@
 				</div>
 
 				<div class="sm:hidden flex gap-2 w-full">
-					<button aria-label="avis précédent" class="btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center">
+					<button disabled aria-label="avis précédent" class="advice-previous-js btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center disabled:opacity-30">
 						précédent
 					</button>
-					<button aria-label="avis suivant" class="btn-primary w-full p-3 rounded flex gap-3 justify-center">
+					<button disabled aria-label="avis suivant" class="advice-next-js btn-primary w-full p-3 rounded flex gap-3 justify-center disabled:opacity-30">
 						suivant
 					</button>
 				</div>
@@ -145,7 +130,7 @@
 			<section name="laisser un avis" class='max-w-screen-lg w-full mx-auto'>
 				<div class="bg-secondary min-h-20 mx-2 flex items-center justify-between px-2 sm:px-6 max-sm:flex-col rounded max-sm:mx-2 max-sm:py-4 max-sm:gap-4">
 					<p class="uppercase font-montserrat text-xl text-primary font-medium">Laissez nous votre avis</p>
-					<a class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='redirection vers les services' href="{{ url('app_service') }}">donner mon avis</a>
+					<button class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='donner son avis sur le zoo'>donner mon avis</button>
 				</div>
 			</section>
 
@@ -188,12 +173,18 @@
 						{% endif %}
 					</div>
 				</div>
-
 			</section>
-
-			{% block scripts %}
-
-				<script src="{{ asset("scripts/map.js") }}"></script>
-			{% endblock %}
 		</main>
-	{% endblock %}
+		
+			{% include "partials/_adviceModal.html.twig" %}
+		
+
+		
+		{% endblock %}
+		
+		{% block scripts %}
+			<script src="{{ asset("scripts/map.js") }}"></script>
+			<script src="{{ asset("scripts/adviceModal.js") }}"></script>
+
+			<script src="{{asset("scripts/adviceManager.js")}}"></script>
+		{% endblock %}

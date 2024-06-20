@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\AdviceRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AdviceRepository::class)]
@@ -17,12 +18,14 @@ class Advice
 
     #[ORM\Column(length: 60)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 60, maxMessage: 'Le nom  est trop long, 60 caractères maximum')]
+    #[Assert\Length(max: 60, maxMessage: 'Le pseudo est trop long, 60 caractères maximum')]
+    #[Groups('advice.approved')]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 300, maxMessage: 'Le nom  est trop long, 300 caractères maximum')]
+    #[Assert\Length(max: 300, maxMessage: 'L\'avis est trop long, 300 caractères maximum')]
+    #[Groups('advice.approved')]
     private ?string $advice = null;
 
     #[ORM\Column]
