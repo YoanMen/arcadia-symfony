@@ -6,9 +6,10 @@ namespace App\Form;
 use App\Entity\ServiceImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class ServiceImageType extends AbstractType
 {
@@ -27,6 +28,11 @@ class ServiceImageType extends AbstractType
           ),
 
         ]
+      ])
+      ->add('alt', TextType::class, [
+        'label' => 'Description',
+        'help' => 'description de l\'image pour l\'accessibilité',
+        'required' => false,
       ]);
   }
 

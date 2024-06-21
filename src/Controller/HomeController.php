@@ -12,19 +12,17 @@ use Symfony\Component\Routing\Attribute\Route;
 class HomeController extends AbstractController
 {
 
-    public function __construct(private SchedulesRepository $schedulesRepository)
-    {
-    }
+
 
     #[Route('/', name: 'app_home')]
-    public function index(): Response
+    public function index(SchedulesRepository $schedulesRepository, HabitatRepository $habitatRepository): Response
     {
 
-        $schedules = $this->schedulesRepository->findAll();
-
-
+        $schedules = $schedulesRepository->findAll();
+        $habitats = $habitatRepository->findTwoHabitatForHomePageCards();
         return $this->render('home/index.html.twig', [
             'schedules' => $schedules,
+            'habitats' => $habitats
         ]);
     }
 }

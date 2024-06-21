@@ -15,21 +15,21 @@
 		</div>
 		<p class="mt-10">
 			Situé en Bretagne, en France, au cœur de la légendaire Forêt de Brocéliande, le zoo Arcadia accueille les visiteurs 
-			depuis 1960.
+																																																																								depuis 1960.
 			<br>
 			Notre zoo est le refuge d'une grande variété d'animaux, soigneusement regroupés par habitat.
-			Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend 
-			visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos 
-			nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin 
-			qu'il reçoive le bon équilibre de nutriments.	Grâce à notre équipe déterminée et à notre engagement envers l'excellence,
-			Arcadia est un endroit où nos animaux vivent leur vie au mieux.
+																																																																								Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend 
+																																																																								visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos 
+																																																																								nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin 
+																																																																								qu'il reçoive le bon équilibre de nutriments.	Grâce à notre équipe déterminée et à notre engagement envers l'excellence,
+																																																																								Arcadia est un endroit où nos animaux vivent leur vie au mieux.
 			<br>
 			Cette réalisation nous inspire de la fierté que nous vondrions partager, venez explorer les merveilles du zoo Arcadia !
 		</p>
 		<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.png') }}" alt="">
 		<p class="mx-auto text-sm max-w-screen-md font-medium text-center">
 			“Les animaux sont les gardiens de notre planète. Il est donc essentiel de les protéger et de préserver leur habitat pour un
-			 meilleure futur”
+																																																																								meilleure futur”
 		</p>
 	</section>
 
@@ -51,29 +51,30 @@
 			Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis. Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
 		</p>
 		<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-between mt-20">
-			<a href="" class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
-				<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="{{ asset("images/homeCarousel/leopar.jpg") }}" alt="">
-				<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
-					<h3 class="text-xl font-semibold uppercase text-primary">jungle</h3>
-					<p class=" text-primary line-clamp-2">la jungle est un super environnement ou ddzdzd dz qdz lldqzmldkzkdzdmqzkd
-					</p>
-				</div>
-			</a>
-			<a href="#" class="relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
-				<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="{{ asset("images/homeCarousel/leopar.jpg") }}" alt="">
-				<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
-					<h3 class="text-xl font-semibold uppercase text-primary">Marais</h3>
-					<p class=" text-primary line-clamp-2">la jungle est un super environnement ou ddzdzd dz qdz lldqzmldkzkdzdmqzkd
-					</p>
-				</div>
-			</a>
-			<a href="{{ url('app_habitat') }}" class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b bg-secondary cards overflow-clip">
-				<div class="absolute bottom-0 flex flex-co	l items-center h-full w-full justify-center">
-					<h3 class="text-xl font-medium uppercase text-primary">voir tous les habitats</h3>
-				</div>
-			</a>
+
+			{% for habitat in habitats %}
+				<article class="relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
+					<a href="/habitats/{{ habitat.slug }}">
+						<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="images/habitats/{{ asset(habitat.image_name) }}" alt="{{ habitat.alt }}">
+						<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
+							<h3 class="text-xl font-semibold uppercase text-primary">{{ habitat.name }}</h3>
+							<p class=" text-primary line-clamp-2">
+								{{ habitat.description | striptags }}
+							</p>
+						</div>
+					</a>
+				</article>
+			{% endfor %}
+			<article class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b bg-secondary cards overflow-clip">
+				<a href="{{ url('app_habitat') }}">
+					<div class="absolute bottom-0 flex flex-co	l items-center h-full w-full justify-center">
+						<h3 class="text-xl font-medium uppercase text-primary">voir tous les habitats</h3>
+					</div>
+				</a>
+			</article>
 		</div>
 	</section>
+
 
 	{# SECTION APPLICATION #}
 	<section name="application" class="max-w-screen-lg mx-auto my-40 max-md:my-20 px-2">

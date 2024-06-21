@@ -36,6 +36,7 @@ class Animal
 
     #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'animal')]
+    #[Assert\Valid()]
     private Collection $animalImages;
 
     #[ORM\OneToOne(inversedBy: 'animal', cascade: ['persist', 'remove'])]

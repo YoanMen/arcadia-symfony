@@ -50,6 +50,7 @@ class Habitat
      */
     #[ORM\OneToMany(targetEntity: HabitatImage::class, mappedBy: 'habitat', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'habitat')]
+    #[Assert\Valid()]
     private Collection $habitatImages;
 
     /**

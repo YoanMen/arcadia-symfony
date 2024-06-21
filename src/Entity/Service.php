@@ -45,6 +45,8 @@ class Service
      */
     #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true)]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour le service')]
+    #[Assert\Valid()]
+
     private Collection $serviceImages;
 
     public function __construct()

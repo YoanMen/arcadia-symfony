@@ -5,6 +5,7 @@ namespace App\Form;
 use App\Entity\HabitatImage;
 use App\Entity\ProjectImage;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
@@ -27,6 +28,11 @@ class HabitatImageType extends AbstractType
           ),
 
         ]
+      ])
+      ->add('alt', TextType::class, [
+        'label' => 'Description',
+        'help' => 'description de l\'image pour l\'accessibilité',
+        'required' => false,
       ]);
   }
 

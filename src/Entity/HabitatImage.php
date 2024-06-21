@@ -6,6 +6,7 @@ use App\Repository\HabitatImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HabitatImageRepository::class)]
 #[Vich\Uploadable]
@@ -26,6 +27,10 @@ class HabitatImage
     #[ORM\Column(nullable: true)]
 
     private ?int $imageSize = null;
+
+    #[ORM\Column(nullable: true)]
+    #[Assert\Length(max: 120, maxMessage: 'Le alt est trop long, 120 caractères maximum')]
+    private ?string $alt = null;
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -84,6 +89,24 @@ class HabitatImage
     public function setHabitat(?Habitat $habitat): static
     {
         $this->habitat = $habitat;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of alt
+     */
+    public function getAlt(): ?string
+    {
+        return $this->alt;
+    }
+
+    /**
+     * Set the value of alt
+     */
+    public function setAlt(?string $alt): self
+    {
+        $this->alt = strip_tags($alt);
 
         return $this;
     }

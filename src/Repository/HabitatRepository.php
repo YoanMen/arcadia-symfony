@@ -16,28 +16,16 @@ class HabitatRepository extends ServiceEntityRepository
         parent::__construct($registry, Habitat::class);
     }
 
-//    /**
-//     * @return Habitat[] Returns an array of Habitat objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('h.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function findTwoHabitatForHomePageCards()
+    {
 
-//    public function findOneBySomeField($value): ?Habitat
-//    {
-//        return $this->createQueryBuilder('h')
-//            ->andWhere('h.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $conn = $this->getEntityManager()->getConnection();
+        $sql = 'SELECT name, slug , description, image_name, alt FROM habitat ';
+        $sql .= 'INNER JOIN habitat_image ON habitat.id = habitat_image.habitat_id;';
+        $sql .= 'INNER JOIN alt ON habitat.id = habitat_image.habitat_id;';
+
+
+        $conn->prepare($sql);
+        return $conn->executeQuery($sql)->fetchAllAssociative();
+    }
 }

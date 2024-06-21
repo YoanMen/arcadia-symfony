@@ -6,9 +6,10 @@ use App\Entity\AnimalImage;
 use App\Entity\ProjectImage;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class AnimalImageType extends AbstractType
 {
@@ -25,6 +26,10 @@ class AnimalImageType extends AbstractType
             mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpj, jpeg",
           )
         ]
+      ])->add('alt', TextType::class, [
+        'label' => 'Description',
+        'help' => 'description de l\'image pour l\'accessibilité',
+        'required' => false,
       ]);
   }
 
