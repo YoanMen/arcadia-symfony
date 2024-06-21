@@ -39,7 +39,6 @@ export class Carousel {
       this.autoplayScroll();
 
       this.container.addEventListener("scroll", () => {
-        console.log(screen.width);
         if (screen.width < 648) {
           clearTimeout(this.animationAutoplay);
           this.autoplay = false;

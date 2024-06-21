@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     toggleMobileMenu() {
       this.connectionBtn.classList.toggle("max-lg:hidden");
+      document.body.classList.toggle("disable-scroll");
       this.menuLinks.classList.toggle("max-lg:hidden");
       this.menuIcon.classList.toggle("hidden");
     }
@@ -26,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     transparentBackground() {
       this.menuIcon
         .closest("header")
-        .classList.remove("border-b-[1px]", "border-color", "bg-primary");
+        .classList.remove("border-b-color", "bg-primary");
       this.menuIcon
         .closest("header")
         .classList.add("bg-gradient-to-b", "from-black");
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
     disableTransparentBackground() {
       this.menuIcon
         .closest("header")
-        .classList.add("bg-primary", "border-b-[1px]", "border-color");
+        .classList.add("bg-primary", "border-b-color");
       this.menuIcon
         .closest("header")
         .classList.remove("bg-gradient-to-b", "from-black");

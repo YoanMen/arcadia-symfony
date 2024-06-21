@@ -47,7 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Email(message: "L'adresse email n'est pas valide")]
-    #[Assert\Length(max: 255, maxMessage: "L\'adresse email  ne doit pas dépasser 255 caractères")]
+    // 255 caractères avant le @ et 55 pour le domaine.
+    #[Assert\Length(max: 320, maxMessage: "L\'adresse email  ne doit pas dépasser 320 caractères")]
 
     private ?string $email = null;
 

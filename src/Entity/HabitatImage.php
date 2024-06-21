@@ -24,6 +24,7 @@ class HabitatImage
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
+
     private ?int $imageSize = null;
 
     #[ORM\Column(nullable: true)]

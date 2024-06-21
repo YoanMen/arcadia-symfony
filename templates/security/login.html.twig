@@ -6,11 +6,17 @@
 
 {% block main %}
 	<main class="min-h-screen bg-primary flex items-center p-4">
+<<<<<<< HEAD
 		<div class="max-w-md w-full py-2 px-10 rounded m-auto border-color max-sm:px-4">
+=======
+		<div class="bg-primary max-w-md w-full py-2 px-10 rounded m-auto border-color max-sm:px-4">
+>>>>>>> efc3a4b6680a17d5b9fef373456d8253cff4d042
 			<form method="post" class="flex flex-col h-full justify-around gap-2 text-color">
 				<h1 class="h3 mb-3 mt-6 font-semibold text-center text-3xl">Connexion</h1>
 				{% if error %}
-					<div class="text-red-400">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+				<div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+					<span class="block sm:inline">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+				</div>
 				{% endif %}
 				<label class="font-montserrat font-medium" for="username">adresse email</label>
 				<input class="w-full h-10 p-2 border-color outline-0 rounded bg-border" type="email" value="{{ last_username }}" name="_username" id="username" class="form-control" autocomplete="username" required autofocus>
@@ -20,9 +26,9 @@
 				<button class="w-full rounded text-sm p-3 px-3 btn-primary  mt-16 mb-9" type="submit">
 					Se connecter
 				</button>
-				<p class="mx-auto text-xs text-color--btn">
+				<small class="mx-auto text-xs text-color--btn">
 					réservé au personnel du zoo Arcadia
-				</p>
+				</small>
 			</form>
 		</div>
 	</main>
