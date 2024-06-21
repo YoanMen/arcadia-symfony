@@ -17,21 +17,25 @@ class Advice
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
-    #[Assert\NotBlank()]
     #[Assert\Length(max: 60, maxMessage: 'Le pseudo est trop long, 60 caractères maximum')]
-    #[Groups('advice.approved')]
+    #[Assert\NotBlank()]
+    #[Groups(['advice.approved', 'advice.create'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 300, maxMessage: 'L\'avis est trop long, 300 caractères maximum')]
-    #[Groups('advice.approved')]
+    #[Assert\Length(min: 10, minMessage: 'L\'avis doit faire 10 caractères minimum', max: 300, maxMessage: 'L\'avis est trop long, 300 caractères maximum')]
+    #[Groups(['advice.approved', 'advice.create'])]
     private ?string $advice = null;
 
     #[ORM\Column]
     #[Assert\PositiveOrZero()]
     private ?bool $approved = null;
 
+    public function __construct()
+    {
+        $this->setApproved(false);
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -44,7 +48,7 @@ class Advice
 
     public function setPseudo(string $pseudo): static
     {
-        $this->pseudo = $pseudo;
+        $this->pseudo = htmlspecialchars(trim($pseudo));
 
         return $this;
     }
@@ -56,7 +60,7 @@ class Advice
 
     public function setAdvice(string $advice): static
     {
-        $this->advice = $advice;
+        $this->advice = htmlspecialchars(trim($advice));
 
         return $this;
     }

@@ -3,7 +3,6 @@ class AdviceManager {
     this.previousBtn = document.querySelectorAll(".advice-previous-js");
     this.nextBtn = document.querySelectorAll(".advice-next-js");
     this.container = document.querySelector(".advice-container-js");
-
     this.currentAdvice = 1;
     this.totalAdvice = 0;
 
@@ -29,7 +28,7 @@ class AdviceManager {
 
       this.getAdvice();
     } else {
-      this.container.textContent = "Aucun avis";
+      this.container.textContent = "Aucun avis, laissez le votre !";
       this.container.classList.add("flex", "items-center", "justify-center");
     }
   }
@@ -65,32 +64,48 @@ class AdviceManager {
   }
 
   async getAdvicesCount() {
-    const response = await fetch("/api/advice/count", {
-      method: "GET",
-      Headers: "Content-Type: application/json",
-    })
-      .then((data) => data.json())
-      .catch((error) => console.error("cant get advice " + error));
+    try {
+      const response = await fetch("/api/advice/count", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
 
-    if (response.success) {
-      return response.count;
+      const result = await response.json();
+
+      if (result.success) {
+        return result.count;
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      console.error(error.message);
     }
-
-    return 0;
   }
 
   async getAdvice() {
     this.showLoadingAdvice();
 
-    const response = await fetch(`/api/advice/${this.currentAdvice}`, {
-      method: "GET",
-      Headers: "Content-Type: application/json",
-    })
-      .then((data) => data.json())
-      .catch((error) => console.error("cant get advice " + error.error));
+    try {
+      const response = await fetch(`/api/advice/${this.currentAdvice}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      });
 
-    if (response.success) {
-      this.showAdvice(response.data[0]);
+      const result = await response.json();
+
+      if (result.success) {
+        this.showAdvice(result.data[0]);
+      } else {
+        throw new Error(result.error);
+      }
+    } catch (error) {
+      console.error(error.message);
     }
   }
 
