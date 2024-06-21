@@ -48,7 +48,7 @@ class Advice
 
     public function setPseudo(string $pseudo): static
     {
-        $this->pseudo = htmlspecialchars(trim($pseudo));
+        $this->pseudo = strip_tags(trim($pseudo));
 
         return $this;
     }
@@ -60,7 +60,7 @@ class Advice
 
     public function setAdvice(string $advice): static
     {
-        $this->advice = htmlspecialchars(trim($advice));
+        $this->advice = strip_tags(trim($advice));
 
         return $this;
     }
