@@ -16,7 +16,7 @@ class HabitatRepository extends ServiceEntityRepository
         parent::__construct($registry, Habitat::class);
     }
 
-    public function findTwoHabitatForHomePageCards()
+    public function findTwoHabitatForHomePageCards(): array
     {
 
         $conn = $this->getEntityManager()->getConnection();

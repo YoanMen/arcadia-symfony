@@ -29,7 +29,7 @@
 		<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.png') }}" alt="">
 		<p class="mx-auto text-sm max-w-screen-md font-medium text-center">
 			“Les animaux sont les gardiens de notre planète. Il est donc essentiel de les protéger et de préserver leur habitat pour un
-			meilleure futur”
+																		meilleure futur”
 		</p>
 	</section>
 
@@ -56,7 +56,7 @@
 				<article class="relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
 					<a href="/habitats/{{ habitat.slug }}">
 						<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="images/habitats/{{ asset(habitat.image_name) }}" alt="{{ habitat.alt }}">
-						<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
+						<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full gradient-to-top p-2">
 							<h3 class="text-xl font-semibold uppercase text-primary">{{ habitat.name }}</h3>
 							<p class=" text-primary line-clamp-2">
 								{{ habitat.description | striptags }}
@@ -67,7 +67,7 @@
 			{% endfor %}
 			<article class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b bg-secondary cards overflow-clip">
 				<a href="{{ url('app_habitat') }}">
-					<div class="absolute bottom-0 flex flex-co	l items-center h-full w-full justify-center">
+					<div class="absolute bottom-0 flex flex-col items-center h-full w-full justify-center">
 						<h3 class="text-xl font-medium uppercase text-primary">voir tous les habitats</h3>
 					</div>
 				</a>

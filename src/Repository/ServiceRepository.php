@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -16,28 +17,26 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
-//    /**
-//     * @return Service[] Returns an array of Service objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
 
-//    public function findOneBySomeField($value): ?Service
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findServicesByPage(int $page): array
+    {
+
+        $totalPages = ceil($this->count() / 9);
+        $first = ($page) * 9;
+
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = 'SELECT name, slug, description, image_name, alt FROM service ';
+        $sql .= 'INNER JOIN service_image ON service.id = service_image.service_id;';
+        $sql .= 'INNER JOIN alt ON service.id = service_image.service_id;';
+        $sql .= 'LIMIT 9 OFFSET :page';
+
+
+        $conn->prepare($sql);
+        $result['data'] = $conn->executeQuery($sql, ['page' => $first])->fetchAllAssociative();
+        $result["totalPage"] =  $totalPages;
+
+        return $result;
+    }
 }

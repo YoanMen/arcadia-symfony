@@ -166,12 +166,10 @@ class AdviceModal {
       if (result.success) {
         this.successMessage("merci d'avoir laissé votre avis sur Arcadia !");
         this.disableFormInputs();
+      } else if (result.error) {
+        throw new Error(result.error);
       } else {
-        if (result.error) {
-          throw new Error(result.error);
-        } else {
-          throw new Error(result.detail);
-        }
+        throw new Error(result.detail);
       }
 
       this.isSendAdvice = false;
