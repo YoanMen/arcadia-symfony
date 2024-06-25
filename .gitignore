@@ -21,6 +21,8 @@
 
 ###> symfony/asset-mapper ###
 /public/assets/
+/public/images/
 /assets/vendor/
+/migrations/
 ###< symfony/asset-mapper ###
 .vscode/settings.json

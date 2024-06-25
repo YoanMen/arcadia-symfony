@@ -48,6 +48,13 @@ export class Carousel {
       });
     }
 
+    if (this.items.length > 1) {
+      const cloneImage = this.items[0].cloneNode(true);
+      cloneImage.classList.add("last:max-sm:hidden");
+
+      this.container.appendChild(cloneImage);
+    }
+
     // disable interaction if no interaction is set
     if (noInteraction) this.disableInteractionImage();
 

@@ -53,7 +53,6 @@ class AnimalInformation
     private ?Species $species = null;
 
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -148,4 +147,6 @@ class AnimalInformation
 
         return $this;
     }
+
+
 }

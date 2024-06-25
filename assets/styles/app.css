@@ -53,8 +53,9 @@ body {
 
 p,
 label,
-input {
+li input {
   font-family: var(--open-sans);
+  color: var(--text-color);
 }
 
 h1,

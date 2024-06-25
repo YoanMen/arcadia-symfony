@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 class ServiceController  extends AbstractController
 {
   #[Route('api/service', name: 'api_getService', methods: ['GET'])]
-  public function getAdviceCount(Request $request, ServiceRepository $serviceRepository)
+  public function getServices(Request $request, ServiceRepository $serviceRepository)
   {
     try {
       $page = $request->get('page', '1');

@@ -1,6 +1,5 @@
 export class Card {
   createCard(imageName, alt, href, title, description) {
-    console.log(imageName);
     const articleElement = document.createElement("article");
     articleElement.className =
       "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group";
@@ -12,7 +11,7 @@ export class Card {
     imageElement.src = imageName;
     imageElement.alt = alt;
     imageElement.className =
-      "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150";
+      "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-all ease-in-out duration-150";
 
     const textContainer = document.createElement("div");
     textContainer.className =
@@ -31,7 +30,6 @@ export class Card {
     anchorElement.appendChild(imageElement);
     anchorElement.appendChild(textContainer);
     articleElement.appendChild(anchorElement);
-    console.log("created");
 
     return articleElement;
   }

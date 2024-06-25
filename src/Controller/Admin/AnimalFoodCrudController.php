@@ -4,13 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Entity\AnimalFood;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Controller\Admin\Filter\EmployeeFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use App\Controller\Admin\Filter\HabitatCommentFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use App\Controller\Admin\Filter\HabitatAnimalFoodFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;

@@ -42,7 +42,7 @@ export class Pagination {
     }
 
     // manage nextBtn
-    if (this.currentPage + 1 >= this.totalPage) {
+    if (this.currentPage + 1 > this.totalPage) {
       this.nextBtn.disabled = true;
       this.nextBtn.classList.add("hidden");
     } else {
@@ -51,7 +51,7 @@ export class Pagination {
     }
 
     // manage upper
-    if (this.currentPage + 1 >= this.totalPage) {
+    if (this.currentPage + 1 > this.totalPage) {
       this.upperBtn.classList.add("hidden");
       this.upperBtn.disabled = true;
     } else {
@@ -60,9 +60,8 @@ export class Pagination {
       this.upperBtn.classList.remove("hidden");
     }
 
-    // // manage double upper
-    // manage upper
-    if (this.currentPage + 2 >= this.totalPage) {
+    // manage double upper
+    if (this.currentPage + 2 > this.totalPage) {
       this.doubleUpperBtn.classList.add("hidden");
       this.doubleUpperBtn.disabled = true;
     } else {

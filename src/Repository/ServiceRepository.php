@@ -21,20 +21,21 @@ class ServiceRepository extends ServiceEntityRepository
     public function findServicesByPage(int $page): array
     {
 
-        $totalPages = ceil($this->count() / 9);
-        $first = ($page) * 9;
+        $totalPages = ceil($this->count() / 6);
+        $first = ($page - 1) * 6;
 
 
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT name, slug, description, image_name, alt FROM service ';
-        $sql .= 'INNER JOIN service_image ON service.id = service_image.service_id;';
-        $sql .= 'INNER JOIN alt ON service.id = service_image.service_id;';
-        $sql .= 'LIMIT 9 OFFSET :page';
+        $sql = "SELECT name, slug, description, image_name, alt FROM service
+                INNER JOIN service_image ON service.id = service_image.service_id
+                GROUP BY name
+                LIMIT 6 OFFSET $first";
 
 
         $conn->prepare($sql);
-        $result['data'] = $conn->executeQuery($sql, ['page' => $first])->fetchAllAssociative();
+        $result['data'] = $conn->executeQuery($sql)
+            ->fetchAllAssociative();
         $result["totalPage"] =  $totalPages;
 
         return $result;

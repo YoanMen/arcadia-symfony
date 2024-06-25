@@ -16,28 +16,80 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
-//    /**
-//     * @return Animal[] Returns an array of Animal objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getCountBySearch(string $search)
+    {
 
-//    public function findOneBySomeField($value): ?Animal
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT COUNT(DISTINCT animal.name) FROM animal
+                INNER JOIN animal_information ON animal_information.id = animal.information_id
+                INNER JOIN species ON species.id= animal_information.species_id
+                INNER JOIN region ON region.id = animal_information.region_id
+                INNER JOIN habitat ON habitat.id= animal.habitat_id
+                WHERE animal.name LIKE :search
+                OR species.family LIKE :search
+                OR region.region LIKE :search
+                OR habitat.name LIKE :search
+                OR species.commun_name LIKE :search;";
+
+        $conn->prepare($sql);
+
+        return $conn->executeQuery($sql, ['search' => $search])->fetchOne();
+    }
+    public function findAnimalBySearch(string $search, int $page)
+    {
+        $search = '%' . $search . '%';
+
+        $totalPages = ceil($this->getCountBySearch($search) / 6);
+        $first = ($page - 1) * 6;
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT DISTINCT animal.name, animal.slug, habitat.slug as habitat_slug, animal_information.description, image_name, alt FROM animal
+                INNER JOIN animal_image ON animal.id = animal_image.animal_id
+                INNER JOIN animal_information ON animal_information.id = animal.information_id
+                INNER JOIN species ON species.id= animal_information.species_id
+                INNER JOIN region ON region.id = animal_information.region_id
+                INNER JOIN habitat ON habitat.id= animal.habitat_id
+                WHERE animal.name LIKE :search
+                OR species.family LIKE :search
+                OR region.region LIKE :search
+                OR habitat.name LIKE :search
+                OR species.commun_name LIKE :search
+                GROUP BY name
+                LIMIT 6 OFFSET $first;";
+
+        $conn->prepare($sql);
+
+        $result['data'] = $conn->executeQuery($sql, ['search' => $search])
+            ->fetchAllAssociative();
+        $result["totalPage"] =  intval($totalPages);
+
+        return $result;
+    }
+
+    public function getPredictive(string $search)
+    {
+        $search = '%' . $search . '%';
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT DISTINCT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
+                LEFT JOIN animal_image ON animal.id = animal_image.animal_id
+                LEFT JOIN animal_information ON animal_information.id = animal.information_id
+                LEFT JOIN species ON species.id= animal_information.species_id
+                LEFT JOIN region ON region.id = animal_information.region_id
+                LEFT JOIN habitat ON habitat.id= animal.habitat_id
+                WHERE animal.name LIKE :search
+                OR species.family LIKE :search
+                OR region.region LIKE :search
+                OR habitat.name LIKE :search
+                OR species.commun_name LIKE :search
+                GROUP BY name;";
+
+        $conn->prepare($sql);
+
+        $result['data'] = $conn->executeQuery($sql, ['search' => $search])
+            ->fetchAllAssociative();
+
+        return $result;
+    }
 }

@@ -110,6 +110,8 @@ class AnimalReportCrudController extends AbstractCrudController
         // add veterinary for comment
         if ($entityInstance instanceof AnimalReport) {
 
+            $entityInstance->setDate(new \DateTimeImmutable());
+
             $user = $this->getUser();
             if ($user) {
                 $entityInstance->setVeterinary($user);

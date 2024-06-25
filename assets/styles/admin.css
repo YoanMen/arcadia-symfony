@@ -115,12 +115,18 @@
   padding: 6px;
 }
 
-.btn:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+.btn-primary:hover {
+  background-color: #d14538 !important;
+}
+
+.btn-secondary,
+.btn-secondary.disabled,
+.btn-secondary[disabled] {
   color: var(--primary);
 }
 
-.btn-primary:hover {
-  background-color: #d14538 !important;
+.btn:not(:disabled):not(.disabled):not(.btn-link):not(.btn-danger):hover {
+  color: var(--primary);
 }
 
 .btn:not(:disabled):not(.disabled):not(.btn-link):active,
@@ -128,6 +134,14 @@
 .btn:not(:disabled):not(.disabled):not(.btn-link):focus {
   color: var(--primary);
 }
+
+.input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(
+    .valid-feedback
+  ):not(.invalid-tooltip):not(.invalid-feedback) {
+  color: black;
+}
+
 .btn-secondary:hover,
 .btn-secondary:not(:disabled):not(.disabled):active,
 .btn-secondary:not(:disabled):not(.disabled):active:focus,
