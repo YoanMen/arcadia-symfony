@@ -101,7 +101,7 @@
 		import CardsManager from "{{ asset('scripts/cardsManager.js') }}";
 
 document.addEventListener('DOMContentLoaded', () => {
-new CardsManager('/api/habitat/ {{ habitat.slug }}', '/habitats/ {{ habitat.slug }}', '/images/animals/');
+new CardsManager('/api/habitat/{{ habitat.slug }}', '/habitats/{{ habitat.slug }}', '/images/animals/');
 });
 	</script>
 {% endblock %}
