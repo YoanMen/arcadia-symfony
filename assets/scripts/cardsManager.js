@@ -50,8 +50,10 @@ export default class CardsManager {
 
       this.searchForm.addEventListener("submit", (event) => {
         event.preventDefault();
-        this.searchAnimal = true;
-        this.getDataForAnimal();
+        if (this.search.length > 0) {
+          this.searchAnimal = true;
+          this.getDataForAnimal();
+        }
       });
     }
 
@@ -60,6 +62,8 @@ export default class CardsManager {
 
   async getData(page = 1) {
     try {
+      this.showLoadingCards();
+
       const response = await fetch(`${this.fetchUrl}?page=${page}`, {
         method: "GET",
         headers: {
@@ -84,6 +88,8 @@ export default class CardsManager {
 
   async getDataForAnimal(page = 1) {
     try {
+      this.showLoadingCards();
+
       const response = await fetch(
         `/api/animal/search?page=${page}&search=${this.search}`,
         {
@@ -152,7 +158,7 @@ export default class CardsManager {
         this.cardsContainer.appendChild(newCard);
       });
     } else {
-      this.cardsContainer.remove();
+      this.cardsContainer.innerHTML = "";
       this.pagination.remove();
     }
   }
@@ -255,6 +261,16 @@ export default class CardsManager {
           element.remove();
         }
       });
+    }
+  }
+
+  showLoadingCards() {
+    for (let index = 0; index < 5; index++) {
+      const loadingElement = document.createElement("arcticle");
+      loadingElement.className =
+        "size-80 max-md:w-full md:rounded  bg-slate-100 animate-pulse";
+
+      this.cardsContainer.appendChild(loadingElement);
     }
   }
 }
