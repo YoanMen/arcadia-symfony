@@ -52,7 +52,7 @@ export default class CardsManager {
         event.preventDefault();
         if (this.search.length > 0) {
           this.searchAnimal = true;
-          this.getDataForAnimal();
+          this.getDataForAnimals();
         }
       });
     }
@@ -86,7 +86,7 @@ export default class CardsManager {
     }
   }
 
-  async getDataForAnimal(page = 1) {
+  async getDataForAnimals(page = 1) {
     try {
       this.showLoadingCards();
 
@@ -117,26 +117,26 @@ export default class CardsManager {
   nextPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 1);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimal(page) : this.getData(page);
+    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   previousPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage - 1);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimal(page) : this.getData(page);
+    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   upperPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 1);
 
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimal(page) : this.getData(page);
+    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   doubleUpperPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 2);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimal(page) : this.getData(page);
+    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   showCards(data) {
