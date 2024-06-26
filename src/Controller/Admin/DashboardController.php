@@ -42,13 +42,10 @@ class DashboardController extends AbstractDashboardController
         return $this->redirect('/');
     }
 
-
-
-
-
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
+            ->setFaviconPath("/images/logo/arcadia_favicon.svg")
             ->disableDarkMode()
             ->setTitle('<img src="/images/logo/arcadia_green.svg" class="img-fluid d-block mx-auto" style="max-width:64px; width:100%;">');
     }
@@ -60,7 +57,6 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::linkToUrl('Retour au site', 'fa fa-caret-left', '/');
         yield MenuItem::section("");
-
         if ($this->isGranted('ROLE_ADMIN')) {
             yield MenuItem::linkToDashboard('Dashboard', 'fa fa-chart-line');
             yield MenuItem::linkToCrud('Rapport sur les animaux', 'fas fa-clipboard', AnimalReport::class);

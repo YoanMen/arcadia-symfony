@@ -2,7 +2,9 @@
 
 namespace App\Controller\Admin;
 
+use App\DTO\NewUserDTO;
 use App\Entity\User;
+use App\Event\NewUserRegisteredEvent;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
@@ -16,13 +18,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
 {
 
 
-    public function __construct(private UserPasswordHasherInterface $passwordHasher, private EntityRepository $entityRepository)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher, private EntityRepository $entityRepository, private EventDispatcherInterface $dispatcher)
     {
     }
 
@@ -53,8 +56,13 @@ class UserCrudController extends AbstractCrudController
     {
         return [
 
-            TextField::new('username', 'Nom d\'utilisateur')->setColumns(6),
-            TextField::new('email')->setColumns(6),
+            TextField::new('username', 'Nom d\'utilisateur')
+                ->setDisabled(true)
+                ->setColumns(6),
+            TextField::new('email')
+                ->setColumns(6)
+                ->setDisabled(true),
+
             TextField::new('password', 'Mot de passe')
                 ->setColumns(6)
                 ->setFormTypeOption('data', '')
@@ -65,7 +73,8 @@ class UserCrudController extends AbstractCrudController
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE'
                 ])->onlyOnIndex(),
-            ChoiceField::new('selectedRole', 'role de l\'utilisateur')->setColumns(6)
+            ChoiceField::new('selectedRole', 'role de l\'utilisateur')
+                ->setColumns(6)
                 ->setChoices([
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE'
@@ -93,6 +102,13 @@ class UserCrudController extends AbstractCrudController
         }
 
         parent::persistEntity($entityManager, $entityInstance);
+
+        // send mail to new user
+        $newUser = new NewUserDTO();
+        $newUser->username = $entityInstance->getUsername();
+        $newUser->email = $entityInstance->getEmail();
+
+        $this->dispatcher->dispatch(new NewUserRegisteredEvent($newUser));
     }
 
     public function updateEntity(EntityManagerInterface $entityManager, $entityInstance): void

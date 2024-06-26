@@ -19,12 +19,13 @@ class ServiceImageType extends AbstractType
       ->add('imageFile', VichImageType::class, [
         'label' => 'Image',
         'required' => true,
+        'allow_delete' => false,
         'constraints' => [
           new Assert\File(
             maxSize: "5M",
-            mimeTypes: ["image/png", "image/jpg", "image/jpeg"],
+            mimeTypes: ["image/png", "image/jpg", "image/jpeg", "image/webp"],
             maxSizeMessage: "L'image ne doit pas dépassée 5M.",
-            mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpj, jpeg",
+            mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpg, jpeg, webp",
           ),
 
         ]

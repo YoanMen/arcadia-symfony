@@ -1,0 +1,29 @@
+<body style="font-family:Arial,Helvetica,sans-serif;">
+	<p>Demande de contact reçue</p>
+	<ul>
+		<li>
+			<strong>Nom :</strong>
+			{{ data.name }}
+		</li>
+		<li>
+			<strong>Type de demande :</strong>
+			{% if data.contactType == '0' %}
+				<p>information</p>
+			{% elseif data.contactType == '1'%}
+				<p>visite pour une école</p>
+			{% elseif data.contactType == '2' %}
+				<p>visite en groupe</p>
+			{% else %}
+				<p>autre</p>
+			{% endif %}
+		</li>
+		<li>
+			<strong>Email :</strong>
+			{{ data.email }}
+		</li>
+		<li style="margin-top:8px">
+			<strong>Message :</strong><br>
+			{{ data.message | nl2br }}
+		</li>
+	</ul>
+</body>
