@@ -13,6 +13,7 @@ class UploadFileListener
   #[AsEventListener(event: Events::POST_UPLOAD)]
   public function onVichUploaderPreUpload(Event $event)
   {
-    CompressImage::compress($event);
+    $compressImage = new CompressImage();
+    $compressImage->compress($event);
   }
 }

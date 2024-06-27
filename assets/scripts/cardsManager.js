@@ -7,14 +7,14 @@ import { Pagination } from "./pagination.js";
 import { Card } from "./card.js";
 
 export default class CardsManager {
-  constructor(fetchUrl, href, imagePath) {
+  constructor(fetchUrl, href, imagePath, className = "") {
     this.fetchUrl = fetchUrl;
     this.href = href;
     this.imagePath = imagePath;
 
     this.search = "";
     this.cardsContainer = document.querySelector(".cards-container-js");
-    this.card = new Card();
+    this.card = new Card(className);
 
     this.searchAnimal = false;
     this.searchInput = document.querySelector(".cards-search-js");
@@ -157,6 +157,8 @@ export default class CardsManager {
         // add card to container
         this.cardsContainer.appendChild(newCard);
       });
+
+      this.listenButtonsForAnimalClick();
     } else {
       this.cardsContainer.innerHTML = "";
       this.pagination.remove();
@@ -167,6 +169,9 @@ export default class CardsManager {
     this.cardsContainer.innerHTML = "";
 
     if (data.data.length != 0) {
+      // add class to animals buttons
+      this.card.setClassName("button-listen");
+
       this.pagination.setTotalPages(data.totalPage);
 
       data.data.forEach((element) => {
@@ -181,6 +186,8 @@ export default class CardsManager {
         // add card to container
         this.cardsContainer.appendChild(newCard);
       });
+
+      this.listenButtonsForAnimalClick();
     } else {
       this.cardsContainer.innerHTML = "";
       this.pagination.remove();
@@ -266,11 +273,39 @@ export default class CardsManager {
 
   showLoadingCards() {
     for (let index = 0; index < 5; index++) {
-      const loadingElement = document.createElement("arcticle");
+      const loadingElement = document.createElement("article");
       loadingElement.className =
         "size-80 max-md:w-full md:rounded  bg-slate-100 animate-pulse";
 
       this.cardsContainer.appendChild(loadingElement);
     }
+  }
+
+  listenButtonsForAnimalClick() {
+    const buttons = document.querySelectorAll(".button-listen");
+
+    buttons.forEach((button) => {
+      let pressedBtn = false;
+      button.addEventListener("click", async (event) => {
+        if (pressedBtn) {
+          return;
+        }
+
+        pressedBtn = true;
+
+        event.preventDefault();
+        const href = button.querySelector("a").href;
+        const name = button.querySelector(".button-title").textContent;
+
+        await fetch(`/api/clickToAnimal/${name}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }).finally(() => {
+          window.location.href = href;
+        });
+      });
+    });
   }
 }

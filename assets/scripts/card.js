@@ -1,8 +1,17 @@
 export class Card {
+  constructor(className = "") {
+    this.className = className;
+  }
+
+  setClassName(className) {
+    this.className = className;
+  }
+
   createCard(imageName, alt, href, title, description) {
     const articleElement = document.createElement("article");
     articleElement.className =
-      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group";
+      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group " +
+      this.className;
 
     const anchorElement = document.createElement("a");
     anchorElement.href = href;
@@ -19,7 +28,8 @@ export class Card {
 
     const titleElement = document.createElement("h3");
     titleElement.textContent = title;
-    titleElement.className = "text-xl font-semibold uppercase text-primary";
+    titleElement.className =
+      "button-title text-xl font-semibold uppercase text-primary";
 
     const descriptionElement = document.createElement("p");
     descriptionElement.textContent = description;

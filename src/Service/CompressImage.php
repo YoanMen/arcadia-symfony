@@ -2,10 +2,12 @@
 
 namespace App\Service;
 
+use GdImage;
+
 class CompressImage
 {
 
-  public static function compress($event, $quality = 70)
+  public function compress($event, $quality = 70)
   {
 
     try {
@@ -22,6 +24,7 @@ class CompressImage
       $imageHeight = $imageSize['1'];
       $extension  = $imageSize['mime'] ?? $object->getImageFile()->getExtension();
 
+
       switch ($extension) {
         case 'image/png':
           $image = imagecreatefrompng($destination . '/' . $nameFile);
@@ -33,9 +36,6 @@ class CompressImage
           $image = imagecreatefromjpeg($destination . '/' . $nameFile);
           $newNameFile = str_replace(['.jpeg', '.jpg'], '.webp', $nameFile);
           break;
-
-
-
 
         default:
           $image = null;
@@ -50,11 +50,9 @@ class CompressImage
       if ($image) {
         $object->setImageName($newNameFile);
 
-        if ($imageHeight > 1080) {
-          $resize = imagescale($image,  $imageWidth * ($quality / 100), $imageHeight * ($quality / 100));
-        } else {
-          $resize = $image;
-        }
+
+        $resize = $this->resizeImage($quality, $image, $imageWidth, $imageHeight);
+
 
         // format image to webp
         imagewebp($resize, $destination  . '/' . $newNameFile, $quality);
@@ -69,6 +67,16 @@ class CompressImage
       }
     } catch (\Throwable $th) {
       throw new \Exception("Error formatting image " . $th->getMessage());
+    }
+  }
+
+
+  private function resizeImage(int $quality, GdImage $image, int $imageWidth, int $imageHeight): GdImage
+  {
+    if ($imageHeight > 1080) {
+      return imagescale($image,  $imageWidth * ($quality / 100), $imageHeight * ($quality / 100));
+    } else {
+      return  $image;
     }
   }
 }
