@@ -40,7 +40,7 @@ class ContactController extends AbstractController
                 return $this->render('contact/index.html.twig', [
                     'controller_name' => 'ContactController',
                     'contactForm' => $this->createForm(ContactType::class, $data),
-                    'error' => $e->getMessage()
+                    'error' => 'Impossible d\'envoyer votre message, une erreur est survenue'
                 ]);
             }
         }

@@ -1,7 +1,5 @@
-// récupéré les data
-// crée la pagination
-// faire des callback afin de géré la pagination
-//
+// get data to create cards
+// manage pagination
 
 import { Pagination } from "./pagination.js";
 import { Card } from "./card.js";
@@ -22,6 +20,11 @@ export default class CardsManager {
     this.datalist = document.querySelector(".cards-search-datalist-js");
     this.searchForm = document.querySelector(".cards-search-form-js");
 
+    this.initialize();
+  }
+
+  // initialise pagingation and
+  initialize() {
     this.pagination = new Pagination(
       () => {
         this.nextPage();
@@ -37,17 +40,17 @@ export default class CardsManager {
       }
     );
 
+    // listen search input and create prediction depending input value
     if (this.searchInput) {
       this.searchInput.addEventListener("input", () => {
-        // event
         this.search = this.searchInput.value;
-        // search
 
         if (this.search.length != 0) {
           this.setPredictive();
         }
       });
 
+      // search animals depending search input
       this.searchForm.addEventListener("submit", (event) => {
         event.preventDefault();
         if (this.search.length > 0) {
@@ -60,6 +63,7 @@ export default class CardsManager {
     this.getData();
   }
 
+  // search data by url and page
   async getData(page = 1) {
     try {
       this.showLoadingCards();
@@ -74,7 +78,6 @@ export default class CardsManager {
       const result = await response.json();
 
       if (result.success) {
-        // some action
         this.showCards(result.data);
       } else if (result.error) {
         throw new Error(result.error);
@@ -86,6 +89,7 @@ export default class CardsManager {
     }
   }
 
+  // replace getData with this animals versions when user use search filter
   async getDataForAnimals(page = 1) {
     try {
       this.showLoadingCards();
@@ -114,6 +118,8 @@ export default class CardsManager {
     }
   }
 
+  // CALLBACK PAGINATION
+  // fetch data depending if user search animal or navigate to habitat page.
   nextPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 1);
     const page = this.pagination.currentPage;
@@ -139,6 +145,7 @@ export default class CardsManager {
     this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
   }
 
+  // Show Cards
   showCards(data) {
     this.cardsContainer.innerHTML = "";
 
@@ -165,6 +172,7 @@ export default class CardsManager {
     }
   }
 
+  // replace show Card with this if user use search filter
   showAnimalsCards(data) {
     this.cardsContainer.innerHTML = "";
 
@@ -194,6 +202,7 @@ export default class CardsManager {
     }
   }
 
+  // set prediction depending user input to help find animals
   async setPredictive() {
     const response = await fetch("/api/animal/predictive", {
       method: "POST",
@@ -271,6 +280,7 @@ export default class CardsManager {
     }
   }
 
+  // when data is loaded use loading cards placeholder
   showLoadingCards() {
     for (let index = 0; index < 5; index++) {
       const loadingElement = document.createElement("article");
@@ -281,6 +291,8 @@ export default class CardsManager {
     }
   }
 
+
+  // Used to get animal when user click
   listenButtonsForAnimalClick() {
     const buttons = document.querySelectorAll(".button-listen");
 

@@ -100,8 +100,10 @@
   margin-bottom: 1rem;
   border: 1px solid #f5c6cb;
   width: 100%;
+  text-align: center;
   font-size: 1rem;
 }
+
 .action-filters-button,
 .action-filters-applied,
 .action-filters-button:hover,

@@ -71,7 +71,7 @@ class HabitatCrudController extends AbstractCrudController
         $animalCount = count($entityInstance->getAnimals());
 
         if ($animalCount != 0) {
-            $this->addFlash('notice', "Impossible de supprimer l'habitat des animaux y sont rattaché");
+            $this->addFlash('notice', "Impossible de supprimer l'habitat " . $entityInstance->getName() . " des animaux y sont rattaché");
         } else {
             $entityManager->remove($entityInstance);
             $entityManager->flush();
