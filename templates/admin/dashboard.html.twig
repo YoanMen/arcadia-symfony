@@ -1,15 +1,62 @@
 {% extends '@EasyAdmin/page/content.html.twig' %}
-
-{% block page_title %}Dashboard
+{% block page_title
+%}Dashboard
 {% endblock %}
-
 {% block main %}
-	<div class="col w-100 mx-auto row px-md-4">
+	<div class="col w-100 mx-auto row px-md-4 border p-2 rounded">
+		{% if chart is not null %}
+			<h2 class="mb-4 h4">Les animaux les plus consultés</h2>
 
+			<div class="col">
+				{{ render_chart(chart) }}
+			</div>
+		{% endif %}
 
 		<div class="col">
-			<h2 class="mb-4 h4">Les animaux les plus consultés</h2>
-			<div class="table-responsive small"></div>
+			<h2 class="mb-4 h4">Les dernier commentaires sur les habitats</h2>
+			<div class="table-responsive">
+				<table class="table ">
+					<thead>
+						<tr>
+							<th scope="col">Habitat</th>
+							<th scope="col">Commentaire</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for comment in comments %}
+							<tr>
+								<th scope="row">{{comment.getHabitat()}}</th>
+								<td>{{comment.getDetail()}}</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div class="col w-100 mx-auto row px-md-4 border p-2 rounded mt-4">
+		<h2 class="h4">Les dernier rapports sur les animaux</h2>
+
+		<div class="table-responsive">
+			<table class="table ">
+				<thead>
+					<tr>
+						<th scope="col">Animal</th>
+						<th scope="col">État de l'animal</th>
+
+						<th scope="col">Détail</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for report in reports %}
+						<tr>
+							<th scope="row">{{report.getAnimal()}}</th>
+							<td>{{report.getStatut()}}</td>
+							<td>{{report.getDetail() ?? 'aucun détail donnée'}}</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
 		</div>
 	</div>
 {% endblock %}
