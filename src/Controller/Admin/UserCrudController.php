@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin;
 
-use App\DTO\NewUserDTO;
 use App\Entity\User;
-use App\Event\NewUserRegisteredEvent;
+use App\DTO\NewUserDTO;
 use Doctrine\ORM\QueryBuilder;
+use App\Event\NewUserRegisteredEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
@@ -16,9 +16,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FieldCollection;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserCrudController extends AbstractCrudController
@@ -57,12 +57,9 @@ class UserCrudController extends AbstractCrudController
         return [
 
             TextField::new('username', 'Nom d\'utilisateur')
-                ->setDisabled(true)
                 ->setColumns(6),
             TextField::new('email')
-                ->setColumns(6)
-                ->setDisabled(true),
-
+                ->setColumns(6),
             TextField::new('password', 'Mot de passe')
                 ->setColumns(6)
                 ->setFormTypeOption('data', '')

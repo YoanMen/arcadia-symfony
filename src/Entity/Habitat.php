@@ -12,8 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
-#[UniqueEntity('name')]
-
+#[UniqueEntity('name', message: "Un habitat avec ce nom existe déjà")]
 class Habitat
 {
     #[ORM\Id]

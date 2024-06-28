@@ -11,11 +11,14 @@
 		<link rel="icon" href="{{ asset('images/logo/arcadia_favicon.svg') }}"> {% block stylesheets %}{% endblock %}
 
 		{% block javascripts %}
+
 			{% block importmap %}
+				{# the csp_nonce() function is defined by the NelmioSecurityBundle #}
 				{{ importmap('app') }}
 			{% endblock %}
 		{% endblock %}
 	</head>
+
 
 	<body>
 		{%  block menu %}
