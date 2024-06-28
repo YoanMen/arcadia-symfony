@@ -15,21 +15,21 @@
 		</div>
 		<p class="mt-10">
 			Situé en Bretagne, en France, au cœur de la légendaire Forêt de Brocéliande, le zoo Arcadia accueille les visiteurs 
-																		depuis 1960.
+			depuis 1960.
 			<br>
 			Notre zoo est le refuge d'une grande variété d'animaux, soigneusement regroupés par habitat.
-																		Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend 
-																		visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos 
-																		nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin 
-																		qu'il reçoive le bon équilibre de nutriments.	Grâce à notre équipe déterminée et à notre engagement envers l'excellence,
-																		Arcadia est un endroit où nos animaux vivent leur vie au mieux.
+			Au coeur de Arcadia, la bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend 
+			visite à chaque espèce pour s'assurer de leur santé et leur bonheur, ils sont au sommet de nos préoccupations. Nos 
+			nutritionnistes travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin 
+			qu'il reçoive le bon équilibre de nutriments.	Grâce à notre équipe déterminée et à notre engagement envers l'excellence,
+			Arcadia est un endroit où nos animaux vivent leur vie au mieux.
 			<br>
 			Cette réalisation nous inspire de la fierté que nous vondrions partager, venez explorer les merveilles du zoo Arcadia !
 		</p>
 		<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.png') }}" alt="">
 		<p class="mx-auto text-sm max-w-screen-md font-medium text-center">
 			“Les animaux sont les gardiens de notre planète. Il est donc essentiel de les protéger et de préserver leur habitat pour un
-																		meilleure futur”
+			meilleure futur”
 		</p>
 	</section>
 
@@ -48,7 +48,8 @@
 			<h2 class="text-2xl text-color text-secondary font-bold">Des lieux à découvrir</h2>
 		</div>
 		<p class="mt-10 mx-auto ">
-			Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis. Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
+			Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis.
+			Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
 		</p>
 		<div class="max-w-screen-lg mx-auto flex  md:gap-4 flex-wrap my-10 justify-start">
 
@@ -164,7 +165,7 @@
 							35380 Paimpont
 						</li>
 					</ul>
-					<iframe title="map" class="rounded border-color" id='map' width="100%" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717"></iframe>
+					<div id="openstreetmap" class="openstreetmap" data-url="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717" width="100%" height="350"></div>
 				</div>
 				<div class='w-full'>
 					<h4 class="text-base uppercase font-montserrat font-medium mb-3 max-md:text-center">
@@ -183,8 +184,9 @@
 {% endblock %}
 
 {% block scripts %}
-	<script src="{{ asset("scripts/map.js") }}"></script>
+	<script type="text/javascript">
+		(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+	</script>
 	<script src="{{ asset("scripts/adviceModal.js") }}"></script>
-
 	<script src="{{asset("scripts/adviceManager.js")}}"></script>
 {% endblock %}
