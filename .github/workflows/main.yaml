@@ -7,15 +7,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env: 
+      SSHPASS: ${{ secrets.APP_PASS}}
     steps:
       - uses: actions/checkout@v4
-
-      - name: webfactory/ssh-agent
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: |
-                        ${{ secrets.APP_SSHKEY }}
-                        ${{ secrets.APP_SSHPASS }}
 
       - name: connect to server
         run: |
