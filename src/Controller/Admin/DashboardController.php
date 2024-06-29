@@ -56,7 +56,6 @@ class DashboardController extends AbstractDashboardController
                 ->getQuery()
                 ->execute();
 
-            // dd($reports[0]->getVeterinary()->getUsername());
 
             return $this->render(
                 'admin/dashboard.html.twig',
@@ -131,7 +130,6 @@ class DashboardController extends AbstractDashboardController
     {
 
         $famousAnimal = $this->couchDBManager->getFamousAnimals();
-
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
 

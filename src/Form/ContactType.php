@@ -77,8 +77,7 @@ class ContactType extends AbstractType
                 'attr' =>
                 [
                     'minlength' => '10',
-                    'rows' => '10',
-                    'class' => 'w-full p-2 border-color outline-0 rounded bg-border resize-none'
+                    'class' => 'w-full h-40 p-2 border-color outline-0 rounded bg-border resize-none '
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [

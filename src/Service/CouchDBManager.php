@@ -59,7 +59,6 @@ class CouchDBManager
     $animals = $data['docs'];
     $famousAnimalsDTO = [];
 
-
     foreach ($animals as $animal) {
       $famousAnimalDTO = new FamousAnimalDTO();
 

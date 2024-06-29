@@ -102,7 +102,7 @@
 						</li>
 						<li>
 							<strong class="font-bold text-secondary">détail :</strong>
-							{{ animal.animalReports | last.detail }}
+							{{ animal.animalReports | last.detail ?? 'pas de détail'}}
 						</li>
 					</ul>
 				</div>
