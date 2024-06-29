@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Event\AccountLockedRequestEvent;
 use App\Event\ContactRequestEvent;
 use App\Event\NewUserRegisteredEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -20,7 +21,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
         $data = $event->data;
         $mail = (new TemplatedEmail())
-            ->to('contact@arcadia.com')
+            ->to($_ENV['CONTACT_MAIL'])
             ->subject("Message du formulaire de contact par " . $data->name)
             ->from('no-reply@arcadia.com')
             ->htmlTemplate('email/contact.html.twig')
@@ -36,8 +37,22 @@ class MailingSubscriber implements EventSubscriberInterface
         $mail = (new TemplatedEmail())
             ->to($data->email)
             ->subject("Zoo Arcadia - Votre compte")
-            ->from('no-reply@arcadia.com')
+            ->from($_ENV['NOREPLY_MAIL'])
             ->htmlTemplate('email/newAccount.html.twig')
+            ->context(['data' => $data]);
+
+        $this->mailer->send($mail);
+    }
+
+    public function onAccountLockedRequestEvent(AccountLockedRequestEvent $event): void
+    {
+        $data = $event->data;
+
+        $mail = (new TemplatedEmail())
+            ->to($data->email)
+            ->subject("Zoo Arcadia - COMPTE BLOQUÉ")
+            ->from($_ENV['NOREPLY_MAIL'])
+            ->htmlTemplate('email/accountLock.html.twig')
             ->context(['data' => $data]);
 
         $this->mailer->send($mail);
@@ -47,7 +62,9 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         return [
             ContactRequestEvent::class => 'onContactRequestEvent',
-            NewUserRegisteredEvent::class => 'onNewUserRegisteredEvent'
+            NewUserRegisteredEvent::class => 'onNewUserRegisteredEvent',
+            AccountLockedRequestEvent::class => 'onAccountLockedRequestEvent',
+
         ];
     }
 }

@@ -185,7 +185,9 @@
 
 {% block scripts %}
 	<script type="text/javascript">
-		(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+		setTimeout(() => {
+			(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+		}, 1500);
 	</script>
 	<script src="{{ asset("scripts/adviceModal.js") }}"></script>
 	<script src="{{asset("scripts/adviceManager.js")}}"></script>

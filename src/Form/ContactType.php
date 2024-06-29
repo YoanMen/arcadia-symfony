@@ -28,11 +28,13 @@ class ContactType extends AbstractType
                     'row_attr' => [
                         'class' => 'flex flex-col'
                     ],
-                    'label_attr' => [],
+                    'label_attr' => [
+                        'class' => 'font-montserrat font-medium'
+                    ],
                     'attr' => [
                         'minlength' => '3',
                         'maxlength' => '200',
-                        'class' => 'w-full h-10 p-2 border-color outline-0 rounded bg-border'
+                        'class' => 'mt-2 w-full h-10 p-2 border-color outline-0 rounded bg-border'
                     ]
                 ]
             )
@@ -43,12 +45,14 @@ class ContactType extends AbstractType
                 'row_attr' => array(
                     'class' => 'flex flex-col'
                 ),
-                'label_attr' => [],
+                'label_attr' => [
+                    'class' => 'font-montserrat font-medium'
+                ],
                 'attr' =>
                 [
                     'minlength' => '3',
                     'maxlength' => '320',
-                    'class' => 'w-full h-10 p-2 border-color outline-0 rounded bg-border'
+                    'class' => 'mt-2 w-full h-10 p-2 border-color outline-0 rounded bg-border'
                 ],
             ])
             ->add('contactType', ChoiceType::class, [
@@ -60,24 +64,28 @@ class ContactType extends AbstractType
                     'visite en groupe' =>  2,
                     'autre' => 3,
                 ],
-                'label_attr' => [],
+                'label_attr' => [
+                    'class' => 'font-montserrat font-medium'
+                ],
                 'choice_attr' => function () {
-                    return ['class' => 'text-black'];
+                    return ['class' => 'text-black '];
                 },
                 'attr' =>
                 [
-                    'class' => 'w-full h-10 p-2 border-color outline-0 rounded bg-border'
+                    'class' => 'mt-2 w-full h-10 p-2 border-color outline-0 rounded bg-border'
                 ],
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'message',
                 'required' => true,
                 'empty_data' => '',
-                'label_attr' => [],
+                'label_attr' => [
+                    'class' => 'font-montserrat font-medium'
+                ],
                 'attr' =>
                 [
                     'minlength' => '10',
-                    'class' => 'w-full h-40 p-2 border-color outline-0 rounded bg-border resize-none '
+                    'class' => 'mt-2 w-full h-40 p-2 border-color outline-0 rounded bg-border resize-none '
                 ],
             ])
             ->add('agreeTerms', CheckboxType::class, [
