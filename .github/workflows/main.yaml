@@ -12,6 +12,7 @@ jobs:
 
       - name: deploy test
         run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 
-          "cd sites/arcadia/ &&
+          "cd sites/arcadia-symfony/ &&
            git pull && 
-           composer install"
+           composer install &&
+           php bin/console d:m:m -n"
