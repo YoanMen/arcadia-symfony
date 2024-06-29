@@ -9,9 +9,16 @@ jobs:
 
     env: 
       SSHPASS: ${{ secrets.APP_SSHPASS}}
+
     steps:
       - uses: actions/checkout@v4
 
       - name: connect to server
-        run: |
-          ssh ${{ secrets.APP_SSH}}
+        run: 
+          sudo apt update && sudo apt install sshpass 
+        
+      - name: test
+        run:
+          sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_SSH}}
+        
+
