@@ -14,7 +14,7 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: deploy
+      - name: deploy test
         run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 
           "cd sites/arcadia/ &&
            git pull && 
