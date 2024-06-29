@@ -14,5 +14,8 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: test SSH connection
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 'echo "SSH connection successful"'
+      - name: deploy
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 
+          "cd sites/arcadia/ &&
+           git pull && 
+           composer install"
