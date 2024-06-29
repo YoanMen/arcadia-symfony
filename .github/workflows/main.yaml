@@ -1,5 +1,5 @@
 name: CD
-on: 
+on:
   push:
     branches: [master]
 
@@ -8,15 +8,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - uses: actions/checkout@v4
-      
+
       - name: webfactory/ssh-agent
         uses: webfactory/ssh-agent@v0.9.0
         with:
-          ssh-private-key: ${{ secrets.APP_SSHPASS }}  
-      
+          ssh-private-key: ${{ secrets.APP_SSHKEY }}
+
       - name: connect to server
         run: |
           ssh ${{ secrets.APP_SSH}}
-  
