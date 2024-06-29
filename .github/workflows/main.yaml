@@ -4,15 +4,23 @@ on:
     branches: [master]
 
 jobs:
-  deploy:
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v4
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
 
-      - name: deploy test
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 
-          "cd sites/arcadia-symfony/ &&
-           git pull && 
-           composer install &&
-           php bin/console d:m:m -n"
+      - name: 📂 Sync files
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.ftp_server }}
+          username: ${{ secrets.ftp_username }}
+          password: ${{ secrets.ftp_password }}
+          port: ${{ secrets.ftp_port }}
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            **/documents/**
+            **/migrations/**
