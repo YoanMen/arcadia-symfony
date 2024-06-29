@@ -7,18 +7,12 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
-    env: 
-      SSHPASS: ${{ secrets.APP_SSHPASS}}
-
     steps:
       - uses: actions/checkout@v4
 
-      - name: connect to server
-        run: 
-          sudo apt update && sudo apt install sshpass 
-        
-      - name: test
-        run:
-          sshpass -e ssh -o stricthostkeychecking=no ${{ secrets.APP_SSH}}
-        
+      - uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
+      - name: test SSH connection
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_DOMAIN }} 'echo "SSH connection successful"'
