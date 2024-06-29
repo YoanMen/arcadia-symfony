@@ -28,3 +28,7 @@ public/images/animals/
 /migrations/
 ###< symfony/asset-mapper ###
 .vscode/settings.json
+
+###> liip/imagine-bundle ###
+/public/media/cache/
+###< liip/imagine-bundle ###
