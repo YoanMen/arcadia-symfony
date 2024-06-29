@@ -76,7 +76,7 @@ class AnimalReport
 
     public function setStatut(string $statut): static
     {
-        $this->statut = $statut;
+        $this->statut =  strtolower($statut);
 
         return $this;
     }
@@ -88,7 +88,7 @@ class AnimalReport
 
     public function setFood(string $food): static
     {
-        $this->food = $food;
+        $this->food =  strtolower($food);
 
         return $this;
     }

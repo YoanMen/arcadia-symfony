@@ -67,7 +67,7 @@ class AnimalFood
 
     public function setFood(string $food): static
     {
-        $this->food = $food;
+        $this->food = strtolower($food);
 
         return $this;
     }

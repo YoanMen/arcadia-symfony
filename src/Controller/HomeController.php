@@ -16,11 +16,8 @@ class HomeController extends AbstractController
 
 
     #[Route('/', name: 'app_home')]
-    public function index(SchedulesRepository $schedulesRepository, HabitatRepository $habitatRepository, AnimalRepository $animalRepository): Response
+    public function index(SchedulesRepository $schedulesRepository, HabitatRepository $habitatRepository): Response
     {
-
-        $couchDB = new CouchDBManager($animalRepository);
-
         $schedules = $schedulesRepository->findAll();
         $habitats = $habitatRepository->findTwoHabitatForHomePageCards();
         return $this->render('home/index.html.twig', [

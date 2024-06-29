@@ -80,11 +80,13 @@ class AnimalReportCrudController extends AbstractCrudController
             TextField::new('statut', 'État de l\'animal')
                 ->setSortable(false)
                 ->setColumns(4)
-                ->setHelp('malade, bien, mal a la patte etc..'),
+                ->setHelp('malade, bien, mal a la patte etc..')
+                ->setRequired(true),
             TextField::new('food', 'Nourriture')
                 ->setSortable(false)
                 ->setHelp('nourriture recommandée ex: viande, foin, fruits etc ...')
-                ->setColumns(3),
+                ->setColumns(3)
+                ->setRequired(true),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
                     return $value . ' Kg';
@@ -94,7 +96,8 @@ class AnimalReportCrudController extends AbstractCrudController
             NumberField::new('quantity', 'Quantité')
                 ->onlyOnForms()
                 ->setHelp('en kilogrammes')
-                ->setColumns(3),
+                ->setColumns(3)
+                ->setRequired(true),
             TextareaField::new('detail')
                 ->setColumns(12)
                 ->setSortable(false)
