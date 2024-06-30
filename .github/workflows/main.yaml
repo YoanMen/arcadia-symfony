@@ -10,6 +10,21 @@ jobs:
   symfony-tests:
     name: 🛠️ Build and Test
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -34,10 +49,15 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Create Database
+      - name: Wait for MySQL
         run: |
-          mkdir -p data
-          touch data/test.sqlite
+          until mysqladmin ping --host 127.0.0.1 --port 3306 --user root --password=root --silent; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
+
+      - name: Set up .env.test.local
+        run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/test" > .env.test.local
 
       - name: Migrate database
         run: php bin/console d:m:m --no-interaction --env=test
@@ -46,8 +66,6 @@ jobs:
         run: php bin/console d:f:l --no-interaction --env=test
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-          DATABASE_URL: sqlite:///%kernel.project_dir%/data/test.sqlite
         run: vendor/bin/phpunit
 
   web-deploy:
