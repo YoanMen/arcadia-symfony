@@ -11,21 +11,68 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class HabitatRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(ManagerRegistry $registry, private AnimalRepository $animalRepository)
     {
         parent::__construct($registry, Habitat::class);
     }
 
-    public function findTwoHabitatForHomePageCards()
+    public function findTwoHabitatForHomePageCards(): array
     {
 
         $conn = $this->getEntityManager()->getConnection();
-        $sql = 'SELECT name, slug , description, image_name, alt FROM habitat ';
-        $sql .= 'INNER JOIN habitat_image ON habitat.id = habitat_image.habitat_id;';
-        $sql .= 'INNER JOIN alt ON habitat.id = habitat_image.habitat_id;';
-
+        $sql = "SELECT name, slug , description, image_name, alt FROM habitat
+                INNER JOIN habitat_image ON habitat.id = habitat_image.habitat_id
+                GROUP BY name
+                LIMIT 2 ;";
 
         $conn->prepare($sql);
         return $conn->executeQuery($sql)->fetchAllAssociative();
+    }
+
+    public function findHabitatsByPage(int $page): array
+    {
+
+        $totalPages = ceil($this->count() / 6);
+        $first = ($page - 1) * 6;
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT name, slug, description, image_name, alt FROM habitat
+                INNER JOIN habitat_image ON habitat.id = habitat_image.habitat_id
+                GROUP BY name
+                LIMIT 6 OFFSET $first";
+
+        $conn->prepare($sql);
+
+        $result['data'] = $conn->executeQuery($sql)
+            ->fetchAllAssociative();
+
+        $result["totalPage"] = intval($totalPages);
+
+        return $result;
+    }
+
+    public function findAnimalsByHabitatAndByPage(int $page, string $slug): array
+    {
+        $habitat = $this->findOneBy(['slug' => $slug]);
+        $totalPages = ceil($this->animalRepository->count(['habitat' => $habitat->getId()]) / 6);
+        $first = ($page - 1) * 6;
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = "SELECT name, slug, description, image_name, alt FROM animal
+                INNER JOIN animal_image ON animal.id = animal_image.animal_id
+                INNER JOIN animal_information ON animal.information_id = animal_information.id
+                WHERE animal.habitat_id = :habitat
+                GROUP BY name
+                LIMIT 6 OFFSET $first";
+
+        $conn->prepare($sql);
+
+        $result['data'] = $conn->executeQuery($sql, ['habitat' => $habitat->getId()])
+            ->fetchAllAssociative();
+        $result["totalPage"] =  intval($totalPages);
+
+        return $result;
     }
 }

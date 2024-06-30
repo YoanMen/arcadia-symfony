@@ -11,9 +11,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 
 class HabitatCrudController extends AbstractCrudController
 {
@@ -52,8 +52,8 @@ class HabitatCrudController extends AbstractCrudController
                 ->setTargetFieldName('name')
                 ->onlyOnForms()
                 ->setHelp('généralement à ne pas changer'),
-            TextEditorField::new('description', 'Description de l\'habitat')
-                ->setNumOfRows(15)
+            TextareaField::new('description', 'Description de l\'habitat')
+                ->setNumOfRows(5)
                 ->setColumns(15),
             CollectionField::new('habitatImages', 'Images de l\'habitat')
                 ->setEntryType(HabitatImageType::class)
@@ -70,7 +70,7 @@ class HabitatCrudController extends AbstractCrudController
         $animalCount = count($entityInstance->getAnimals());
 
         if ($animalCount != 0) {
-            $this->addFlash('notice', "Impossible de supprimer l'habitat des animaux y sont rattaché");
+            $this->addFlash('notice', "Impossible de supprimer l'habitat " . $entityInstance->getName() . " des animaux y sont rattaché");
         } else {
             $entityManager->remove($entityInstance);
             $entityManager->flush();

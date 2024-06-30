@@ -48,15 +48,16 @@
 			<h2 class="text-2xl text-color text-secondary font-bold">Des lieux à découvrir</h2>
 		</div>
 		<p class="mt-10 mx-auto ">
-			Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis. Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
+			Découvrez les différentes écosystèmes du zoo, où les animaux se trouvent naturellement répartis.
+			Des animaux de la savane aux animaux de la jungle, chaque habitat est un monde à part entier.
 		</p>
-		<div class="flex max-md:flex-col flex-wrap md:gap-3 justify-between mt-20">
+		<div class="max-w-screen-lg mx-auto flex  md:gap-4 flex-wrap my-10 justify-start">
 
 			{% for habitat in habitats %}
 				<article class="relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group">
 					<a href="/habitats/{{ habitat.slug }}">
 						<img class=" object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150" src="images/habitats/{{ asset(habitat.image_name) }}" alt="{{ habitat.alt }}">
-						<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2">
+						<div class="absolute rounded-sm bottom-0 flex flex-col justify-end w-full gradient-to-top p-2">
 							<h3 class="text-xl font-semibold uppercase text-primary">{{ habitat.name }}</h3>
 							<p class=" text-primary line-clamp-2">
 								{{ habitat.description | striptags }}
@@ -67,7 +68,7 @@
 			{% endfor %}
 			<article class="relative size-80 max-md:w-full md:rounded first:rounded-t last:rounded-b bg-secondary cards overflow-clip">
 				<a href="{{ url('app_habitat') }}">
-					<div class="absolute bottom-0 flex flex-co	l items-center h-full w-full justify-center">
+					<div class="absolute bottom-0 flex flex-col items-center h-full w-full justify-center">
 						<h3 class="text-xl font-medium uppercase text-primary">voir tous les habitats</h3>
 					</div>
 				</a>
@@ -108,27 +109,27 @@
 			<p class="text-xs font-montserrat leading-3 font-medium text-secondary">L'avis des visiteurs</p>
 			<h2 class="text-2xl text-color text-secondary font-bold">Ce qu'ils pensent d'Arcadia</h2>
 		</div>
-		<div class="flex max-md:flex-col items-center justify-center mt-10 mx-auto gap-10">
-			<div class="max-sm:hidden">
+		<div class="flex max-lg:flex-col items-center justify-center mt-10 mx-auto gap-10">
+			<div class="max-lg:hidden">
 				<button disabled aria-label="avis précédent" class="advice-previous-js pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 size-12 disabled:opacity-30">
 					<svg class=" m-auto -rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
 						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
 					</svg>
 				</button>
 			</div>
-			<div class="advice-container-js border-color max-w-screen-sm w-full min-h-52 p-4 "></div>
-			<div class="max-sm:hidden">
+			<div class="advice-container-js rounded border-color max-w-screen-sm w-full min-h-52 p-4 "></div>
+			<div class="max-lg:hidden">
 				<button disabled aria-label="avis suivant" class="advice-next-js pointer-events-auto rounded bg-secondary btn-primary hover:opacity-100 disabled:opacity-30 size-12  ">
 					<svg class=" m-auto rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
 						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
 					</svg>
 				</button>
 			</div>
-			<div class="sm:hidden flex gap-2 w-full">
+			<div class="lg:hidden flex gap-2 w-full justify-center">
 				<button disabled aria-label="avis précédent" class="advice-previous-js btn-primary w-40 max-sm:w-full p-3 rounded flex gap-3 justify-center disabled:opacity-30">
 					précédent
 				</button>
-				<button disabled aria-label="avis suivant" class="advice-next-js btn-primary w-full p-3 rounded flex gap-3 justify-center disabled:opacity-30">
+				<button disabled aria-label="avis suivant" class="advice-next-js btn-primary w-40 p-3  max-sm:w-full rounded flex gap-3 justify-center disabled:opacity-30">
 					suivant
 				</button>
 			</div>
@@ -164,7 +165,7 @@
 							35380 Paimpont
 						</li>
 					</ul>
-					<iframe title="map" class="rounded border-color" id='map' width="100%" height="350" src="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717"></iframe>
+					<div id="openstreetmap" class="openstreetmap" data-url="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717" width="100%" height="350"></div>
 				</div>
 				<div class='w-full'>
 					<h4 class="text-base uppercase font-montserrat font-medium mb-3 max-md:text-center">
@@ -183,8 +184,11 @@
 {% endblock %}
 
 {% block scripts %}
-	<script src="{{ asset("scripts/map.js") }}"></script>
+	<script type="text/javascript">
+		setTimeout(() => {
+			(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+		}, 1500);
+	</script>
 	<script src="{{ asset("scripts/adviceModal.js") }}"></script>
-
 	<script src="{{asset("scripts/adviceManager.js")}}"></script>
 {% endblock %}

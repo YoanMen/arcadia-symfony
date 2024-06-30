@@ -1,0 +1,134 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Zoo Arcadia -
+	{{ animal.name }}
+{% endblock %}
+
+{% block main %}
+
+	<header aria-label="hero" class="lg:h-[480px] h-80 w-full lg:mt-20 mt-10 ">
+		<img class="h-full w-full object-cover" src="{{ asset("images/animals/" ~ animal.animalImages[0].imageName) }}" alt="{{ animal.animalImages[0].alt }}">
+		<div aria-label="conteneur du titre" class="relative bottom-32 h-32 max-lg:h-40 max-lg:bottom-40 p-10 gradient-to-top flex items-center">
+			<h1 class=" w-full uppercase text-center text-5xl max-md:text-4xl font-medium text-primary">
+				{{ animal.name }}
+			</h1>
+		</div>
+	</header>
+	<main
+		class="min-h-screen">
+		{# BREADCRUMB #}
+		<nav aria-label="breadcrumb" class="px-2 mt-10 ">
+			<ul class="flex items-center gap-2 px-3 text-primary max-w-screen-lg mx-auto w-full h-10 bg-secondary rounded lowercase">
+				<li class="flex items-center gap-2">
+					<a class="text-color--hover transition-all duration-150" href="{{ url('app_home') }}">
+						<svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.707 2.293a1 1 0 0 0-1.414 0l-7 7l-2 2a1 1 0 1 0 1.414 1.414L4 12.414V19a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6.586l.293.293a1 1 0 0 0 1.414-1.414z" clip-rule="evenodd"/></svg>
+					</a>
+					<svg class="rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+					</svg>
+				</li>
+				<li class="flex items-center gap-2 ">
+					<a class="text-color--hover transition-all duration-150" href="{{ url("app_habitat") }}">habitats</a>
+					<svg class="rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+					</svg>
+				</li>
+				<li class="flex items-center gap-2 ">
+					<a class="text-color--hover transition-all duration-150" href="{{ url("app_habitat.show", { 'slug' : animal.habitat.slug }) }}">
+						{{ animal.habitat }}
+					</a>
+					<svg class="rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+					</svg>
+				</li>
+				<li>
+					<a class="text-color--hover transition-all duration-150" href="{{ url("app_service.show" , {"slug" : animal.slug}) }}">{{ animal.name}}</a>
+				</li>
+			</ul>
+		</nav>
+		<p aria-label="description du service" class="max-w-screen-lg mx-auto mt-10 max-lg:mx-2">
+			{{ animal.information.description  }}
+		</p>
+		<section aria-label="information sur l'animal" name="information" class="max-w-screen-lg mx-auto my-20 px-2">
+			<h2 class="text-2xl text-color text-center text-secondary font-bold">Fiche d’information</h2>
+			<div aria-label="information sur l'animal" class="mt-10 mb-20 max-w-[460px] mx-auto px-2">
+				<ul class="uppercase font-montserra flex flex-col gap-2">
+					<li>
+						<strong class="font-bold text-secondary">espèce :</strong>
+						{{ animal.information.species }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">famille :</strong>
+						{{ animal.information.species.family }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">genre :</strong>
+						{{ animal.information.species.genre }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">ordre :</strong>
+						{{ animal.information.species.ordre }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">
+							poids et taille :</strong>
+						{{ animal.information.sizeAndHeight }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">Espérance de vie :</strong>
+						{{ animal.information.lifespan }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">région :</strong>
+						{{ animal.information.region }}
+					</li>
+					<li>
+						<strong class="font-bold text-secondary">Statut UICN :</strong>
+						{{ animal.information.uicn }}
+					</li>
+				</ul>
+			</div>
+		</section>
+
+
+		{% if animal.animalReports is not  empty  %}
+			<section aria-label="rapport du vétérinaire" name="rapport" class="max-w-screen-lg mx-auto my-20 px-2">
+				<h2 class="text-2xl text-color text-center text-secondary font-bold">Le rapport du vétérinaire</h2>
+				<div aria-label="information sur l'animal" class="mt-10 mb-20 max-w-[460px] mx-auto px-2">
+					<ul class="uppercase font-montserra flex flex-col gap-2">
+						<li>
+							<strong class="font-bold text-secondary">état :</strong>
+							{{ animal.animalReports | last.statut }}
+						</li>
+						<li>
+							<strong class="font-bold text-secondary">détail :</strong>
+							{{ animal.animalReports | last.detail ?? 'pas de détail'}}
+						</li>
+					</ul>
+				</div>
+			</section>
+		{% endif %}
+
+		<div aria-label="carousel" class="carousel md:w-[540px] w-full mx-auto h-[360px] relative mb-20 ">
+			<div class="max-sm:hidden carousel-control absolute w-full h-full pointer-events-none	flex justify-between items-center px-6">
+				<button class="hidden pointer-events-auto rounded bg-secondary btn-primary opacity-75 hover:opacity-100 size-12  ">
+					<svg class=" m-auto -rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+					</svg>
+				</button>
+				<button class="hidden pointer-events-auto rounded bg-secondary btn-primary opacity-75 hover:opacity-100 size-12  ">
+					<svg class=" m-auto rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
+					</svg>
+				</button>
+			</div>
+			<div class="carousel-container h-full w-full ">
+				<div class="carousel-items flex overflow-y-hidden h-full w-full sm:overflow-x-hidden snap-mandatory snap-x md:rounded md:border-color">
+					{% for image in animal.animalImages %}
+						<img class="image snap-center object-cover flex-shrink-0 w-full h-full" src="{{ asset('images/animals/' ~ image.imageName) }}" alt="{{ image.alt }}">
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}

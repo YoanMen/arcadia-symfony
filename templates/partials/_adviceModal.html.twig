@@ -8,11 +8,20 @@
 				</svg>
 			</button>
 			<form method="post" class="modal-form-js  relative flex flex-col h-full justify-around gap-2 text-color py-4 mt-2">
-				<label class="font-montserrat font-medium" for="username">pseudo</label>
+				<label class="font-montserrat font-medium" for="pseudo">pseudo</label>
 				<input autofocus minlength="3" class="modal-pseudo-js w-full h-10 p-2 border-color outline-0 rounded bg-border invalid:border-red-500" type="text" name="pseudo" id="pseudo" class="form-control" autocomplete="username">
-				<label class=" mt-2 font-montserrat font-medium" for="password">avis</label>
+				<label class=" mt-2 font-montserrat font-medium" for="advice">avis</label>
 				<textarea minlength="10" class="modal-text-js w-full h-40 p-2 border-color outline-0 rounded bg-border resize-none invalid:border-red-500" name="advice" id="advice"></textarea>
 				<input class='modal-csrf-js' type="hidden" name="_csrf_token" value="{{ csrf_token('send_advice') }}">
+				<label class="flex gap-1 justify-start items-start " for="agree">
+					<input class="" type="checkbox" required name="agree" id="agree">
+
+					<p class="text-xs   ">
+						En cochant cette case, je consens à envoyer mon avis. Voir
+						<a class="text-color--btn underline" href="{{ url('app_mentions') }}">mentions légales</a>
+						pour plus d'informations sur la collecte et l'utilisation de mes données.
+					</p>
+				</label>
 				<button disabled class="modal-submit-js w-full h-11 rounded text-sm p-3 px-3 btn-primary mt-6 disabled:opacity-50" type="submit">
 					envoyer mon avis
 				</button>

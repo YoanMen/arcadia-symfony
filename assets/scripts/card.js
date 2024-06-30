@@ -1,43 +1,46 @@
-class Card {
-  constructor(imageUrl, alt, href, title, description) {
-    this.imageUrl = imageUrl;
-    this.alt = alt;
-    this.href = href;
-    this.title = title;
-    this.description = description;
-
-    this.createCard();
+export class Card {
+  constructor(className = "") {
+    this.className = className;
   }
 
-  createCard() {
-    const article = document.createElement("article");
-    anchor.href = this.href;
+  setClassName(className) {
+    this.className = className;
+  }
 
-    const anchor = document.createElement("a");
-    anchor.href = this.href;
-    anchor.className =
-      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group";
+  createCard(imageName, alt, href, title, description) {
+    const articleElement = document.createElement("article");
+    articleElement.className =
+      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group " +
+      this.className;
 
-    const image = document.createElement("img");
-    image.src = this.imageUrl;
-    image.alt = this.alt;
-    image.className =
-      "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-transform ease-in-out duration-150";
+    const anchorElement = document.createElement("a");
+    anchorElement.href = href;
+
+    const imageElement = document.createElement("img");
+    imageElement.src = imageName;
+    imageElement.alt = alt;
+    imageElement.className =
+      "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-all ease-in-out duration-150";
 
     const textContainer = document.createElement("div");
     textContainer.className =
-      "absolute rounded-sm bottom-0 flex flex-col justify-end w-full bg-gradient-to-t from-black p-2";
+      "absolute rounded-sm bottom-0 flex flex-col justify-end w-full gradient-to-top p-2";
 
-    const title = document.createElement("h3");
-    title.textContent = this.title;
-    title.className = "text-xl font-semibold uppercase text-primary";
+    const titleElement = document.createElement("h3");
+    titleElement.textContent = title;
+    titleElement.className =
+      "button-title text-xl font-semibold uppercase text-primary";
 
-    const description = document.createElement("p");
-    description.textContent = this.description;
-    description.className = "text-primary line-clamp-2";
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = description;
+    descriptionElement.className = "text-primary line-clamp-2";
 
-    textContainer.appendChild(title, description);
-    anchor.appendChild(textContainer);
-    article.appendChild(anchor);
+    textContainer.appendChild(titleElement);
+    textContainer.appendChild(descriptionElement);
+    anchorElement.appendChild(imageElement);
+    anchorElement.appendChild(textContainer);
+    articleElement.appendChild(anchorElement);
+
+    return articleElement;
   }
 }

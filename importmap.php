@@ -16,6 +16,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'cardsManager' => [
+        'path' => './assets/scripts/cardsManager.js',
+        'entrypoint' => true,
+    ],
     'admin/app' => [
         'path' => './assets/admin/app.js',
         'entrypoint' => true,
@@ -28,5 +32,8 @@ return [
     ],
     '@hotwired/turbo' => [
         'version' => '7.3.0',
+    ],
+    'chart.js' => [
+        'version' => '3.9.1',
     ],
 ];

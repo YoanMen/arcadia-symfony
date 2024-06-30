@@ -8,8 +8,10 @@ use App\Repository\AnimalRepository;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
+#[UniqueEntity('name', message: "Un animal avec ce nom existe déjà")]
 class Animal
 {
     #[ORM\Id]

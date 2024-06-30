@@ -12,8 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
-#[UniqueEntity('name')]
-
+#[UniqueEntity('name', message: "Un habitat avec ce nom existe déjà")]
 class Habitat
 {
     #[ORM\Id]
@@ -27,9 +26,9 @@ class Habitat
     #[Groups('habitat.cards')]
     private ?string $name = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 500, maxMessage: 'La description est trop longue, 500 caractères maximum')]
+    #[Assert\Length(max: 255, maxMessage: 'La description est trop longue, 255 caractères maximum')]
     #[Groups('habitat.cards')]
     private ?string $description = null;
 

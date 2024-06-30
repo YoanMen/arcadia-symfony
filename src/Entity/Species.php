@@ -37,7 +37,6 @@ class Species
     #[ORM\OneToOne(mappedBy: 'species', cascade: ['persist', 'remove'])]
     private ?AnimalInformation $animalInformation = null;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -91,13 +90,6 @@ class Species
         return $this;
     }
 
-
-
-    public function __toString(): string
-    {
-        return $this->communName;
-    }
-
     public function getAnimalInformation(): ?AnimalInformation
     {
         return $this->animalInformation;
@@ -113,5 +105,10 @@ class Species
         $this->animalInformation = $animalInformation;
 
         return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->communName;
     }
 }

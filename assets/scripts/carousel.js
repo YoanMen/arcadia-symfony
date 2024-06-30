@@ -48,6 +48,13 @@ export class Carousel {
       });
     }
 
+    if (this.items.length > 1) {
+      const cloneImage = this.items[0].cloneNode(true);
+      cloneImage.classList.add("last:max-sm:hidden");
+
+      this.container.appendChild(cloneImage);
+    }
+
     // disable interaction if no interaction is set
     if (noInteraction) this.disableInteractionImage();
 
@@ -66,6 +73,7 @@ export class Carousel {
   previous() {
     const button = this.carousel.querySelector(".carousel-control").children[0];
 
+    button.classList.remove("hidden");
     button.addEventListener("click", (e) => {
       e.stopPropagation();
       if (this.autoplay) clearTimeout(this.animationAutoplay);
@@ -78,6 +86,7 @@ export class Carousel {
   next() {
     const button = this.carousel.querySelector(".carousel-control").children[1];
 
+    button.classList.remove("hidden");
     button.addEventListener("click", (e) => {
       e.stopPropagation();
 

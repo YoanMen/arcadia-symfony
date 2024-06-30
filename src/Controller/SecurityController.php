@@ -12,13 +12,17 @@ class SecurityController extends AbstractController
     #[Route(path: '/login', name: 'app_login')]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        // redirect user to admin panel
+        // redirect user to back office
         if ($this->getUser()) {
             return $this->redirectToRoute(route: 'app_admin');
         }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
+        // add sleep to avoid temporel attacks
+        if ($error) {
+            sleep(rand(0.8, 1.2));
+        }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();
 

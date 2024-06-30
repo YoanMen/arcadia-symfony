@@ -43,7 +43,7 @@ class Service
     /**
      * @var Collection<int, ServiceImage>
      */
-    #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour le service')]
     #[Assert\Valid()]
 

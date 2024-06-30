@@ -53,8 +53,9 @@ body {
 
 p,
 label,
-input {
+li input {
   font-family: var(--open-sans);
+  color: var(--text-color);
 }
 
 h1,
@@ -64,6 +65,13 @@ h4 {
   font-family: var(--montserrat);
 }
 
+.gradient-to-top {
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.5018382352941176) 0%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
 .cards {
   border-color: var(--secondary);
   background-color: var(--secondary);
@@ -139,7 +147,7 @@ h4 {
 
 .border-color:focus {
   border-color: var(--btn-color);
-  border: solid 2px var(--btn-color);
+  border: solid 3px var(--btn-color);
 }
 
 .bg-border {

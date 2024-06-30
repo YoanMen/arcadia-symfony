@@ -15,7 +15,6 @@ use App\Controller\Admin\Filter\HabitatCommentFilter;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class HabitatCommentCrudController extends AbstractCrudController
 {
@@ -70,7 +69,8 @@ class HabitatCommentCrudController extends AbstractCrudController
             AssociationField::new("habitat"),
             TextareaField::new('detail')
                 ->setColumns(12)
-                ->onlyOnForms(),
+                ->onlyOnForms()
+                ->setRequired(true),
             TextField::new('detail')
                 ->onlyOnIndex()
                 ->renderAsHtml()

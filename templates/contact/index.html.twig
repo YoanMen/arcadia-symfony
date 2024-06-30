@@ -1,16 +1,86 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ContactController!{% endblock %}
+{% block title %}Zoo Arcadia - Contact
+{% endblock %}
 
 {% block main %}
 
-    <main class="min-h-screen">
-        
-        
-            
-            
-    
-    </main>
+	<main class="min-h-screen bg-primary flex items-center p-4">
+
+		<section aria-label="formulaire de conctact" name="contact" id="contact" class="bg-primary max-w-lg w-full p-2 rounded m-auto border-color max-sm:px-4 max-2xl:my-20">
+			<h1 class="mb-3 mt-6 font-semibold text-center text-3xl">
+				Formulaire de contact
+			</h1>
+
+			{% for message in app.flashes('success') %}
+
+				<div class="bg-green-100 lg:mx-4 max-lg:my-2 border border-green-400 text-green-700 px-4 py-3 rounded" role="alert">
+					<span class="block sm:inline">
+						{{ message }}</span>
+				</div>
+			{% endfor %}
+
+			{% if error is defined %}
+				<div class="bg-red-100 lg:mx-4 max-lg:my-2 border border-red-400 text-red-700 px-4 py-3 rounded" role="alert">
+					<span class="block sm:inline">{{ error}}</span>
+				</div>
+			{% endif %}
+
+			<!-- contact form  -->
+			<div class=" p-4 max-lg:p-0 max-md:w-full w-full h-full ">
+				{{ form_start(contactForm, {'attr': {'id': 'contact-form'}}) }}
+
+				<div class="grid grid-cols-2 gap-2 w-full max-md:grid-cols-1  ">
+					<div>
+						{{ form_label(contactForm.name) }}
+						{{ form_widget(contactForm.name) }}
+						<div class="text-red-700  text-sm">
+							{{ form_errors(contactForm.name) }}
+						</div>
+					</div>
+
+					<div>
+						{{ form_label(contactForm.email) }}
+						{{ form_widget(contactForm.email) }}
+						<div class="text-red-700 text-sm">
+							{{ form_errors(contactForm.email) }}
+						</div>
+					</div>
+				</div>
+				<div class='mt-4'>
+					{{ form_label(contactForm.contactType) }}
+					{{ form_widget(contactForm.contactType) }}
+					<div class="text-red-700  text-sm">
+						{{ form_errors(contactForm.contactType) }}
+					</div>
+				</div>
+				<div class="my-4">
+					{{ form_label(contactForm.message) }}
+					{{ form_widget(contactForm.message) }}
+					<div class="text-red-700  text-sm">
+						{{ form_errors(contactForm.message) }}
+					</div>
+				</div>
+				<input type="hidden" name="_csrf_token" value="{{ csrf_token('contact') }}">
+
+				<div class="grid grid-cols-3 max-lg:gap-0 gap-2 w-full max-md:grid-cols-1">
+					<label class="flex gap-1  col-span-2  " for="{{ contactForm.agreeTerms.vars.id}}">
+						{{ form_row( contactForm.agreeTerms) }}
+						<small class="text-xs  max-lg:mb-6  ">
+							En cochant cette case, je consens à ce que mes données soient utilisées pour me recontacter au sujet de ma demande et ne seront ni stockées ni partagées avec des tiers, voir
+							<a class="text-color--btn underline" href="{{ url('app_mentions') }}">mentions légales</a>.
+						</small>
+					</label>
+					{{ form_row( contactForm.save) }}
+				</div>
+				{{ form_end(contactForm) }}
+			</div>
+
+
+		</section>
+
+
+	</main>
 
 
 {% endblock %}
