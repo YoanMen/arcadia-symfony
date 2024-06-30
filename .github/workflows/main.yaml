@@ -16,7 +16,7 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: test
+          MYSQL_DATABASE: database
         ports:
           - 3306:3306
         options: >-
@@ -57,7 +57,10 @@ jobs:
           done
 
       - name: Set up .env.test.local
-        run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/test" > .env.test.local
+        run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/database" > .env.test.local
+
+      - name: create database
+        run: php bin/console d:d:c --no-interaction --env=test
 
       - name: Migrate database
         run: php bin/console d:m:m --no-interaction --env=test
