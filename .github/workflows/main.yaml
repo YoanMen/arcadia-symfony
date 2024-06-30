@@ -2,14 +2,29 @@ name: CI/CD
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
   pull_request:
-    branches: [master]
+    branches: [dev]
 
 jobs:
   symfony-tests:
     name: 🛠️ Build and Test
     runs-on: ubuntu-latest
+
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: database
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
+
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -17,7 +32,7 @@ jobs:
       - name: 🔧 Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.3'
+          php-version: "8.3"
 
       - name: Copy .env.test.local
         run: php -r "file_exists('.env.test.local') || copy('.env.test', '.env.test.local');"
@@ -34,26 +49,32 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
-      - name: Create Database
+      - name: Wait for MySQL
         run: |
-          mkdir -p data
-          touch data/database.sqlite
+          until mysqladmin ping --host 127.0.0.1 --port 3306 --user root --password=root --silent; do
+            echo "Waiting for MySQL to be ready..."
+            sleep 5
+          done
 
-      - name: Migrate database 
+      - name: Set up .env.test.local
+        run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/database" > .env.test.local
+
+      - name: create database
+        run: php bin/console d:d:c --no-interaction --env=test
+
+      - name: Migrate database
         run: php bin/console d:m:m --no-interaction --env=test
 
       - name: Load fixtures
-        run: php bin/console d:f:l --no-interaction --env=test
+        run: php bin/console doctrine:fixtures:load --no-interaction --env=test
 
       - name: Execute tests (Unit and Feature tests) via PHPUnit
-        env:
-          DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
         run: vendor/bin/phpunit
 
   web-deploy:
     name: 🎉 Deploy
     runs-on: ubuntu-latest
-    needs: symfony-tests  # Cette ligne fait dépendre le job de déploiement du job de tests
+    needs: symfony-tests # Cette ligne fait dépendre le job de déploiement du job de tests
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -61,7 +82,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.ftp_server }}
+          server: ${{ secrets.ftp_server_TEST }}
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           port: ${{ secrets.ftp_port }}
