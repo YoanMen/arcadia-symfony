@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [master]
+    branches: [dev]
   pull_request:
-    branches: [master]
+    branches: [dev]
 
 jobs:
   symfony-tests:
@@ -49,6 +49,14 @@ jobs:
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
+      - name: execute PHP-cs-fixer
+        run: ./vendor/bin/php-cs-fixer fix --diff --allow-risky=yes
+
+      - name: execute PHPStan
+        uses: php-actions/phpstan@v3
+        with:
+          path: src/
+
       - name: Wait for MySQL
         run: |
           until mysqladmin ping --host 127.0.0.1 --port 3306 --user root --password=root --silent; do
@@ -82,7 +90,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.ftp_server }}
+          server: ${{ secrets.ftp_servert }}
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           port: ${{ secrets.ftp_port }}
@@ -91,5 +99,3 @@ jobs:
             **/.git*/**
             **/node_modules/**  
             **/documents/**
-
-
