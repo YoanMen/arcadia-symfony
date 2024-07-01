@@ -1,5 +1,7 @@
-// get data to create cards
-// manage pagination
+/**
+ * get data to create cards
+ * manage pagination
+ */
 
 import { Pagination } from "./pagination.js";
 import { Card } from "./card.js";
@@ -9,12 +11,12 @@ export default class CardsManager {
     this.fetchUrl = fetchUrl;
     this.href = href;
     this.imagePath = imagePath;
-
-    this.search = "";
+    this.className = className;
     this.cardsContainer = document.querySelector(".cards-container-js");
-    this.card = new Card(className);
 
-    this.searchAnimal = false;
+    // search filter
+    this.search = "";
+    this.searchAnimals = false;
     this.searchInput = document.querySelector(".cards-search-js");
     this.searchSubmit = document.querySelector(".cards-search-submit-js");
     this.datalist = document.querySelector(".cards-search-datalist-js");
@@ -23,7 +25,7 @@ export default class CardsManager {
     this.initialize();
   }
 
-  // initialise pagingation and
+  // initialise pagination and datas
   initialize() {
     this.pagination = new Pagination(
       () => {
@@ -54,7 +56,7 @@ export default class CardsManager {
       this.searchForm.addEventListener("submit", (event) => {
         event.preventDefault();
         if (this.search.length > 0) {
-          this.searchAnimal = true;
+          this.searchAnimals = true;
           this.getDataForAnimals();
         }
       });
@@ -123,26 +125,26 @@ export default class CardsManager {
   nextPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 1);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
+    this.searchAnimals ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   previousPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage - 1);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
+    this.searchAnimals ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   upperPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 1);
 
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
+    this.searchAnimals ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   doubleUpperPage() {
     this.pagination.setCurrentPage(this.pagination.currentPage + 2);
     const page = this.pagination.currentPage;
-    this.searchAnimal ? this.getDataForAnimals(page) : this.getData(page);
+    this.searchAnimals ? this.getDataForAnimals(page) : this.getData(page);
   }
 
   // Show Cards
@@ -153,16 +155,17 @@ export default class CardsManager {
       this.pagination.setTotalPages(data.totalPage);
 
       data.data.forEach((element) => {
-        const newCard = this.card.createCard(
+        const card = new Card(
           `${this.imagePath}${element.image_name}`,
           element.alt,
           `${this.href}/${element.slug}`,
           element.name,
-          element.description
+          element.description,
+          this.className
         );
 
         // add card to container
-        this.cardsContainer.appendChild(newCard);
+        this.cardsContainer.appendChild(this.createCard(card));
       });
 
       this.listenButtonsForAnimalClick();
@@ -178,21 +181,20 @@ export default class CardsManager {
 
     if (data.data.length != 0) {
       // add class to animals buttons
-      this.card.setClassName("button-listen");
-
       this.pagination.setTotalPages(data.totalPage);
 
       data.data.forEach((element) => {
-        const newCard = this.card.createCard(
+        const card = new Card(
           `/images/animals/${element.image_name}`,
           element.alt,
           `/habitats/${element.habitat_slug}/${element.slug}`,
           element.name,
-          element.description
+          element.description,
+          "button-listen"
         );
 
         // add card to container
-        this.cardsContainer.appendChild(newCard);
+        this.cardsContainer.appendChild(this.createCard(card));
       });
 
       this.listenButtonsForAnimalClick();
@@ -291,7 +293,6 @@ export default class CardsManager {
     }
   }
 
-
   // Used to get animal when user click
   listenButtonsForAnimalClick() {
     const buttons = document.querySelectorAll(".button-listen");
@@ -319,5 +320,42 @@ export default class CardsManager {
         });
       });
     });
+  }
+
+  createCard(card) {
+    const articleElement = document.createElement("article");
+    articleElement.className =
+      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group " +
+      card.getClassName();
+
+    const anchorElement = document.createElement("a");
+    anchorElement.href = card.getHref();
+
+    const imageElement = document.createElement("img");
+    imageElement.src = card.getImageName();
+    imageElement.alt = card.getAlt();
+    imageElement.className =
+      "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-all ease-in-out duration-150";
+
+    const textContainer = document.createElement("div");
+    textContainer.className =
+      "absolute rounded-sm bottom-0 flex flex-col justify-end w-full gradient-to-top p-2";
+
+    const titleElement = document.createElement("h3");
+    titleElement.textContent = card.getTitle();
+    titleElement.className =
+      "button-title text-xl font-semibold uppercase text-primary";
+
+    const descriptionElement = document.createElement("p");
+    descriptionElement.textContent = card.getDescription();
+    descriptionElement.className = "text-primary line-clamp-2";
+
+    textContainer.appendChild(titleElement);
+    textContainer.appendChild(descriptionElement);
+    anchorElement.appendChild(imageElement);
+    anchorElement.appendChild(textContainer);
+    articleElement.appendChild(anchorElement);
+
+    return articleElement;
   }
 }

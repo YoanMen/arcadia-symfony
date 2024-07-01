@@ -36,46 +36,51 @@ class AdviceModal {
     this.modal.close();
   }
 
+  // check if input is valid
   checkInputs() {
     const adviceLength = this.adviceInput.value.length;
     const pseudoLength = this.pseudoInput.value.length;
 
-    let pseudoIsValid = false;
-    let adviceIsValid = false;
+    let pseudoIsValid = true;
+    let adviceIsValid = true;
 
-    if (pseudoLength > 0) {
-      if (pseudoLength > 60) {
-        this.errorMessage(
-          this.pseudoInput,
-          "Le pseudo doit faire moins de 60 caractères"
-        );
-      } else if (pseudoLength < 3) {
-        this.errorMessage(
-          this.pseudoInput,
-          "Le pseudo doit faire au minimum 3 caractères"
-        );
-      } else {
-        pseudoIsValid = true;
-        this.removeError(this.pseudoInput);
-      }
+    this.removeError(this.adviceInput);
+    this.removeError(this.pseudoInput);
+
+    if (pseudoLength >= 0 && pseudoLength < 3) {
+      pseudoIsValid = false;
+      this.errorMessage(
+        this.pseudoInput,
+        "Le pseudo doit faire au minimum 3 caractères"
+      );
     }
 
-    if (adviceLength > 0) {
-      if (adviceLength > 300) {
-        this.errorMessage(
-          this.adviceInput,
-          "L'avis doit faire moins de 300 caractères"
-        );
-      } else if (adviceLength < 10) {
-        this.errorMessage(
-          this.adviceInput,
-          "L'avis doit faire au minimum 10 caractères"
-        );
-      } else {
-        adviceIsValid = true;
-        this.removeError(this.adviceInput);
-      }
+    if (pseudoLength > 60) {
+      pseudoIsValid = false;
+      this.errorMessage(
+        this.pseudoInput,
+        "Le pseudo doit faire moins de 60 caractères"
+      );
     }
+
+    if (adviceLength >= 0 && adviceLength < 10) {
+      adviceIsValid = false;
+
+      this.errorMessage(
+        this.adviceInput,
+        "L'avis doit faire au minimum 10 caractères"
+      );
+    }
+
+    if (adviceLength > 300) {
+      adviceIsValid = false;
+
+      this.errorMessage(
+        this.adviceInput,
+        "L'avis doit faire au maximum 300 caractères"
+      );
+    }
+
     if (adviceIsValid && pseudoIsValid) {
       this.submitBtn.disabled = false;
     } else {
