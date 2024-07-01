@@ -22,19 +22,19 @@ class InformationType extends AbstractType
             ->add('lifespan')
             ->add('uicn', EntityType::class, [
                 'class' => UICN::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
             ->add('region', EntityType::class, [
                 'class' => Region::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
             ->add('animal', EntityType::class, [
                 'class' => Animal::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
             ->add('species', EntityType::class, [
                 'class' => Species::class,
-'choice_label' => 'id',
+                'choice_label' => 'id',
             ])
         ;
     }

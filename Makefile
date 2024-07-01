@@ -1,5 +1,7 @@
 .PHONY:  deploy 
 
+defaul: check
+
 deploy: vendor/autoload.php
 
 	cd public &&	rm -R asset/
@@ -12,3 +14,6 @@ vendor/autoload.php: composer.lock composer.json
 	touch vendor/autoload.php
 
 
+check :
+	./vendor/bin/php-cs-fixer fix src
+	vendor/bin/phpstan analyse src 

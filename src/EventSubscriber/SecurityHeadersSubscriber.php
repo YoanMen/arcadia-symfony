@@ -9,20 +9,19 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class SecurityHeadersSubscriber implements EventSubscriberInterface
 {
-  public function onKernelResponse(ResponseEvent $event)
-  {
-    $response = $event->getResponse();
+    public function onKernelResponse(ResponseEvent $event): void
+    {
+        $response = $event->getResponse();
 
-
-    if ($response->getStatusCode() === Response::HTTP_OK) {
-      $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+        if (Response::HTTP_OK === $response->getStatusCode()) {
+            $response->headers->set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+        }
     }
-  }
 
-  public static function getSubscribedEvents()
-  {
-    return [
-      KernelEvents::RESPONSE => 'onKernelResponse',
-    ];
-  }
+    public static function getSubscribedEvents()
+    {
+        return [
+            KernelEvents::RESPONSE => 'onKernelResponse',
+        ];
+    }
 }

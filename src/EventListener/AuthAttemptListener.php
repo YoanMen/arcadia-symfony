@@ -3,64 +3,57 @@
 namespace App\EventListener;
 
 use App\DTO\AccountLockDTO;
-use App\Entity\User;
 use App\Entity\AuthAttempt;
+use App\Entity\User;
 use App\Event\AccountLockedRequestEvent;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Http\Event\LoginFailureEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Security\Http\Event\LoginFailureEvent;
 
 final class AuthAttemptListener
 {
-
-  public function __construct(private EntityManagerInterface $em, private RequestStack $requestStack, private EventDispatcherInterface $dispatcher)
-  {
-  }
-
-
-  #[AsEventListener(event: LoginFailureEvent::class)]
-  public function onSecurityAuthenticationError(LoginFailureEvent $event): void
-  {
-
-    $passport = $event->getPassport()->getUser();
-
-    $user = $this->em->getRepository(User::class)
-      ->findOneBy(['username' => $passport->getUserIdentifier()]);
-
-    if (!$user) {
-      return;
+    public function __construct(private EntityManagerInterface $em, private EventDispatcherInterface $dispatcher)
+    {
     }
 
-    $authAttempt = $user->getAuthAttempt();
+    #[AsEventListener(event: LoginFailureEvent::class)]
+    public function onSecurityAuthenticationError(LoginFailureEvent $event): void
+    {
+        $passport = $event->getPassport()->getUser();
 
-    $accountLockDTO = new AccountLockDTO();
-    $accountLockDTO->username = $user->getUsername();
-    $accountLockDTO->email = $user->getEmail();
+        $user = $this->em->getRepository(User::class)
+            ->findOneBy(['username' => $passport->getUserIdentifier()]);
 
+        if (!$user) {
+            return;
+        }
 
-    if ($authAttempt) {
-      // increment attempt
-      $attemptCount = $authAttempt->getAttempt() + 1;
+        $authAttempt = $user->getAuthAttempt();
 
-      $authAttempt->setAttempt($attemptCount);
+        $accountLockDTO = new AccountLockDTO();
+        $accountLockDTO->username = $user->getUsername();
+        $accountLockDTO->email = $user->getEmail();
 
-      // event to send mail to user
-      if ($attemptCount == 5) {
-        $this->dispatcher->dispatch(new AccountLockedRequestEvent($accountLockDTO));
-      }
-    } else {
-      // create a new auth attempt for user
-      $authAttempt = new AuthAttempt();
+        if ($authAttempt) {
+            // increment attempt
+            $attemptCount = $authAttempt->getAttempt() + 1;
 
-      $authAttempt->setAccount($user);
-      $authAttempt->setAttempt(1);
+            $authAttempt->setAttempt($attemptCount);
+
+            // event to send mail to user
+            if (5 == $attemptCount) {
+                $this->dispatcher->dispatch(new AccountLockedRequestEvent($accountLockDTO));
+            }
+        } else {
+            // create a new auth attempt for user
+            $authAttempt = new AuthAttempt();
+
+            $authAttempt->setAccount($user);
+            $authAttempt->setAttempt(1);
+        }
+
+        $this->em->persist($authAttempt);
+        $this->em->flush();
     }
-
-
-
-    $this->em->persist($authAttempt);
-    $this->em->flush();
-  }
 }

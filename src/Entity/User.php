@@ -2,18 +2,18 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
-#[UniqueEntity('email', message: "Un compte avec cette adresse existe déjà")]
+#[UniqueEntity('email', message: 'Un compte avec cette adresse existe déjà')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -25,7 +25,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 180, maxMessage: "Le nom de l\'utilisateur ne doit pas dépasser 180 caractères")]
-
     private ?string $username = null;
 
     /**
@@ -34,7 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column()]
     private array $roles = [];
     private string $selectedRole;
-
 
     /**
      * @var string The hashed password
@@ -48,10 +46,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Email(message: "L'adresse email n'est pas valide")]
     // 255 caractères avant le @ et 55 pour le domaine.
     #[Assert\Length(max: 320, maxMessage: "L\'adresse email  ne doit pas dépasser 320 caractères")]
-
     private ?string $email = null;
-
-
 
     #[ORM\OneToOne(mappedBy: 'account', cascade: ['persist', 'remove'])]
     private ?AuthAttempt $authAttempt = null;
@@ -74,15 +69,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: AnimalReport::class, mappedBy: 'veterinary')]
     private Collection $animalReports;
 
-
     public function __construct()
     {
         $this->habitatComments = new ArrayCollection();
         $this->animalFood = new ArrayCollection();
         $this->animalReports = new ArrayCollection();
     }
-
-
 
     public function getId(): ?int
     {
@@ -94,7 +86,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->selectedRole;
     }
 
-    public function setSelectedRole(string $role)
+    public function setSelectedRole(string $role): void
     {
         $this->selectedRole = $role;
     }
@@ -123,6 +115,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see UserInterface
+     *
      * @return list<string>
      */
     public function getRoles(): array
@@ -137,14 +130,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @param list<string> $roles
      */
-    public function setRoles(array $roles): static
+    public function setRoles(array $roles): string
     {
         $this->roles = $roles;
 
         return $this;
     }
 
-    public function addRole($role)
+    public function addRole(string $role): void
     {
         $this->roles[] = $role;
     }
@@ -185,8 +178,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-
-
     public function getAuthAttempt(): ?AuthAttempt
     {
         return $this->authAttempt;
@@ -203,7 +194,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
 
     public function __toString(): string
     {

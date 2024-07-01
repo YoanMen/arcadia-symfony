@@ -5,21 +5,18 @@ namespace App\Controller\Admin;
 use App\Entity\Habitat;
 use App\Form\HabitatImageType;
 use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class HabitatCrudController extends AbstractCrudController
 {
-
-
-
     public static function getEntityFqcn(): string
     {
         return Habitat::class;
@@ -34,16 +31,16 @@ class HabitatCrudController extends AbstractCrudController
                 });
         }
 
-
         return $actions->disable(Action::NEW, Action::EDIT, Action::DELETE);
     }
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setPageTitle("index", "Gestion des habitats")
+        return $crud->setPageTitle('index', 'Gestion des habitats')
             ->setPageTitle('edit', 'Modifier un habitat')
             ->setPageTitle('new', 'Création d\'un habitat');
     }
+
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -65,12 +62,12 @@ class HabitatCrudController extends AbstractCrudController
         ];
     }
 
-    public function deleteEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function deleteEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void
     {
         $animalCount = count($entityInstance->getAnimals());
 
-        if ($animalCount != 0) {
-            $this->addFlash('notice', "Impossible de supprimer l'habitat " . $entityInstance->getName() . " des animaux y sont rattaché");
+        if (0 != $animalCount) {
+            $this->addFlash('notice', "Impossible de supprimer l'habitat ".$entityInstance->getName().' des animaux y sont rattaché');
         } else {
             $entityManager->remove($entityInstance);
             $entityManager->flush();

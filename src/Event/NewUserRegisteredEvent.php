@@ -6,7 +6,7 @@ use App\DTO\NewUserDTO;
 
 class NewUserRegisteredEvent
 {
-  public function __construct(public readonly NewUserDTO $data)
-  {
-  }
+    public function __construct(public readonly NewUserDTO $data)
+    {
+    }
 }

@@ -10,7 +10,6 @@ class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
-
         $schedules = new Schedules();
         $schedules->setSchedules('remplacer par vos horaires');
         $manager->persist($schedules);

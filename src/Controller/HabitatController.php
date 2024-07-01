@@ -21,9 +21,7 @@ class HabitatController extends AbstractController
     #[Route('/habitats/{slug}', name: 'app_habitat.show')]
     public function show(HabitatRepository $habitatRepository, string $slug): Response
     {
-
         $habitat = $habitatRepository->findOneBy(['slug' => $slug]);
-
 
         if ($habitat) {
             return $this->render('habitat/show.html.twig', [
@@ -37,7 +35,6 @@ class HabitatController extends AbstractController
     #[Route('/habitats/{slug}/{slugAnimal}', name: 'app_habitat.animalShow')]
     public function showAnimal(AnimalRepository $animalRepository, string $slug, string $slugAnimal): Response
     {
-
         $animal = $animalRepository->findOneBy(['slug' => $slugAnimal]);
         if ($animal) {
             return $this->render('animal/show.html.twig', [

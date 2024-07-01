@@ -19,7 +19,6 @@ class UICN
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 255, maxMessage: 'L\'UICN ne doit pas dépasser 255 caractères')]
-
     private ?string $uicn = null;
 
     /**

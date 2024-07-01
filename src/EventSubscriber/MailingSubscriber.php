@@ -6,23 +6,21 @@ use App\Event\AccountLockedRequestEvent;
 use App\Event\ContactRequestEvent;
 use App\Event\NewUserRegisteredEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\MailerInterface;
 
 class MailingSubscriber implements EventSubscriberInterface
 {
-
     public function __construct(private readonly MailerInterface $mailer)
     {
     }
 
     public function onContactRequestEvent(ContactRequestEvent $event): void
     {
-
         $data = $event->data;
         $mail = (new TemplatedEmail())
             ->to($_ENV['CONTACT_MAIL'])
-            ->subject("Message du formulaire de contact par " . $data->name)
+            ->subject('Message du formulaire de contact par '.$data->name)
             ->from('no-reply@arcadia.com')
             ->htmlTemplate('email/contact.html.twig')
             ->context(['data' => $data]);
@@ -32,11 +30,10 @@ class MailingSubscriber implements EventSubscriberInterface
 
     public function onNewUserRegisteredEvent(NewUserRegisteredEvent $event): void
     {
-
         $data = $event->data;
         $mail = (new TemplatedEmail())
             ->to($data->email)
-            ->subject("Zoo Arcadia - Votre compte")
+            ->subject('Zoo Arcadia - Votre compte')
             ->from($_ENV['NOREPLY_MAIL'])
             ->htmlTemplate('email/newAccount.html.twig')
             ->context(['data' => $data]);
@@ -50,7 +47,7 @@ class MailingSubscriber implements EventSubscriberInterface
 
         $mail = (new TemplatedEmail())
             ->to($data->email)
-            ->subject("Zoo Arcadia - COMPTE BLOQUÉ")
+            ->subject('Zoo Arcadia - COMPTE BLOQUÉ')
             ->from($_ENV['NOREPLY_MAIL'])
             ->htmlTemplate('email/accountLock.html.twig')
             ->context(['data' => $data]);
@@ -64,7 +61,6 @@ class MailingSubscriber implements EventSubscriberInterface
             ContactRequestEvent::class => 'onContactRequestEvent',
             NewUserRegisteredEvent::class => 'onNewUserRegisteredEvent',
             AccountLockedRequestEvent::class => 'onAccountLockedRequestEvent',
-
         ];
     }
 }

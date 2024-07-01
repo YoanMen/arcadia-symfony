@@ -2,81 +2,72 @@
 
 namespace App\Service;
 
-use GdImage;
+use Vich\UploaderBundle\Event\Event;
 
 class CompressImage
 {
+    public function compress(Event $event, int $quality = 70): void
+    {
+        try {
+            $object = $event->getObject();
+            $mapping = $event->getMapping();
 
-  public function compress($event, $quality = 70)
-  {
+            $destination = $mapping->getUploadDestination();
+            $nameFile = $object->getImageName();
+            $imageSize = getimagesize($destination.'/'.$nameFile);
 
-    try {
+            $imageWidth = $imageSize['0'];
+            $imageHeight = $imageSize['1'];
+            $extension = $imageSize['mime'] ?? $object->getImageFile()->getExtension();
 
-      $object = $event->getObject();
-      $mapping = $event->getMapping();
+            switch ($extension) {
+                case 'image/png':
+                    $image = imagecreatefrompng($destination.'/'.$nameFile);
+                    $newNameFile = str_replace('.png', '.webp', $nameFile);
+                    break;
 
+                case 'image/jpeg':
+                    $image = imagecreatefromjpeg($destination.'/'.$nameFile);
+                    $newNameFile = str_replace(['.jpeg', '.jpg'], '.webp', $nameFile);
+                    break;
 
-      $destination = $mapping->getUploadDestination();
-      $nameFile = $object->getImageName();
-      $imageSize = getimagesize($destination  . '/' . $nameFile);
+                default:
+                    $image = null;
+                    $newNameFile = $nameFile;
+                    break;
+            }
 
-      $imageWidth = $imageSize['0'];
-      $imageHeight = $imageSize['1'];
-      $extension  = $imageSize['mime'] ?? $object->getImageFile()->getExtension();
+            if ('image/webp' == $extension) {
+                return;
+            }
 
+            if ($image) {
+                $object->setImageName($newNameFile);
 
-      switch ($extension) {
-        case 'image/png':
-          $image = imagecreatefrompng($destination . '/' . $nameFile);
-          $newNameFile = str_replace('.png', '.webp', $nameFile);
-          break;
+                $resize = $this->resizeImage($quality, $image, $imageWidth, $imageHeight);
 
-        case 'image/jpeg':
+                // format image to webp
+                imagewebp($resize, $destination.'/'.$newNameFile, $quality);
 
-          $image = imagecreatefromjpeg($destination . '/' . $nameFile);
-          $newNameFile = str_replace(['.jpeg', '.jpg'], '.webp', $nameFile);
-          break;
+                // remove image when formatted
+                unlink($destination.'/'.$nameFile);
 
-        default:
-          $image = null;
-          break;
-      }
-
-      if ($extension == 'image/webp') {
-        return;
-      }
-
-
-      if ($image) {
-        $object->setImageName($newNameFile);
-
-
-        $resize = $this->resizeImage($quality, $image, $imageWidth, $imageHeight);
-
-
-        // format image to webp
-        imagewebp($resize, $destination  . '/' . $newNameFile, $quality);
-
-        // remove image when formatted
-        unlink($destination . '/' . $nameFile);
-
-        // delete image to cache
-        imagedestroy($image);
-      } else {
-        throw new \Exception("Can't format image");
-      }
-    } catch (\Throwable $th) {
-      throw new \Exception("Error formatting image " . $th->getMessage());
+                // delete image to cache
+                imagedestroy($image);
+            } else {
+                throw new \Exception("Can't format image");
+            }
+        } catch (\Throwable $th) {
+            throw new \Exception('Error formatting image '.$th->getMessage());
+        }
     }
-  }
 
-
-  private function resizeImage(int $quality, GdImage $image, int $imageWidth, int $imageHeight): GdImage
-  {
-    if ($imageHeight > 1080) {
-      return imagescale($image,  $imageWidth * ($quality / 100), $imageHeight * ($quality / 100));
-    } else {
-      return  $image;
+    private function resizeImage(int $quality, \GdImage $image, int $imageWidth, int $imageHeight): \GdImage
+    {
+        if ($imageHeight > 1080) {
+            return imagescale($image, $imageWidth * ($quality / 100), $imageHeight * ($quality / 100));
+        } else {
+            return $image;
+        }
     }
-  }
 }

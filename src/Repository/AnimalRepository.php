@@ -16,12 +16,11 @@ class AnimalRepository extends ServiceEntityRepository
         parent::__construct($registry, Animal::class);
     }
 
-    public function getCountBySearch(string $search)
+    public function getCountBySearch(string $search): int
     {
-
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT COUNT(DISTINCT animal.name) FROM animal
+        $sql = 'SELECT COUNT(DISTINCT animal.name) FROM animal
                 INNER JOIN animal_information ON animal_information.id = animal.information_id
                 INNER JOIN species ON species.id= animal_information.species_id
                 INNER JOIN region ON region.id = animal_information.region_id
@@ -30,15 +29,19 @@ class AnimalRepository extends ServiceEntityRepository
                 OR species.family LIKE :search
                 OR region.region LIKE :search
                 OR habitat.name LIKE :search
-                OR species.commun_name LIKE :search;";
+                OR species.commun_name LIKE :search;';
 
         $conn->prepare($sql);
 
         return $conn->executeQuery($sql, ['search' => $search])->fetchOne();
     }
-    public function findAnimalBySearch(string $search, int $page)
+
+    /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    public function findAnimalBySearch(string $search, int $page): array
     {
-        $search = '%' . $search . '%';
+        $search = '%'.$search.'%';
 
         $totalPages = ceil($this->getCountBySearch($search) / 6);
         $first = ($page - 1) * 6;
@@ -62,17 +65,20 @@ class AnimalRepository extends ServiceEntityRepository
 
         $result['data'] = $conn->executeQuery($sql, ['search' => $search])
             ->fetchAllAssociative();
-        $result["totalPage"] =  intval($totalPages);
+        $result['totalPage'] = intval($totalPages);
 
         return $result;
     }
 
-    public function getPredictive(string $search)
+    /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
+    public function getPredictive(string $search): array
     {
-        $search = '%' . $search . '%';
+        $search = '%'.$search.'%';
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT DISTINCT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
+        $sql = 'SELECT DISTINCT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
                 LEFT JOIN animal_image ON animal.id = animal_image.animal_id
                 LEFT JOIN animal_information ON animal_information.id = animal.information_id
                 LEFT JOIN species ON species.id= animal_information.species_id
@@ -83,7 +89,7 @@ class AnimalRepository extends ServiceEntityRepository
                 OR region.region LIKE :search
                 OR habitat.name LIKE :search
                 OR species.commun_name LIKE :search
-                GROUP BY name;";
+                GROUP BY name;';
 
         $conn->prepare($sql);
 

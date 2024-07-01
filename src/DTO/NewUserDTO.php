@@ -4,7 +4,6 @@ namespace App\DTO;
 
 class NewUserDTO
 {
-
-  public string $username;
-  public string $email;
+    public string $username;
+    public string $email;
 }

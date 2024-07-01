@@ -36,6 +36,7 @@ class Advice
     {
         $this->setApproved(false);
     }
+
     public function getId(): ?int
     {
         return $this->id;

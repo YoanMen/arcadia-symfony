@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
+use App\Repository\ServiceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use App\Repository\ServiceRepository;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[UniqueEntity('name')]
-
 class Service
 {
     #[ORM\Id]
@@ -46,7 +45,6 @@ class Service
     #[ORM\OneToMany(targetEntity: ServiceImage::class, mappedBy: 'service', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour le service')]
     #[Assert\Valid()]
-
     private Collection $serviceImages;
 
     public function __construct()

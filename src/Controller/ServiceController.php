@@ -18,12 +18,9 @@ class ServiceController extends AbstractController
     }
 
     #[Route('/services/{slug}', name: 'app_service.show')]
-
     public function show(string $slug, ServiceRepository $serviceRepository): Response
     {
-
         $service = $serviceRepository->findOneBy(['slug' => $slug]);
-
 
         if ($service) {
             return $this->render('service/show.html.twig', [
