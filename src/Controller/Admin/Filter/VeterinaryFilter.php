@@ -3,15 +3,14 @@
 namespace App\Controller\Admin\Filter;
 
 use App\Entity\User;
-use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\EntityRepository;
-use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Doctrine\ORM\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Contracts\Filter\FilterInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
+use EasyCorp\Bundle\EasyAdminBundle\Dto\FieldDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\FilterDataDto;
 use EasyCorp\Bundle\EasyAdminBundle\Filter\FilterTrait;
-use EasyCorp\Bundle\EasyAdminBundle\Contracts\Filter\FilterInterface;
-
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class VeterinaryFilter implements FilterInterface
 {
@@ -39,7 +38,6 @@ class VeterinaryFilter implements FilterInterface
         $value = $filterDataDto->getValue();
 
         if ($value) {
-
             $queryBuilder->andWhere(sprintf('%s.veterinary = :veterinary', $filterDataDto->getEntityAlias()))
                 ->setParameter('veterinary', $filterDataDto->getValue());
         }

@@ -4,7 +4,6 @@ namespace App\Repository;
 
 use App\Entity\Service;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,13 +16,13 @@ class ServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, Service::class);
     }
 
-
+    /**
+     * @return array<string, array<int, array<string, mixed>>>
+     */
     public function findServicesByPage(int $page): array
     {
-
         $totalPages = ceil($this->count() / 6);
         $first = ($page - 1) * 6;
-
 
         $conn = $this->getEntityManager()->getConnection();
 
@@ -32,11 +31,10 @@ class ServiceRepository extends ServiceEntityRepository
                 GROUP BY name
                 LIMIT 6 OFFSET $first";
 
-
         $conn->prepare($sql);
         $result['data'] = $conn->executeQuery($sql)
             ->fetchAllAssociative();
-        $result["totalPage"] =  $totalPages;
+        $result['totalPage'] = $totalPages;
 
         return $result;
     }

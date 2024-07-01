@@ -6,7 +6,7 @@ use App\DTO\AccountLockDTO;
 
 class AccountLockedRequestEvent
 {
-  public function __construct(public readonly AccountLockDTO $data)
-  {
-  }
+    public function __construct(public readonly AccountLockDTO $data)
+    {
+    }
 }

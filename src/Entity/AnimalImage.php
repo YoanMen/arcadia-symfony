@@ -5,8 +5,8 @@ namespace App\Entity;
 use App\Repository\AnimalImageRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: AnimalImageRepository::class)]
 #[Vich\Uploadable]
@@ -18,7 +18,6 @@ class AnimalImage
     private ?int $id = null;
 
     #[Vich\UploadableField(mapping: 'animals', fileNameProperty: 'imageName', size: 'imageSize')]
-
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -38,7 +37,6 @@ class AnimalImage
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
-
     public function getId(): ?int
     {
         return $this->id;
@@ -51,7 +49,7 @@ class AnimalImage
         if (null !== $imageFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
-            $this->updatedAt = new \DateTimeImmutable();
+            $this->setUpdatedAt(new \DateTimeImmutable());
         }
     }
 
@@ -93,7 +91,7 @@ class AnimalImage
     }
 
     /**
-     * Get the value of alt
+     * Get the value of alt.
      */
     public function getAlt(): ?string
     {
@@ -101,7 +99,7 @@ class AnimalImage
     }
 
     /**
-     * Set the value of alt
+     * Set the value of alt.
      */
     public function setAlt(?string $alt): self
     {
@@ -110,7 +108,25 @@ class AnimalImage
         return $this;
     }
 
-    public function __toString(): String
+    /**
+     * Get the value of updatedAt.
+     */
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * Set the value of updatedAt.
+     */
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function __toString(): string
     {
         return $this->getImageName() ?? 'fichier non valide';
     }

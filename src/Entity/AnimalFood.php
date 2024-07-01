@@ -16,7 +16,7 @@ class AnimalFood
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\DateTimeValidator()]
+    #[Assert\DateTime()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 60)]
@@ -27,21 +27,15 @@ class AnimalFood
     #[ORM\Column(type: Types::DECIMAL, precision: 5, scale: 3)]
     #[Assert\NotBlank()]
     #[Assert\Positive()]
-
     private ?string $quantity = null;
 
-
-
     #[ORM\ManyToOne(inversedBy: 'animalFood')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
-
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $employee = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalFood')]
-    #[Assert\NotNull(message: "Il faut sélectionner un animal")]
+    #[Assert\NotNull(message: 'Il faut sélectionner un animal')]
     private ?Animal $animal = null;
-
-
 
     public function getId(): ?int
     {

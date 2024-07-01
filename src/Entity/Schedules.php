@@ -18,7 +18,6 @@ class Schedules
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 500, maxMessage: 'Le texte des horaires ne doit pas dépasser 500 caractères')]
-
     private ?string $schedules = null;
 
     public function getId(): ?int

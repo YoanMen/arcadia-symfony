@@ -3,6 +3,16 @@
 {% block title %}Zoo Arcadia - Nos Services
 {% endblock %}
 
+{% block scripts %}
+	<script defer type="module">
+		import CardsManager from "{{ asset('scripts/cardsManager.js') }}";
+
+document.addEventListener('DOMContentLoaded', () => {
+new CardsManager('/api/service', '/services', '/images/services/');
+});
+	</script>
+{% endblock %}
+
 {% block main %}
 
 	<header aria-label="hero" class="lg:h-[480px] h-80 w-full lg:mt-20 mt-10 ">
@@ -60,13 +70,4 @@
 
 	</main>
 
-{% endblock %}
-{% block scripts %}
-	<script type="module">
-		import CardsManager from "{{ asset('scripts/cardsManager.js') }}";
-
-document.addEventListener('DOMContentLoaded', () => {
-new CardsManager('/api/service', '/services', '/images/services/');
-});
-	</script>
 {% endblock %}

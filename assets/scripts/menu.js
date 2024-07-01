@@ -1,70 +1,59 @@
 document.addEventListener("DOMContentLoaded", () => {
-  class Menu {
-    constructor() {
-      this.buttonMenu = document.querySelector(".menu-mobile-js");
-      this.menuIcon = document.querySelector(".menu-mobile-icon-js");
-      this.menuLogo = document.querySelector(".menu-logo-js");
-      this.connectionBtn = document.querySelector(".connection-btn-js");
-      this.menuLinks = document.querySelector(".menu-links-js");
-      this.isActive = false;
-      this.listeningClickToBtnMenu();
-      this.checkIfHomePage();
-    }
+  const buttonMenu = document.querySelector(".menu-mobile-js");
+  const menuIcon = document.querySelector(".menu-mobile-icon-js");
+  const menuLogo = document.querySelector(".menu-logo-js");
+  const connectionBtn = document.querySelector(".connection-btn-js");
+  const menuLinks = document.querySelector(".menu-links-js");
+  let isActive = false;
 
-    listeningClickToBtnMenu() {
-      this.buttonMenu.addEventListener("click", () => {
-        this.toggleMobileMenu();
-      });
-    }
+  listeningClickToBtnMenu();
+  checkIfHomePage();
 
-    toggleMobileMenu() {
-      this.connectionBtn.classList.toggle("max-lg:hidden");
-      document.body.classList.toggle("disable-scroll");
-      this.menuLinks.classList.toggle("max-lg:hidden");
-      this.menuIcon.classList.toggle("hidden");
-    }
+  function listeningClickToBtnMenu() {
+    buttonMenu.addEventListener("click", () => {
+      toggleMobileMenu();
+    });
+  }
 
-    transparentBackground() {
-      this.menuIcon
-        .closest("header")
-        .classList.remove("border-b-color", "bg-primary");
-      this.menuIcon
-        .closest("header")
-        .classList.add("bg-gradient-to-b", "from-black");
-      this.menuLinks.classList.add("text-primary");
-      this.menuLogo.src = "images/logo/arcadia_white.svg";
-      this.menuIcon.parentElement.classList.add("fill-white");
-    }
+  function toggleMobileMenu() {
+    connectionBtn.classList.toggle("max-lg:hidden");
+    document.body.classList.toggle("disable-scroll");
+    menuLinks.classList.toggle("max-lg:hidden");
+    menuIcon.classList.toggle("hidden");
+  }
 
-    disableTransparentBackground() {
-      this.menuIcon
-        .closest("header")
-        .classList.add("bg-primary", "border-b-color");
-      this.menuIcon
-        .closest("header")
-        .classList.remove("bg-gradient-to-b", "from-black");
-      this.menuLinks.classList.remove("text-primary");
-      this.menuLogo.src = "images/logo/arcadia_green.svg";
-      this.menuIcon.parentElement.classList.remove("fill-white");
-    }
+  function transparentBackground() {
+    menuIcon.closest("header").classList.remove("border-b-color", "bg-primary");
+    menuIcon.closest("header").classList.add("bg-gradient-to-b", "from-black");
+    menuLinks.classList.add("text-primary");
+    menuLogo.src = "images/logo/arcadia_white.svg";
+    menuIcon.parentElement.classList.add("fill-white");
+  }
 
-    checkIfHomePage() {
-      if (window.location.pathname === "/") {
-        this.SetBackground();
-        document.addEventListener("scroll", () => this.SetBackground());
-      }
-    }
+  function disableTransparentBackground() {
+    menuIcon.closest("header").classList.add("bg-primary", "border-b-color");
+    menuIcon
+      .closest("header")
+      .classList.remove("bg-gradient-to-b", "from-black");
+    menuLinks.classList.remove("text-primary");
+    menuLogo.src = "images/logo/arcadia_green.svg";
+    menuIcon.parentElement.classList.remove("fill-white");
+  }
 
-    SetBackground() {
-      let scrollPosition = window.scrollY;
-
-      if (scrollPosition > 0) {
-        this.disableTransparentBackground();
-      } else {
-        this.transparentBackground();
-      }
+  function checkIfHomePage() {
+    if (window.location.pathname === "/") {
+      SetBackground();
+      document.addEventListener("scroll", () => SetBackground());
     }
   }
 
-  new Menu();
+  function SetBackground() {
+    let scrollPosition = window.scrollY;
+
+    if (scrollPosition > 0) {
+      disableTransparentBackground();
+    } else {
+      transparentBackground();
+    }
+  }
 });

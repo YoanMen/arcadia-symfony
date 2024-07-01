@@ -4,7 +4,6 @@ namespace App\DTO;
 
 class AccountLockDTO
 {
-
-  public string $username;
-  public string $email;
+    public string $username;
+    public string $email;
 }

@@ -3,6 +3,16 @@
 {% block title %}Zoo Arcadia - Accueil
 {% endblock %}
 
+{% block scripts %}
+	<script defer type="text/javascript">
+		setTimeout(() => {
+(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+}, 1500);
+	</script>
+	<script defer src="{{ asset("scripts/adviceModal.js") }}"></script>
+	<script defer src="{{asset("scripts/adviceManager.js")}}"></script>
+{% endblock %}
+
 {% block main %}
 	{% include "partials/_homeCarousel.html.twig" %}
 
@@ -181,14 +191,4 @@
 
 	{% include "partials/_adviceModal.html.twig" %}
 
-{% endblock %}
-
-{% block scripts %}
-	<script type="text/javascript">
-		setTimeout(() => {
-			(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
-		}, 1500);
-	</script>
-	<script src="{{ asset("scripts/adviceModal.js") }}"></script>
-	<script src="{{asset("scripts/adviceManager.js")}}"></script>
 {% endblock %}

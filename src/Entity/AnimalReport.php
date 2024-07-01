@@ -16,13 +16,12 @@ class AnimalReport
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Assert\DateValidator()]
+    #[Assert\Date()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 60)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 60, maxMessage: 'Le statut est trop long, 60 caractères maximum')]
-
     private ?string $statut = null;
 
     #[ORM\Column(length: 60)]
@@ -39,23 +38,18 @@ class AnimalReport
     #[Assert\Length(max: 60, maxMessage: 'Le detail  est trop long, 255 caractères maximum')]
     private ?string $detail = null;
 
-
     #[ORM\ManyToOne(inversedBy: 'animalReports')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Animal $animal = null;
 
-
     #[ORM\ManyToOne(inversedBy: 'animalReports')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $veterinary = null;
-
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-
 
     public function getDate(): ?\DateTimeImmutable
     {
@@ -76,7 +70,7 @@ class AnimalReport
 
     public function setStatut(string $statut): static
     {
-        $this->statut =  strtolower($statut);
+        $this->statut = strtolower($statut);
 
         return $this;
     }
@@ -88,7 +82,7 @@ class AnimalReport
 
     public function setFood(string $food): static
     {
-        $this->food =  strtolower($food);
+        $this->food = strtolower($food);
 
         return $this;
     }
@@ -117,12 +111,10 @@ class AnimalReport
         return $this;
     }
 
-
     public function getAnimal(): ?Animal
     {
         return $this->animal;
     }
-
 
     public function setAnimal(?Animal $animal): static
     {

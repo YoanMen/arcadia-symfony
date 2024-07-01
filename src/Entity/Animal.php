@@ -2,16 +2,15 @@
 
 namespace App\Entity;
 
-use App\Entity\AnimalImage;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\AnimalRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
-#[UniqueEntity('name', message: "Un animal avec ce nom existe déjà")]
+#[UniqueEntity('name', message: 'Un animal avec ce nom existe déjà')]
 class Animal
 {
     #[ORM\Id]
@@ -22,7 +21,6 @@ class Animal
     #[ORM\Column(length: 80)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 80, maxMessage: 'Le nom est trop long, 80 caractères maximum')]
-
     private ?string $name = null;
 
     #[ORM\Column(length: 100)]
@@ -35,7 +33,9 @@ class Animal
     #[ORM\JoinColumn(nullable: false)]
     private ?Habitat $habitat = null;
 
-
+    /**
+     * @var Collection<int, AnimalImage>
+     */
     #[ORM\OneToMany(targetEntity: AnimalImage::class, mappedBy: 'animal', orphanRemoval: true, cascade: ['persist'])]
     #[Assert\Count(min: 1, minMessage: 'Vous devez au moins mettre 1 image pour l\'animal')]
     #[Assert\Valid()]
@@ -59,14 +59,12 @@ class Animal
     #[ORM\OneToMany(targetEntity: AnimalFood::class, mappedBy: 'animal', orphanRemoval: true)]
     private Collection $animalFood;
 
-
     public function __construct()
     {
         $this->animalImages = new ArrayCollection();
         $this->animalReports = new ArrayCollection();
         $this->animalFood = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {

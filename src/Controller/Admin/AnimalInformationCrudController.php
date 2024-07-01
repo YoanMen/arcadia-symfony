@@ -5,10 +5,10 @@ namespace App\Controller\Admin;
 use App\Entity\AnimalInformation;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 
 class AnimalInformationCrudController extends AbstractCrudController
 {
@@ -26,7 +26,6 @@ class AnimalInformationCrudController extends AbstractCrudController
         return $actions->disable(Action::NEW, Action::EDIT, Action::DELETE);
     }
 
-
     public function configureFields(string $pageName): iterable
     {
         return [
@@ -39,7 +38,7 @@ class AnimalInformationCrudController extends AbstractCrudController
             FormField::addFieldset()->addColumn(6),
             AssociationField::new('species', 'Espèce')
                 ->renderAsEmbeddedForm()
-                ->onlyOnForms()->setColumns(15)
+                ->onlyOnForms()->setColumns(15),
         ];
     }
 }

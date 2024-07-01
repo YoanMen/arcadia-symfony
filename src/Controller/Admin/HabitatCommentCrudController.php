@@ -2,19 +2,20 @@
 
 namespace App\Controller\Admin;
 
-use App\Entity\HabitatComment;
-use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Controller\Admin\Filter\HabitatCommentFilter;
 use App\Controller\Admin\Filter\VeterinaryFilter;
+use App\Entity\HabitatComment;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
-use App\Controller\Admin\Filter\HabitatCommentFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class HabitatCommentCrudController extends AbstractCrudController
 {
@@ -49,14 +50,11 @@ class HabitatCommentCrudController extends AbstractCrudController
         return $actions;
     }
 
-
-
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setPageTitle("index", "Les commentaires sur les habitats")
+        return $crud->setPageTitle('index', 'Les commentaires sur les habitats')
             ->setPageTitle('new', 'Création d\'un commentaire pour un habitat');
     }
-
 
     public function configureFields(string $pageName): iterable
     {
@@ -66,25 +64,23 @@ class HabitatCommentCrudController extends AbstractCrudController
             AssociationField::new('veterinary', 'Vétérinaire')
                 ->onlyOnIndex()
                 ->setPermission('ROLE_ADMIN'),
-            AssociationField::new("habitat"),
+            AssociationField::new('habitat'),
             TextareaField::new('detail')
                 ->setColumns(12)
                 ->onlyOnForms()
                 ->setRequired(true),
             TextField::new('detail')
                 ->onlyOnIndex()
-                ->renderAsHtml()
+                ->renderAsHtml(),
         ];
     }
 
-
-    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void
     {
         // add veterinary for comment
         if ($entityInstance instanceof HabitatComment) {
-
             $user = $this->getUser();
-            if ($user) {
+            if ($user instanceof User) {
                 $entityInstance->setDate(new \DateTimeImmutable());
                 $entityInstance->setVeterinary($user);
             }

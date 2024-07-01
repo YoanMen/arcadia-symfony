@@ -27,10 +27,18 @@ public/images/services/
 public/images/animals/
 
 /assets/vendor/
-/migrations/
 ###< symfony/asset-mapper ###
 .vscode/settings.json
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
 ###< liip/imagine-bundle ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###

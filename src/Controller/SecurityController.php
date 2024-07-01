@@ -21,7 +21,7 @@ class SecurityController extends AbstractController
 
         // add sleep to avoid temporel attacks
         if ($error) {
-            sleep(rand(0.8, 1.2));
+            sleep(rand(1, 2));
         }
         // last username entered by the user
         $lastUsername = $authenticationUtils->getLastUsername();

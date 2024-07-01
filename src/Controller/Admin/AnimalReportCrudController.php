@@ -2,23 +2,21 @@
 
 namespace App\Controller\Admin;
 
-
-use App\Entity\AnimalReport;
-
-use Doctrine\ORM\EntityManagerInterface;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use App\Controller\Admin\Filter\AnimalRapportHabitatFilter;
 use App\Controller\Admin\Filter\VeterinaryFilter;
+use App\Entity\AnimalReport;
+use App\Entity\User;
+use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use App\Controller\Admin\Filter\AnimalRapportHabitatFilter;
-use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
-use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
-
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AnimalReportCrudController extends AbstractCrudController
 {
@@ -48,17 +46,14 @@ class AnimalReportCrudController extends AbstractCrudController
                 });
         }
 
-
         return $actions->disable(Action::NEW, Action::EDIT, Action::DELETE);
     }
 
     public function configureCrud(Crud $crud): Crud
     {
-        return $crud->setPageTitle("index", "Les rapports sur les animaux")
+        return $crud->setPageTitle('index', 'Les rapports sur les animaux')
             ->setPageTitle('new', 'Création d\'un rapport pour un animal');
     }
-
-
 
     public function configureFields(string $pageName): iterable
     {
@@ -71,11 +66,11 @@ class AnimalReportCrudController extends AbstractCrudController
             TextField::new('animal.habitat', 'Habitat')
                 ->setSortable(true)
                 ->onlyOnIndex(),
-            AssociationField::new("animal", "Animal")
+            AssociationField::new('animal', 'Animal')
                 ->setColumns(2)
                 ->setSortable(true)
                 ->setFormTypeOption('choice_label', function ($animal) {
-                    return $animal->getName() . ' (' . $animal->getHabitat()->getName() . ')';
+                    return $animal->getName().' ('.$animal->getHabitat()->getName().')';
                 }),
             TextField::new('statut', 'État de l\'animal')
                 ->setSortable(false)
@@ -89,7 +84,7 @@ class AnimalReportCrudController extends AbstractCrudController
                 ->setRequired(true),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
-                    return $value . ' Kg';
+                    return $value.' Kg';
                 })
                 ->setHelp('quantité recommandée')
                 ->setSortable(false),
@@ -102,21 +97,18 @@ class AnimalReportCrudController extends AbstractCrudController
                 ->setColumns(12)
                 ->setSortable(false)
                 ->setRequired(false),
-
         ];
     }
 
-
-
-    public function persistEntity(EntityManagerInterface $entityManager, $entityInstance): void
+    public function persistEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void
     {
         // add veterinary for comment
         if ($entityInstance instanceof AnimalReport) {
-
             $entityInstance->setDate(new \DateTimeImmutable());
 
             $user = $this->getUser();
-            if ($user) {
+
+            if ($user instanceof User) {
                 $entityInstance->setVeterinary($user);
             }
         }

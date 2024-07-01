@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\DBAL\Types\Types;
-use Doctrine\ORM\Mapping as ORM;
 use App\Repository\HabitatRepository;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Component\Validator\Constraints as Assert;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
-#[UniqueEntity('name', message: "Un habitat avec ce nom existe déjà")]
+#[UniqueEntity('name', message: 'Un habitat avec ce nom existe déjà')]
 class Habitat
 {
     #[ORM\Id]
@@ -57,8 +56,6 @@ class Habitat
      */
     #[ORM\OneToMany(targetEntity: HabitatComment::class, mappedBy: 'habitat', orphanRemoval: true)]
     private Collection $habitatComments;
-
-
 
     public function __construct()
     {
@@ -168,7 +165,6 @@ class Habitat
         return $this;
     }
 
-
     /**
      * @return Collection<int, HabitatComment>
      */
@@ -199,9 +195,8 @@ class Habitat
         return $this;
     }
 
-
     public function __toString(): string
     {
-        return  $this->getName();
+        return $this->getName();
     }
 }

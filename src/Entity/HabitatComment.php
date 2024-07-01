@@ -16,7 +16,7 @@ class HabitatComment
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Assert\DateValidator()]
+    #[Assert\Date()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 255)]
@@ -24,18 +24,14 @@ class HabitatComment
     #[Assert\Length(max: 255, maxMessage: 'Le détail doit être de 255 caractères maximum ')]
     private ?string $detail = null;
 
-
-
     #[ORM\ManyToOne(inversedBy: 'habitatComments')]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\NotNull()]
     private ?Habitat $habitat = null;
 
     #[ORM\ManyToOne(inversedBy: 'habitatComments')]
-    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?User $veterinary = null;
-
-
 
     public function getId(): ?int
     {
@@ -65,7 +61,6 @@ class HabitatComment
 
         return $this;
     }
-
 
     public function getHabitat(): ?Habitat
     {

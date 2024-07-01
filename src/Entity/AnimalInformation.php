@@ -18,7 +18,6 @@ class AnimalInformation
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
     #[Assert\Length(max: 320, maxMessage: 'La description de l\'animal doit faire moins de 320 caractères')]
-
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -30,8 +29,6 @@ class AnimalInformation
     #[Assert\NotBlank()]
     #[Assert\Length(max: 255, maxMessage: 'Le texte de l\'espérance de vie doit faire moins de 255 caractères')]
     private ?string $lifespan = null;
-
-
 
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]
     #[ORM\JoinColumn(nullable: false)]
@@ -49,9 +46,7 @@ class AnimalInformation
     #[ORM\OneToOne(inversedBy: 'animalInformation', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     #[Assert\Valid()]
-
     private ?Species $species = null;
-
 
     public function getId(): ?int
     {
@@ -93,7 +88,6 @@ class AnimalInformation
 
         return $this;
     }
-
 
     public function getUicn(): ?UICN
     {
@@ -147,6 +141,4 @@ class AnimalInformation
 
         return $this;
     }
-
-
 }
