@@ -16,4 +16,4 @@ vendor/autoload.php: composer.lock composer.json
 
 check :
 	./vendor/bin/php-cs-fixer fix src
-	vendor/bin/phpstan analyse src 
+	vendor/bin/phpstan analyse src

@@ -2,17 +2,15 @@
 
 namespace App\Tests;
 
-use App\Entity\AnimalImage;
 use App\Entity\Animal;
+use App\Entity\AnimalImage;
 use App\Entity\Habitat;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class AnimalTest extends KernelTestCase
 {
-
-    public function testAnimalIsNotValid()
+    public function testAnimalIsNotValid(): void
     {
-
         self::bootKernel();
         $container = $this->getContainer();
 
@@ -24,14 +22,11 @@ class AnimalTest extends KernelTestCase
         $animal->addAnimalImage(new AnimalImage());
         $errors = $container->get('validator')->validate($animal);
 
-
         $this->assertCount(2, $errors);
     }
 
-
-    public function testAnimalIsValid()
+    public function testAnimalIsValid(): void
     {
-
         self::bootKernel();
         $container = $this->getContainer();
 
@@ -42,7 +37,6 @@ class AnimalTest extends KernelTestCase
         $animal->setHabitat(new Habitat());
         $animal->addAnimalImage(new AnimalImage());
         $errors = $container->get('validator')->validate($animal);
-
 
         $this->assertCount(0, $errors);
     }
