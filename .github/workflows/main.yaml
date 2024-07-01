@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [dev]
+    branches: [master]
   pull_request:
-    branches: [dev]
+    branches: [master]
 
 jobs:
   symfony-tests:
@@ -90,7 +90,7 @@ jobs:
       - name: 📂 Sync files
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.ftp_servert }}
+          server: ${{ secrets.ftp_server }}
           username: ${{ secrets.ftp_username }}
           password: ${{ secrets.ftp_password }}
           port: ${{ secrets.ftp_port }}
