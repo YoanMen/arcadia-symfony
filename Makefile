@@ -4,7 +4,7 @@ defaul: check
 
 deploy: vendor/autoload.php
 
-	cd public &&	rm -R asset/
+	cd public &&	rm -R assets/
 	php bin/console cache:clear
 	php bin/console tailwind:build --minify
 	php bin/console asset-map:compile
