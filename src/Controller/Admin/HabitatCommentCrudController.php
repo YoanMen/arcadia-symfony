@@ -64,7 +64,8 @@ class HabitatCommentCrudController extends AbstractCrudController
             AssociationField::new('veterinary', 'Vétérinaire')
                 ->onlyOnIndex()
                 ->setPermission('ROLE_ADMIN'),
-            AssociationField::new('habitat'),
+            AssociationField::new('habitat')
+                ->setRequired(true),
             TextareaField::new('detail')
                 ->setColumns(12)
                 ->onlyOnForms()

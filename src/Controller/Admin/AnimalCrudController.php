@@ -54,18 +54,22 @@ class AnimalCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Nom')->setColumns(6),
+            TextField::new('name', 'Nom')
+                ->setRequired(true)
+                ->setColumns(6),
             SlugField::new('slug')
                 ->setTargetFieldName('name')
                 ->onlyOnForms()
                 ->setHelp('généralement à ne pas changer'),
-            AssociationField::new('habitat'),
+            AssociationField::new('habitat')
+            ->setRequired(true),
             AssociationField::new('animalImages', 'Images')
                 ->onlyOnIndex(),
             AssociationField::new('information', 'Information sur l\'animal')
                 ->setColumns(12)
                 ->onlyOnForms()
-                ->renderAsEmbeddedForm(),
+                ->renderAsEmbeddedForm()
+                ->setRequired(true),
             CollectionField::new('animalImages', 'Image de l\'animal')
                 ->setEntryType(AnimalImageType::class)
                 ->onlyOnForms(),
