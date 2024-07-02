@@ -56,7 +56,7 @@ class HabitatCrudController extends AbstractCrudController
                 ->setColumns(15),
             CollectionField::new('habitatImages', 'Images de l\'habitat')
                 ->setEntryType(HabitatImageType::class)
-                ->setRequired(true)
+                ->setRequired(false)
                 ->onlyOnForms(),
             AssociationField::new('habitatImages', 'Images')
                 ->onlyOnIndex(),
@@ -70,7 +70,7 @@ class HabitatCrudController extends AbstractCrudController
         $animalCount = count($entityInstance->getAnimals());
 
         if (0 != $animalCount) {
-            $this->addFlash('notice', "Impossible de supprimer l'habitat ".$entityInstance->getName().' des animaux y sont rattaché');
+            $this->addFlash('notice', "Impossible de supprimer l'habitat " . $entityInstance->getName() . ' des animaux y sont rattaché');
         } else {
             $entityManager->remove($entityInstance);
             $entityManager->flush();
