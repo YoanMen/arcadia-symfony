@@ -69,6 +69,7 @@ class AnimalReportCrudController extends AbstractCrudController
             AssociationField::new('animal', 'Animal')
                 ->setColumns(2)
                 ->setSortable(true)
+                ->setRequired(true)
                 ->setFormTypeOption('choice_label', function ($animal) {
                     return $animal->getName().' ('.$animal->getHabitat()->getName().')';
                 }),

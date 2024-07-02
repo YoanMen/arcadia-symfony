@@ -55,14 +55,17 @@ class UserCrudController extends AbstractCrudController
     {
         return [
             TextField::new('username', 'Nom d\'utilisateur')
-                ->setColumns(6),
+                ->setColumns(6)
+                ->setRequired(true),
             TextField::new('email')
-                ->setColumns(6),
+                ->setColumns(6)
+                ->setRequired(true),
             TextField::new('password', 'Mot de passe')
                 ->setColumns(6)
                 ->setFormTypeOption('data', '')
                 ->setFormTypeOption('attr', ['autocomplete' => 'off'])
-                ->onlyOnForms(),
+                ->onlyOnForms()
+                ->setRequired(true),
             ChoiceField::new('roles', 'role de l\'utilisateur')
                 ->setChoices([
                     'Vétérinaire' => 'ROLE_VETERINARY',

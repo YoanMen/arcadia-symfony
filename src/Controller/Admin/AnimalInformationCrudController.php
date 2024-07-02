@@ -30,15 +30,24 @@ class AnimalInformationCrudController extends AbstractCrudController
     {
         return [
             FormField::addColumn(6),
-            TextField::new('description', 'Description'),
-            TextField::new('sizeAndHeight', 'Taille et poids'),
-            TextField::new('lifespan', 'Espérance de vie'),
-            AssociationField::new('region', 'Région'),
-            AssociationField::new('uicn', 'UICN'),
-            FormField::addFieldset()->addColumn(6),
+            TextField::new('description', 'Description')
+            ->setRequired(true),
+            TextField::new('sizeAndHeight', 'Taille et poids')
+            ->setRequired(true),
+            TextField::new('lifespan', 'Espérance de vie')
+            ->setRequired(true),
+            AssociationField::new('region', 'Région')
+            ->setRequired(true),
+            AssociationField::new('uicn', 'UICN')
+            ->setRequired(true),
+            FormField::addFieldset()
+            ->addColumn(6)
+            ->setRequired(true),
             AssociationField::new('species', 'Espèce')
                 ->renderAsEmbeddedForm()
-                ->onlyOnForms()->setColumns(15),
+                ->onlyOnForms()
+                ->setRequired(true)
+                ->setColumns(15),
         ];
     }
 }

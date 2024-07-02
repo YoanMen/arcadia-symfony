@@ -56,9 +56,11 @@ class AnimalFoodCrudController extends AbstractCrudController
             DateTimeField::new('date')->setFormat('d/M/Y - H:m')
                 ->setHelp('Date du nourrissage')
                 ->setFormTypeOption('data', new \DateTimeImmutable('now'))
+                ->setRequired(true)
                 ->setColumns(12),
             AssociationField::new('animal', 'Animal')
                 ->setColumns(2)
+                ->setRequired(true)
                 ->setSortable(true)
                 ->setFormTypeOption('choice_label', function ($animal) {
                     return $animal->getName().' ('.$animal->getHabitat()->getName().')';
@@ -66,6 +68,7 @@ class AnimalFoodCrudController extends AbstractCrudController
             TextField::new('food', 'Nourriture')
                 ->setSortable(false)
                 ->setColumns(3)
+                ->setRequired(true)
                 ->setHelp('viande, foin, fruits etc ...'),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
@@ -73,9 +76,11 @@ class AnimalFoodCrudController extends AbstractCrudController
                 })
                 ->onlyOnIndex(),
             NumberField::new('quantity', 'Quantité')
-                ->setStoredAsString()->onlyOnForms()
+                ->setStoredAsString()
+                ->onlyOnForms()
                 ->setHelp('en kilogrammes')
-                ->setColumns(3),
+                ->setColumns(3)
+                ->setRequired(true),
         ];
     }
 

@@ -31,8 +31,13 @@ class SchedulesCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('schedules', 'Horaires')->renderAsHtml(),
-            TextEditorField::new('schedules', 'Horaires')->setNumOfRows(15)->setColumns(12)->onlyOnForms(),
+            TextField::new('schedules', 'Horaires')
+                ->renderAsHtml(),
+            TextEditorField::new('schedules', 'Horaires')
+                ->setNumOfRows(15)
+                ->setColumns(12)
+                ->onlyOnForms()
+                ->setRequired(true),
         ];
     }
 }
