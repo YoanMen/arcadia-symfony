@@ -56,7 +56,7 @@ class HabitatCrudController extends AbstractCrudController
                 ->setColumns(15),
             CollectionField::new('habitatImages', 'Images de l\'habitat')
                 ->setEntryType(HabitatImageType::class)
-                ->setRequired(true)
+                ->setRequired(false)
                 ->onlyOnForms(),
             AssociationField::new('habitatImages', 'Images')
                 ->onlyOnIndex(),
