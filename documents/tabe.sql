@@ -3,7 +3,10 @@
 -- création du compte administrateur, email = jose-zoo@arcadia.com mdp 'LeZooArcadia@01'
 
 INSERT INTO user (username, email, password, roles) VALUE 
-      ('José', 'jose-zoo@arcadia.com', '$2y$13$b6YUW.z4qRSUGexB7qzUHOGTdrWbXvZowx.DHTZNdNvoF8MT53dNq', '["ROLE_ADMIN"]'),
+      ('José', 'jose-zoo@arcadia.com', '$2y$13$b6YUW.z4qRSUGexB7qzUHOGTdrWbXvZowx.DHTZNdNvoF8MT53dNq', '["ROLE_ADMIN"]');
+
+INSERT INTO user (username, email, password, roles) VALUE 
+      ('Employee', 'employee@arcadia.com', '$2y$13$b6YUW.z4qRSUGexB7qzUHOGTdrWbXvZowx.DHTZNdNvoF8MT53dNq', '["ROLE_EMPLOYEE"]');
 
 -- Création des options pour le UICN.
 INSERT INTO uicn (uicn) VALUES ('non évaluée'),

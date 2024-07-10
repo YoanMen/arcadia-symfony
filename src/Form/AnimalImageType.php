@@ -27,10 +27,10 @@ class AnimalImageType extends AbstractType
                   ),
               ],
           ])->add('alt', TextType::class, [
-          'label' => 'Description',
-          'help' => 'description de l\'image pour l\'accessibilité',
-          'required' => false,
-      ]);
+              'label' => 'Description',
+              'help' => 'description de l\'image pour l\'accessibilité',
+              'required' => false,
+          ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
