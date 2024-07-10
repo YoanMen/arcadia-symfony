@@ -13,7 +13,7 @@ use App\Entity\Service;
 use App\Entity\User;
 use App\Repository\AnimalReportRepository;
 use App\Repository\HabitatCommentRepository;
-use App\Service\CouchDBManager;
+use App\Service\CouchDBManagerService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -27,7 +27,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private CouchDBManager $couchDBManager,
+        private CouchDBManagerService $couchDBManager,
         private ChartBuilderInterface $chartBuilder,
         private HabitatCommentRepository $habitatCommentRepository,
         private AnimalReportRepository $animalReportRepository

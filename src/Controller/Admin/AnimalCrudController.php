@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Form\AnimalImageType;
-use App\Service\CouchDBManager;
+use App\Service\CouchDBManagerService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -18,7 +18,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AnimalCrudController extends AbstractCrudController
 {
-    public function __construct(private CouchDBManager $couchDBManager)
+    public function __construct(private CouchDBManagerService $couchDBManager)
     {
     }
 
@@ -62,7 +62,7 @@ class AnimalCrudController extends AbstractCrudController
                 ->onlyOnForms()
                 ->setHelp('généralement à ne pas changer'),
             AssociationField::new('habitat')
-            ->setRequired(true),
+                ->setRequired(true),
             AssociationField::new('animalImages', 'Images')
                 ->onlyOnIndex(),
             AssociationField::new('information', 'Information sur l\'animal')
