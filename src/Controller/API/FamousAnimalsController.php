@@ -3,7 +3,7 @@
 namespace App\Controller\API;
 
 use App\Repository\AnimalRepository;
-use App\Service\CouchDBManager;
+use App\Service\CouchDBManagerService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class FamousAnimalsController extends AbstractController
 {
     #[Route('api/clickToAnimal/{name}', name: 'api_incrementClickAnimal', methods: ['GET'])]
-    public function index(Request $request, AnimalRepository $animalRepository, CouchDBManager $couchDBManager): JsonResponse
+    public function index(Request $request, AnimalRepository $animalRepository, CouchDBManagerService $couchDBManager): JsonResponse
     {
         $name = $request->get('name');
         $animal = $animalRepository->findOneBy(['name' => $name]);

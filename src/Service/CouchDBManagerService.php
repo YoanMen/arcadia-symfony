@@ -5,7 +5,7 @@ namespace App\Service;
 use App\DTO\FamousAnimalDTO;
 use App\Repository\AnimalRepository;
 
-class CouchDBManager
+class CouchDBManagerService
 {
     private string $couchDBUrl;
 
@@ -17,9 +17,9 @@ class CouchDBManager
     }
 
     /**
-     * @return array<mixed>
+     * @return array<mixed>|null
      */
-    public function createAnimalDocument(int $animalId): array
+    public function createAnimalDocument(int $animalId): ?array
     {
         return $this->connect(method: 'POST', data: ['_id' => strval($animalId), 'click' => 1]);
     }
@@ -102,9 +102,9 @@ class CouchDBManager
     }
 
     /**
-     * @return array<mixed>
+     * @return array<mixed>|null
      */
-    private function findAnimalDocument(int $animalId): array
+    private function findAnimalDocument(int $animalId): ?array
     {
         return $this->connect(url: '/'.strval($animalId), method: 'GET');
     }

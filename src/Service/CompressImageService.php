@@ -4,7 +4,7 @@ namespace App\Service;
 
 use Vich\UploaderBundle\Event\Event;
 
-class CompressImage
+class CompressImageService
 {
     public function compress(Event $event, int $quality = 70): void
     {
