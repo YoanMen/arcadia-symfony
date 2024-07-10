@@ -14,7 +14,6 @@ new CardsManager('/api/service', '/services', '/images/services/');
 {% endblock %}
 
 {% block main %}
-
 	<header aria-label="hero" class="lg:h-[480px] h-80 w-full lg:mt-20 mt-10 ">
 		<img class="h-full w-full object-cover" src="{{ asset('images/service.webp') | imagine_filter('down_scale') }}" alt="">
 		<div aria-label="conteneur du titre" class="relative bottom-32 gradient-to-top h-32 max-lg:h-40 max-lg:bottom-40 p-10 flex items-center">
@@ -23,7 +22,6 @@ new CardsManager('/api/service', '/services', '/images/services/');
 			</h1>
 		</div>
 	</header>
-
 	<main	class="min-h-screen">
 		{# BREADCRUMB #}
 		<nav aria-label="breadcrumb" class="px-2 mt-10 ">
@@ -41,16 +39,14 @@ new CardsManager('/api/service', '/services', '/images/services/');
 				</li>
 			</ul>
 		</nav>
-
 		<p class="max-w-screen-lg mx-auto mt-10 max-lg:mx-2">
-			“Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le faux texte standard de l'imprimerie depuis les années 1500”
+			Découvrez nos services pour rendre votre visite inoubliable. Profitez d'aires de pique-nique, de zones
+			de détente, et d'installations familiales pour un confort optimal.
 		</p>
-
 		{# CARDS CONTAINER #}
-		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg mx-auto flex  md:gap-4  flex-wrap my-10 justify-start px-2">
+		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg mx-auto flex  md:gap-4  flex-wrap my-10 justify-center px-2">
 			{% include "partials/_cardsLoading.html.twig" %}
 		</section>
-
 		<nav aria-label="pagination" class="pagination-container-js mx-auto w-full max-w-screen-lg px-4 mb-10">
 			<ul class="flex w-full max-md:justify-center justify-end">
 				<li>
@@ -67,7 +63,5 @@ new CardsManager('/api/service', '/services', '/images/services/');
 				</li>
 			</ul>
 		</nav>
-
 	</main>
-
 {% endblock %}
