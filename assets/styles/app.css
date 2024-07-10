@@ -147,7 +147,6 @@ h4 {
 
 .border-color:focus {
   border-color: var(--btn-color);
-  border: solid 3px var(--btn-color);
 }
 
 .bg-border {

@@ -38,6 +38,7 @@ class UserCrudController extends AbstractCrudController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             return $actions
+                ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Ajouter un compte');
                 });
@@ -64,8 +65,6 @@ class UserCrudController extends AbstractCrudController
                 ->setRequired(true),
             TextField::new('password', 'Mot de passe')
                 ->setColumns(6)
-                ->setFormTypeOption('data', '')
-                ->setFormTypeOption('attr', ['autocomplete' => 'off'])
                 ->onlyOnForms()
                 ->setFormType(PasswordType::class)
                 ->setRequired(true),
