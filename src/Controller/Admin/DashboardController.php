@@ -13,7 +13,7 @@ use App\Entity\Service;
 use App\Entity\User;
 use App\Repository\AnimalReportRepository;
 use App\Repository\HabitatCommentRepository;
-use App\Service\CouchDBManagerService;
+use App\Service\FamousAnimalService;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -27,7 +27,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 class DashboardController extends AbstractDashboardController
 {
     public function __construct(
-        private CouchDBManagerService $couchDBManager,
+        private FamousAnimalService $famousAnimalService,
         private ChartBuilderInterface $chartBuilder,
         private HabitatCommentRepository $habitatCommentRepository,
         private AnimalReportRepository $animalReportRepository
@@ -40,8 +40,8 @@ class DashboardController extends AbstractDashboardController
         if ($this->isGranted('ROLE_ADMIN')) {
             $reports = $this->animalReportRepository
                 ->createQueryBuilder('a')
-                ->orderBy('a.id', 'DESC') // order by id in descending order (newest first)
-                ->setMaxResults(10) // limit to the last 10 reports
+                ->orderBy('a.id', 'DESC')
+                ->setMaxResults(10)
                 ->getQuery()
                 ->getResult();
 
@@ -122,7 +122,7 @@ class DashboardController extends AbstractDashboardController
 
     public function setChart(): Chart
     {
-        $famousAnimal = $this->couchDBManager->getFamousAnimals();
+        $famousAnimal = $this->famousAnimalService->getFamousAnimals();
 
         $chart = $this->chartBuilder->createChart(Chart::TYPE_LINE);
 
@@ -131,7 +131,7 @@ class DashboardController extends AbstractDashboardController
         }, $famousAnimal);
 
         $clicks = array_map(function ($animal) {
-            return $animal->getClicks();
+            return $animal->getClick();
         }, $famousAnimal);
 
         $chart->setData([

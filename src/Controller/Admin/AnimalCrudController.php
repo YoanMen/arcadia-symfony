@@ -4,7 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Animal;
 use App\Form\AnimalImageType;
-use App\Service\CouchDBManagerService;
+use App\Service\FamousAnimalService;
 use Doctrine\ORM\EntityManagerInterface;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
@@ -18,8 +18,9 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class AnimalCrudController extends AbstractCrudController
 {
-    public function __construct(private CouchDBManagerService $couchDBManager)
-    {
+    public function __construct(
+        private FamousAnimalService $famousAnimalService
+    ) {
     }
 
     public static function getEntityFqcn(): string
@@ -76,10 +77,15 @@ class AnimalCrudController extends AbstractCrudController
         ];
     }
 
+    public function updateEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void
+    {
+        $this->famousAnimalService->updateAnimal($entityInstance->getId());
+        parent::updateEntity($entityManager, $entityInstance);
+    }
+
     public function deleteEntity(EntityManagerInterface $entityManager, mixed $entityInstance): void
     {
-        // delete from couchDB animal document
-        $this->couchDBManager->deleteAnimalDocument($entityInstance->getId());
+        $this->famousAnimalService->deleteAnimal($entityInstance->getId());
         parent::deleteEntity($entityManager, $entityInstance);
     }
 }

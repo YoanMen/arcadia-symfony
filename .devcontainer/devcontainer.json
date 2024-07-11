@@ -1,0 +1,35 @@
+{
+  "name": "Symfony environnement",
+  "dockerComposeFile": "compose.yaml",
+  "service": "dev",
+  "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "EditorConfig.EditorConfig",
+        "aaron-bond.better-comments",
+        "DEVSENSE.phptools-vscode",
+        "bmewburn.vscode-intelephense-client",
+        "xdebug.php-debug",
+        "DEVSENSE.profiler-php-vscode",
+        "kokororin.vscode-phpfmt",
+        "streetsidesoftware.code-spell-checker",
+        "usernamehw.errorlens",
+        "SirTori.indenticator",
+        "xabikos.JavaScriptSnippets",
+        "ms-vscode.makefile-tools",
+        "christian-kohler.path-intellisense",
+        "rexshi.phpdoc-comment-vscode-plugin",
+        "bradlc.vscode-tailwindcss",
+        "Zarifprogrammer.tailwind-snippets",
+        "junstyle.twig-language",
+        "mblode.twig-language-2",
+        "moetelo.twiggy",
+        "redhat.vscode-yaml",
+        "mongodb.mongodb-vscode"
+      ]
+    }
+  },
+  "forwardPorts": ["mailer:8025", "phpmyadmin:8102"]
+}

@@ -1,0 +1,71 @@
+services:
+  dev:
+    build:
+      context: ..
+      dockerfile: DockerFile
+
+    command: sleep infinity
+    volumes:
+      - ../.:/workspace
+    ports:
+      - 8000:8000
+    environment:
+      MAILER_DSN: "smtp://mailer:1025"
+      DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASS}@db_server:3306/${MYSQL_DB}?serverVersion=11.2.4-MariaDB&charset=utf8mb4"
+      MONGODB_URL: "mongodb://root:rootpassword@mongo:27017"
+    networks:
+      - symfony_app
+
+  db_server:
+    image: mariadb:11.2
+    container_name: "${APP_NAME}-db"
+    restart: always
+    ports:
+      - "33016:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASS}"
+
+    volumes:
+      - db_data:/var/lib/mysql
+
+    networks:
+      - symfony_app
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 8102:80
+    environment:
+      PMA_HOST: db_server
+    networks:
+      - symfony_app
+
+  mailer:
+    image: axllent/mailpit
+    ports:
+      - "1025"
+      - 8025:8025
+
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: rootpassword
+    ports:
+      - 27018:27017
+    volumes:
+      - mongo_db:/data/db
+    networks:
+      - symfony_app
+networks:
+  symfony_app:
+
+volumes:
+  db_data:
+  mongo_db:

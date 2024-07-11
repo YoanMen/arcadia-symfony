@@ -6,7 +6,7 @@ on:
       - "*"
 
   pull_request:
-    branches: [master, dev]
+    branches: [master]
 
 jobs:
   symfony-tests:
@@ -26,7 +26,7 @@ jobs:
           --health-interval=10s
           --health-timeout=5s
           --health-retries=3
-
+    
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
@@ -70,10 +70,10 @@ jobs:
         run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/database" > .env.test.local
 
       - name: create database
-        run: php bin/console d:d:c --no-interaction --env=test
+        run: php bin/console doctrine:database:create --no-interaction --env=test
 
       - name: Migrate database
-        run: php bin/console d:m:m --no-interaction --env=test
+        run: php bin/console  doctrine:migrations:migrate --no-interaction --env=test
 
       - name: Load fixtures
         run: php bin/console doctrine:fixtures:load --no-interaction --env=test
@@ -100,5 +100,7 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
+            **/.devcontainer*/**
+            DockerFile
             **/node_modules/**  
             **/documents/**
