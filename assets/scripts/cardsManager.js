@@ -287,7 +287,7 @@ export default class CardsManager {
     for (let index = 0; index < 5; index++) {
       const loadingElement = document.createElement("article");
       loadingElement.className =
-        "size-80 max-sm:w-full md:rounded  bg-slate-100 animate-pulse";
+        "size-80 max-md:w-full md:rounded  bg-slate-100 animate-pulse";
 
       this.cardsContainer.appendChild(loadingElement);
     }
@@ -325,7 +325,7 @@ export default class CardsManager {
   createCard(card) {
     const articleElement = document.createElement("article");
     articleElement.className =
-      "relative size-80 max-sm:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group " +
+      "relative size-80 max-md:w-full md:rounded  first:rounded-t last:rounded-b border-8 bg-secondary cards overflow-clip group " +
       card.getClassName();
 
     const anchorElement = document.createElement("a");
