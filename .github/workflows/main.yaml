@@ -100,5 +100,7 @@ jobs:
           exclude: |
             **/.git*
             **/.git*/**
+            **/.devcontainer*/**
+            DockerFile
             **/node_modules/**  
             **/documents/**

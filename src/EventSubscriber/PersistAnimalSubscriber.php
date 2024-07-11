@@ -3,13 +3,13 @@
 namespace App\EventSubscriber;
 
 use App\Entity\Animal;
-use App\Service\CouchDBManagerService;
+use App\Service\FamousAnimalService;
 use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class PersistAnimalSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private CouchDBManagerService $couchDBManager)
+    public function __construct(private FamousAnimalService $famousAnimalService)
     {
     }
 
@@ -21,7 +21,7 @@ class PersistAnimalSubscriber implements EventSubscriberInterface
             return;
         }
 
-        $this->couchDBManager->createAnimalDocument($entity->getId());
+        $this->famousAnimalService->createAnimal($entity->getId());
     }
 
     public static function getSubscribedEvents()
