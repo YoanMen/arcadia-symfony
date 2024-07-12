@@ -66,6 +66,7 @@ class AnimalCrudController extends AbstractCrudController
                 ->setColumns(6),
             SlugField::new('slug')
                 ->setTargetFieldName('name')
+                ->setEmptyData('')
                 ->onlyOnForms()
                 ->setHelp('généralement à ne pas changer'),
             AssociationField::new('habitat')

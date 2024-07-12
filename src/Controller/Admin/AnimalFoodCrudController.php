@@ -68,6 +68,7 @@ class AnimalFoodCrudController extends AbstractCrudController
             TextField::new('food', 'Nourriture')
                 ->setSortable(false)
                 ->setColumns(3)
+                ->setEmptyData('')
                 ->setRequired(true)
                 ->setHelp('viande, foin, fruits etc ...'),
             TextField::new('quantity', 'Quantité')
@@ -78,6 +79,7 @@ class AnimalFoodCrudController extends AbstractCrudController
             NumberField::new('quantity', 'Quantité')
                 ->setStoredAsString()
                 ->onlyOnForms()
+                ->setEmptyData('')
                 ->setHelp('en kilogrammes')
                 ->setColumns(3)
                 ->setRequired(true),

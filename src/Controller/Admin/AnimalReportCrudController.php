@@ -82,23 +82,25 @@ class AnimalReportCrudController extends AbstractCrudController
             TextField::new('statut', 'État de l\'animal')
                 ->setSortable(false)
                 ->setColumns(4)
+                ->setEmptyData('')
                 ->setHelp('malade, bien, mal a la patte etc..')
                 ->setRequired(true),
             TextField::new('food', 'Nourriture')
                 ->setSortable(false)
                 ->setHelp('nourriture recommandée ex: viande, foin, fruits etc ...')
                 ->setColumns(3)
+                ->setEmptyData('')
                 ->setRequired(true),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
                     return $value.' Kg';
                 })
-                ->setHelp('quantité recommandée')
                 ->setSortable(false),
             NumberField::new('quantity', 'Quantité')
                 ->onlyOnForms()
                 ->setHelp('en kilogrammes')
                 ->setColumns(3)
+                ->setEmptyData('')
                 ->setRequired(true),
             TextareaField::new('detail')
                 ->setColumns(12)

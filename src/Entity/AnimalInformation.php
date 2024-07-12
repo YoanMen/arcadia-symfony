@@ -22,12 +22,12 @@ class AnimalInformation
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 255, maxMessage: 'Le texte de la taille et el poids doit faire moins de 255 caractères')]
+    #[Assert\Length(max: 160, maxMessage: 'Le texte de la taille et el poids doit faire moins de 160 caractères')]
     private ?string $sizeAndHeight = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    #[Assert\Length(max: 255, maxMessage: 'Le texte de l\'espérance de vie doit faire moins de 255 caractères')]
+    #[Assert\Length(max: 160, maxMessage: 'Le texte de l\'espérance de vie doit faire moins de 160 caractères')]
     private ?string $lifespan = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalInformation')]

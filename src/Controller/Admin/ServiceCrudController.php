@@ -52,17 +52,20 @@ class ServiceCrudController extends AbstractCrudController
                 ->setRequired(true),
             SlugField::new('slug', 'Texte dans l\'url')
                 ->setTargetFieldName('name')
+                ->setEmptyData('')
                 ->setHelp('généralement à ne pas changer')
                 ->onlyOnForms()
                 ->setColumns(6)
                 ->setRequired(true),
             TextareaField::new('description')
                 ->setColumns(12)
+                ->setEmptyData('')
                 ->setHelp('description du service')
                 ->setRequired(true),
             TextEditorField::new('information')
                 ->setColumns(12)
                 ->setNumOfRows(12)
+                ->setEmptyData('')
                 ->setHelp('informations utile au visiteurs, comme les horaires')
                 ->setRequired(true),
             CollectionField::new('serviceImages', 'Ajouter une image')

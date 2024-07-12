@@ -13,7 +13,6 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: ServiceRepository::class)]
 #[UniqueEntity('name')]
 #[UniqueEntity('slug')]
-
 class Service
 {
     #[ORM\Id]

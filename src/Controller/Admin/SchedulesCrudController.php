@@ -39,6 +39,7 @@ class SchedulesCrudController extends AbstractCrudController
                 ->setNumOfRows(15)
                 ->setColumns(12)
                 ->onlyOnForms()
+                ->setEmptyData('')
                 ->setRequired(true),
         ];
     }
