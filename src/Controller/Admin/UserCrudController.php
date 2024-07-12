@@ -38,9 +38,15 @@ class UserCrudController extends AbstractCrudController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             return $actions
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
+                    return $action->setLabel('Créer et ajouter un nouveau utilisateur');
+                })
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                    return $action->setLabel('Créer un utilisateur');
+                })
                 ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
-                    return $action->setIcon('fa fa-plus')->setLabel('Ajouter un compte');
+                    return $action->setIcon('fa fa-plus')->setLabel('Ajouter un utilisateur');
                 });
         }
 
@@ -63,6 +69,14 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email')
                 ->setColumns(6)
                 ->setRequired(true),
+            TextField::new('username', 'Nom d\'utilisateur')
+                ->setColumns(6)
+                ->setDisabled(true)
+                ->onlyWhenUpdating(),
+            TextField::new('email')
+                ->setColumns(6)
+                ->setDisabled(true)
+                ->onlyWhenUpdating(),
             TextField::new('password', 'Mot de passe')
                 ->setColumns(6)
                 ->onlyOnForms()

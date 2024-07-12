@@ -26,6 +26,12 @@ class HabitatCrudController extends AbstractCrudController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             return $actions
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
+                    return $action->setLabel('Créer et ajouter un nouveau habitat');
+                })
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                    return $action->setLabel('Créer un habitat');
+                })
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Ajouter un habitat');
                 });
@@ -44,7 +50,8 @@ class HabitatCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
-            TextField::new('name', 'Nom de l\'habitat')->setColumns(5),
+            TextField::new('name', 'Nom de l\'habitat')
+                ->setColumns(5),
             SlugField::new('slug', 'Texte dans l\'url')
                 ->setTargetFieldName('name')
                 ->onlyOnForms()

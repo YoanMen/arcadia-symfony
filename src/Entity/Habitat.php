@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: HabitatRepository::class)]
 #[UniqueEntity('name', message: 'Un habitat avec ce nom existe déjà')]
+#[UniqueEntity('slug')]
 class Habitat
 {
     #[ORM\Id]
