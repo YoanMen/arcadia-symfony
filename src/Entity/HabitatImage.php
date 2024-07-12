@@ -20,13 +20,14 @@ class HabitatImage
     #[Vich\UploadableField(mapping: 'habitats', fileNameProperty: 'imageName', size: 'imageSize')]
     private ?File $imageFile = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, length: 160)]
+    #[Assert\Length(max: 160, maxMessage: 'Le nom est trop long, 160 caractères maximum')]
     private ?string $imageName = null;
 
     #[ORM\Column(nullable: true)]
     private ?int $imageSize = null;
 
-    #[ORM\Column(nullable: true)]
+    #[ORM\Column(nullable: true, length: 120)]
     #[Assert\Length(max: 120, maxMessage: 'Le alt est trop long, 120 caractères maximum')]
     private ?string $alt = null;
 

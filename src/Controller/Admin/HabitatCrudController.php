@@ -51,14 +51,18 @@ class HabitatCrudController extends AbstractCrudController
     {
         return [
             TextField::new('name', 'Nom de l\'habitat')
-                ->setColumns(5),
+                ->setColumns(5)
+                ->setEmptyData('')
+                ->setRequired(true),
             SlugField::new('slug', 'Texte dans l\'url')
                 ->setTargetFieldName('name')
+                ->setEmptyData('')
                 ->onlyOnForms()
                 ->setRequired(true)
                 ->setHelp('généralement à ne pas changer'),
             TextareaField::new('description', 'Description de l\'habitat')
                 ->setNumOfRows(5)
+                ->setEmptyData('')
                 ->setRequired(true)
                 ->setColumns(15),
             CollectionField::new('habitatImages', 'Images de l\'habitat')

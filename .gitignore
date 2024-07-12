@@ -7,7 +7,6 @@
 /var/
 /vendor/
 /documents/
-/migrations/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

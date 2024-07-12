@@ -18,15 +18,19 @@ class SpeciesCrudController extends AbstractCrudController
         return [
             TextField::new('communName', 'Nom Commun')
                 ->setColumns(6)
-                ->setRequired(true),
+                ->setRequired(true)
+                ->setEmptyData(''),
             TextField::new('genre', 'Genre')
                 ->setColumns(6)
+                ->setEmptyData('')
                 ->setRequired(true),
             TextField::new('family', 'Famille')
                 ->setColumns(6)
+                ->setEmptyData('')
                 ->setRequired(true),
             TextField::new('ordre', 'Ordre')
                 ->setColumns(6)
+                ->setEmptyData('')
                 ->setRequired(true),
         ];
     }

@@ -75,10 +75,12 @@ class HabitatCommentCrudController extends AbstractCrudController
                 ->setRequired(true),
             TextareaField::new('detail')
                 ->setColumns(12)
+                ->setEmptyData('')
                 ->onlyOnForms()
                 ->setRequired(true),
             TextField::new('detail')
                 ->onlyOnIndex()
+                ->setEmptyData('')
                 ->renderAsHtml(),
         ];
     }
