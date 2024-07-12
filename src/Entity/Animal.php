@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AnimalRepository::class)]
 #[UniqueEntity('name', message: 'Un animal avec ce nom existe déjà')]
+#[UniqueEntity('slug')]
 class Animal
 {
     #[ORM\Id]

@@ -25,7 +25,9 @@ class SchedulesCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
-        return $actions->disable(Action::NEW, Action::DELETE);
+        return $actions
+            ->remove(Crud::PAGE_EDIT, Action::SAVE_AND_CONTINUE)
+            ->disable(Action::NEW, Action::DELETE);
     }
 
     public function configureFields(string $pageName): iterable

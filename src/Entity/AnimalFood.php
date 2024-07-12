@@ -16,7 +16,6 @@ class AnimalFood
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\DateTime()]
     private ?\DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 60)]

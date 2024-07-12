@@ -41,7 +41,14 @@ class HabitatCommentCrudController extends AbstractCrudController
             return $actions->disable(Action::NEW, Action::DELETE, Action::EDIT);
         }
         if ($this->isGranted('ROLE_VETERINARY')) {
-            return $actions->disable(Action::DELETE, Action::EDIT)
+            return $actions
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
+                    return $action->setLabel('Créer et ajouter un nouveau commentaire');
+                })
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                    return $action->setLabel('Créer un commentaire');
+                })
+                ->disable(Action::DELETE, Action::EDIT)
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Ajouter un commentaire');
                 });

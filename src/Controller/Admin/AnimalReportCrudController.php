@@ -40,6 +40,12 @@ class AnimalReportCrudController extends AbstractCrudController
     {
         if ($this->isGranted('ROLE_VETERINARY')) {
             return $actions
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
+                    return $action->setLabel('Créer et ajouter un nouveau rapport');
+                })
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                    return $action->setLabel('Créer un rapport');
+                })
                 ->disable(Action::DELETE, Action::EDIT)
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Crée un rapport');

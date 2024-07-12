@@ -37,6 +37,12 @@ class AnimalCrudController extends AbstractCrudController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             return $actions
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_ADD_ANOTHER, function (Action $action) {
+                    return $action->setLabel('Créer et ajouter un nouveau animal');
+                })
+                ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
+                    return $action->setLabel('Créer un animal');
+                })
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Ajouter un animal');
                 });
