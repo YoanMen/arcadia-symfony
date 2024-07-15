@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -22,6 +23,15 @@ class HabitatCommentCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return HabitatComment::class;
+    }
+
+    public function index(AdminContext $context)
+    {
+        if ($this->isGranted('ROLE_ADMIN') || $this->isGranted('ROLE_VETERINARY')) {
+            return parent::index($context);
+        }
+
+        throw $this->createAccessDeniedException('Vous n\'avez pas l\'autorisation pour accéder à cette page');
     }
 
     public function configureFilters(Filters $filters): Filters
@@ -48,10 +58,10 @@ class HabitatCommentCrudController extends AbstractCrudController
                 ->update(Crud::PAGE_NEW, Action::SAVE_AND_RETURN, function (Action $action) {
                     return $action->setLabel('Créer un commentaire');
                 })
-                ->disable(Action::DELETE, Action::EDIT)
                 ->update(Crud::PAGE_INDEX, Action::NEW, function (Action $action) {
                     return $action->setIcon('fa fa-plus')->setLabel('Ajouter un commentaire');
-                });
+                })
+                ->disable(Action::DELETE, Action::EDIT);
         }
 
         return $actions;

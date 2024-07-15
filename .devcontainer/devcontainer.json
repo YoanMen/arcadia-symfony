@@ -27,6 +27,10 @@
         "mblode.twig-language-2",
         "moetelo.twiggy",
         "redhat.vscode-yaml",
+        "xdebug.php-pack",
+        "zobo.php-intellisense",
+        "MehediDracula.php-namespace-resolver",
+        "kokororin.vscode-phpfmt",
         "mongodb.mongodb-vscode"
       ]
     }

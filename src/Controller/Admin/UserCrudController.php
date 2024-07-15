@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Collection\FilterCollection;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
@@ -32,6 +33,15 @@ class UserCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return User::class;
+    }
+
+    public function index(AdminContext $context)
+    {
+        if ($this->isGranted('ROLE_ADMIN')) {
+            return parent::index($context);
+        }
+
+        throw $this->createAccessDeniedException('Vous n\'avez pas l\'autorisation pour accéder à cette page');
     }
 
     public function configureActions(Actions $actions): Actions
