@@ -1,20 +1,41 @@
 {% extends 'base.html.twig' %}
+{% block title %}Zoo Arcadia - Mentions lègales
+{% endblock %}
 
-{% block title %}Hello MentionsController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/yoan/Documents/web project/arcadia-symfony/src/Controller/MentionsController.php</code></li>
-        <li>Your template at <code>/home/yoan/Documents/web project/arcadia-symfony/templates/mentions/index.html.twig</code></li>
-    </ul>
-</div>
+{% block main %}
+	<main aria-label="contenu principal" class="min-h-screen max-w-screen-lg mx-auto lg:mt-28 mt-14 pb-10 px-2">
+		<h1 class="text-3xl text-color font-bold text-secondary 0">Mentions lègales</h1>
+		<section aria-label="Arcadia">
+			<h2 class="text-2xl text-color text-secondary font-bold uppercase mb-2 mt-10">Arcadia</h2>
+			<ul>
+				<li>
+				Zoo Arcadia
+			</li>
+			<li>
+				Fôret de Brocéliande
+			</li>
+			<li>
+				35380 Paimpont
+			</li>
+		</ul>
+	</section>
+	<section aria-label="hébergement">
+		<h2 class="text-2xl text-color text-secondary font-bold uppercase mb-2 mt-10">Hébergeur</h2>
+		<ul>
+			<li>
+				o2switch
+			</li>
+			<li>
+				Siret : 510 909 807 00032
+			</li>
+			<li>
+				RCS Clermont Ferrand
+			</li>
+			<li>
+				SAS au capital de 100 000€
+			</li>
+		</ul>
+	</section>
+	</main>
 {% endblock %}

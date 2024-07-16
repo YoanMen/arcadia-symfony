@@ -10,7 +10,7 @@
 
 {% block main %}
 	{% include "partials/_homeCarousel.html.twig" %}
-	<main aria-label="contenu principal">
+	<main	aria-label="contenu principal">
 		{# SECTION ABOUT #}
 		<section aria-label="section à propos" name="a propos" class="max-w-screen-lg mx-auto mb-40 mt-20 max-md:my-20 px-2">
 			<header aria-label="titre" class="max-sm:mx-auto max-w-fit">
@@ -142,9 +142,9 @@
 				</header>
 				<div class="flex max-md:flex-col gap-10 justify-between mt-10">
 					<div class='w-full max-md:text-center'>
-						<h4 class="text-base uppercase font-montserrat font-medium mb-3">
+						<h3 class="text-base uppercase font-montserrat font-medium mb-3">
 							adresse
-						</h4>
+						</h3>
 						<ul aria-label="adresse" class="mb-10">
 							<li>
 								Zoo Arcadia
@@ -159,9 +159,9 @@
 						<div aria-label="carte" id="openstreetmap" class="openstreetmap" data-url="https://www.openstreetmap.org/export/embed.html?bbox=-2.1460032463073735%2C48.048143335047286%2C-2.128837108612061%2C48.0541677067578&amp;layer=mapnik&amp;marker=48.05115560899795%2C-2.137420177459717" width="100%" height="350"></div>
 					</div>
 					<div class='w-full'>
-						<h4 class="text-base uppercase font-montserrat font-medium mb-3 max-md:text-center">
+						<h3 class="text-base uppercase font-montserrat font-medium mb-3 max-md:text-center">
 							horaires
-						</h4>
+						</h3>
 						{% if schedules is not null  %}
 							{{ schedules[0].schedules	| raw }}
 						{% endif %}

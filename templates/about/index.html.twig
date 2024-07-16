@@ -1,20 +1,72 @@
 {% extends 'base.html.twig' %}
+{% block title %}Zoo Arcadia - A propos
+{% endblock %}
 
-{% block title %}Hello AboutController!{% endblock %}
 
-{% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>/home/yoan/Documents/web project/arcadia-symfony/src/Controller/AboutController.php</code></li>
-        <li>Your template at <code>/home/yoan/Documents/web project/arcadia-symfony/templates/about/index.html.twig</code></li>
-    </ul>
-</div>
+{% block main %}
+	<main aria-label="contenu principal" class="min-h-screen max-w-screen-lg mx-auto lg:mt-28 mt-14 pb-10 px-2">
+		<h1 class="text-3xl text-color font-bold text-secondary 0">A propos</h1>
+		<section aria-label="Gestion des données personnelles">
+			<h2 class="text-2xl text-color text-secondary font-bold uppercase mb-2 mt-10">Données personnelles</h2>
+			<p>
+				Nous prenons très au sérieux la confidentialité et la sécurité de vos données personnelles. Voici comment nous gérons et protégeons les informations que vous nous fournissez à travers nos formulaires :
+			</p>
+			<article aria-label="Formulaire avis">
+				<h3 class="text-xl text-color text-secondary font-bold  mb-2 mt-10">
+					Formulaire d'avis
+				</h3>
+				<p class="mb-2">
+					Lorsque vous laissez un avis sur notre site, nous collectons les informations suivantes :
+				</p>
+				<ul>
+					<li>
+						<strong>Pseudonyme</strong>
+						: Un pseudonyme de votre choix, afin de publier votre avis de manière anonyme.
+					</li>
+					<li>
+						<strong>Avis</strong>
+						: Votre commentaire ou retour d'expérience.
+					</li>
+				</ul>
+			</article>
+			<article aria-label="Formulaire de contact">
+				<h3 class="text-xl text-color text-secondary font-bold  mb-2 mt-10">
+					Formulaire de contact
+				</h3>
+				<p class="mb-2">
+					Lorsque vous nous contactez via notre formulaire de contact, nous collectons les informations suivantes :
+				</p>
+				<ul>
+					<li>
+						<strong>Nom</strong>
+						: Votre nom pour pouvoir vous identifier dans notre correspondance.
+					</li>
+					<li>
+						<strong>Adresse e-mail</strong>
+						:  Votre adresse e-mail pour pouvoir vous répondre.
+					</li>
+					<li>
+						<strong>Message</strong>
+						:  Le contenu de votre message ou de votre demande.
+					</li>
+				</ul>
+				<p class="my-10">
+					Ces informations sont utilisées exclusivement pour répondre à votre demande ou à votre message. Nous ne partageons pas ces informations avec des tiers et nous nous engageons à les protéger conformément à notre politique de confidentialité.
+				</p>
+			</article>
+		</section>
+		<section aria-label="Sécurité des données">
+			<h2 class="text-2xl text-color text-secondary font-bold uppercase mb-2 mt-10">Sécurité des données</h2>
+			<p>
+				Nous mettons en place des mesures de sécurité appropriées pour protéger vos données personnelles contre l'accès non autorisé, la divulgation, la modification ou la destruction.
+			</p>
+		</section>
+		<section aria-label="Droits des utilisateurs">
+			<h2 class="text-2xl text-color text-secondary font-bold uppercase mb-2 mt-10">Droits des utilisateurs</h2>
+			<p>
+				Conformément au règlement général sur la protection des données (RGPD), vous avez le droit d'accéder, de rectifier, de supprimer ou de limiter l'utilisation de vos données personnelles. Pour exercer ces droits, vous pouvez nous contacter directement à l'adresse e-mail suivante : contact@arcadia.menardyoan.com.
+				Nous nous engageons à répondre à vos demandes dans les meilleurs délais et à respecter votre vie privée et vos droits concernant vos données personnelles.
+			</p>
+		</section>
+	</main>
 {% endblock %}
