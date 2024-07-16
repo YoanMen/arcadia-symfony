@@ -132,12 +132,14 @@ function showAdvice(advice) {
   let pseudo = document.createElement("p");
   pseudo.className = "uppercase font-medium text-base font-montserrat";
   pseudo.textContent = advice.pseudo;
+  pseudo.ariaLabel = "pseudo du visiteur";
 
   avatarContainer.appendChild(avatar);
   avatarContainer.appendChild(pseudo);
 
   let textContainer = document.createElement("p");
   textContainer.textContent = advice.advice;
+  textContainer.ariaLabel = "avis de l'utilisateur";
 
   container.appendChild(avatarContainer);
   container.appendChild(textContainer);
@@ -155,7 +157,6 @@ function showLoadingAdvice() {
 
   let avatarContainer = document.createElement("div");
   avatarContainer.className = "flex gap-2 items-center mb-4";
-
   let avatar = document.createElement("div");
   avatar.className = "animate-pulse size-16 bg-gray-100";
 

@@ -11,9 +11,9 @@
 			</svg>
 		</button>
 		{# END Mobile button #}
-		<nav class="flex max-lg:flex-col max-lg:py-2 justify-between items-center mx-auto px-6 h-full max-w-screen-xl ">
+		<nav aria-label="menu" class="flex max-lg:flex-col max-lg:py-2 justify-between items-center mx-auto px-6 h-full max-w-screen-xl ">
 			<a aria-label='Arcadia logo' href="{{ url('app_home') }}">
-				<img class="menu-logo-js w-20 max-lg:w-10 " src="{{ asset('images/logo/arcadia_green.svg') }}" alt="">
+				<img aria-label="image du logo" class="menu-logo-js w-20 max-lg:w-10 " src="{{ asset('images/logo/arcadia_green.svg') }}" alt="">
 			</a>
 			<ul class="menu-links-js flex max-lg:flex-col gap-2 max-lg:hidden max-lg:my-4 lg:gap-16 uppercase font-montserrat text-lg lg:ml-14 ">
 				<li>
