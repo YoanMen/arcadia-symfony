@@ -30,15 +30,15 @@ new CardsManager('/api/habitat', '/habitats', '/images/habitats/');
 		<nav aria-label="breadcrumb" class="px-2 mt-10 ">
 			<ul class="flex items-center gap-2 px-3 text-primary max-w-screen-lg mx-auto w-full h-10 bg-secondary rounded lowercase">
 				<li class="flex items-center gap-2">
-					<a class="text-color--hover transition-all duration-150" href="{{ url('app_home') }}">
-						<svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.707 2.293a1 1 0 0 0-1.414 0l-7 7l-2 2a1 1 0 1 0 1.414 1.414L4 12.414V19a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6.586l.293.293a1 1 0 0 0 1.414-1.414z" clip-rule="evenodd"/></svg>
+					<a aria-label="retour à l'accueil" class="text-color--hover transition-all duration-150" href="{{ url('app_home') }}">
+						<svg aria-label="îcone maison" class="size-5" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M12.707 2.293a1 1 0 0 0-1.414 0l-7 7l-2 2a1 1 0 1 0 1.414 1.414L4 12.414V19a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6.586l.293.293a1 1 0 0 0 1.414-1.414z" clip-rule="evenodd"/></svg>
 					</a>
-					<svg class="rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
+					<svg aria-label="icône flèche" class="rotate-90" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewbox="0 0 40 40">
 						<path fill="currentColor" d="M4.659 28.167h30.682L20 7.833z"/>
 					</svg>
 				</li>
 				<li>
-					<a class="text-color--hover transition-all duration-150" href="{{ url("app_habitat") }}">Habitats</a>
+					<a aria-label="retour aux habitats" class="text-color--hover transition-all duration-150" href="{{ url("app_habitat") }}">Habitats</a>
 				</li>
 			</ul>
 		</nav>
@@ -51,11 +51,11 @@ new CardsManager('/api/habitat', '/habitats', '/images/habitats/');
 			<h2 class="text-2xl text-center mb-2">Vous cherchez un animal ?</h2>
 			<form method="GET" class="cards-search-form-js min-h-10 flex max-sm:flex-col max-sm:gap-4">
 				<div>
-					<input type="text" autocomplete="off" name="search" list='prediction' class="cards-search-js h-10 p-2 border-color outline-0 rounded bg-border w-80 font-normal mr-1 max-sm:w-full" placeholder="nom, espèce, habitat, race, région..." name="" id="">
+					<input role="recherche animaux" aria-label="champ de recherche" type="text" autocomplete="off" name="search" list='prediction' class="cards-search-js h-10 p-2 border-color outline-0 rounded bg-border w-80 font-normal mr-1 max-sm:w-full" placeholder="nom, espèce, habitat, race, région...">
 					<datalist id="prediction" class="cards-search-datalist-js"></datalist>
 				</div>
 				<button class="btn-primary size-10 max-sm:w-full rounded cards-search-submit-js">
-					<svg class="size-8 mx-auto" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path fill="white" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
+					<svg aria-label="icône loupe" class="size-8 mx-auto" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24"><path fill="white" d="m19.6 21l-6.3-6.3q-.75.6-1.725.95T9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l6.3 6.3zM9.5 14q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
 				</button>
 			</form>
 		</section>

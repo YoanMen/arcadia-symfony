@@ -8,7 +8,7 @@
 :root {
   --primary: #fdfffc;
   --secondary: #29524a;
-  --btn-color: #db4c40;
+  --btn-color: #d62839;
   --border-color: #dbe3df;
   --text-color: #16302b;
 
@@ -118,7 +118,7 @@
 }
 
 .btn-primary:hover {
-  background-color: #d14538 !important;
+  background-color: #cc2536 !important;
 }
 
 .btn-secondary,
@@ -148,7 +148,7 @@
 .btn-secondary:not(:disabled):not(.disabled):active,
 .btn-secondary:not(:disabled):not(.disabled):active:focus,
 .btn-secondary:not(:disabled):not(.disabled):focus {
-  background-color: #d14538;
+  background-color: #cc2536;
 }
 
 .action-filters-button.action-filters-applied i {

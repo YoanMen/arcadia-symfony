@@ -35,7 +35,7 @@
 :root {
   --primary: #fdfffc;
   --secondary: #29524a;
-  --btn-color: #db4c40;
+  --btn-color: #d62839;
   --border-color: #dbe3df;
   --text-color: #16302b;
 
@@ -99,11 +99,11 @@ h4 {
 }
 
 .btn-primary:hover {
-  background-color: #e95345;
+  background-color: #cc2536;
 }
 
 .btn-primary:active {
-  background-color: #cc4336;
+  background-color: rgb(194, 64, 52);
 }
 
 /* text  */

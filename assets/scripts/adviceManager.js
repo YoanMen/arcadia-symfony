@@ -28,8 +28,7 @@ async function initialize() {
 
     getAdvice();
   } else {
-    container.textContent = "Aucun avis, laissez le votre !";
-    container.classList.add("flex", "items-center", "justify-center");
+    showError("Aucun avis, laissez le votre !")
   }
 }
 
@@ -84,7 +83,8 @@ async function getAdvicesCount() {
       throw new Error(result.error);
     }
   } catch (error) {
-    console.error(error.message);
+
+    showError(error.message)
   }
 }
 
@@ -101,6 +101,10 @@ async function getAdvice() {
       },
     });
 
+    if(!response.ok) {
+      throw new Error('Impossible de récupérer l\'avis, une erreur interne est survenu');
+    }
+
     const result = await response.json();
 
     if (result.success) {
@@ -109,7 +113,7 @@ async function getAdvice() {
       throw new Error(result.error);
     }
   } catch (error) {
-    console.error(error.message);
+    showError(error.message)
   }
 }
 
@@ -137,6 +141,12 @@ function showAdvice(advice) {
 
   container.appendChild(avatarContainer);
   container.appendChild(textContainer);
+}
+
+function showError(error) {
+  
+  container.textContent = error;
+  container.classList.add("flex", "items-center", "justify-center");
 }
 
 // create loading container when data is fetching

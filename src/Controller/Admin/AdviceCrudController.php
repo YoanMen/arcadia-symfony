@@ -6,6 +6,7 @@ use App\Entity\Advice;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
@@ -17,6 +18,15 @@ class AdviceCrudController extends AbstractCrudController
     public static function getEntityFqcn(): string
     {
         return Advice::class;
+    }
+
+    public function index(AdminContext $context)
+    {
+        if ($this->isGranted('ROLE_EMPLOYEE')) {
+            return parent::index($context);
+        }
+
+        throw $this->createAccessDeniedException('Vous n\'avez pas l\'autorisation pour accéder à cette page');
     }
 
     public function configureActions(Actions $actions): Actions

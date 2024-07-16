@@ -20,7 +20,11 @@
 
 
 			<script src="/tarteaucitron/tarteaucitron.js"></script>
-
+			<script defer type="text/javascript">
+				setTimeout(() => {
+(tarteaucitron.job = tarteaucitron.job || []).push('openstreetmap');
+}, 1500);
+			</script>
 			<script type="text/javascript">
 				tarteaucitron.init({
 "privacyUrl": "", /* Privacy policy url */
@@ -78,7 +82,7 @@
 			</script>
 		{% endblock %}
 	</head>
-	
+
 	<body>
 		{%  block menu %}
 			{% include 'partials/_menu.html.twig' %}
