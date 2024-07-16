@@ -1,27 +1,27 @@
-<dialog class="relative z-10 modal-js" aria-labelledby="modal-title" aria-modal="true">
+<dialog aria-label="boite de dialogue pour écrire un avis" role="dialog" class="relative z-10 modal-js">
 	<div class="fixed inset-0 bg-black bg-opacity-30 transition-opacity"></div>
-	<div class="fixed inset-0 z-10 overflow-y-auto flex">
+	<div aria-label="conteneur" class="fixed inset-0 z-10 overflow-y-auto flex">
 		<div class="shadow-xl transform bg-primary max-w-sm w-full p-4 rounded m-auto border-color">
 			<button aria-label="fermer le modal" class="modal-close-js absolute z-20 right-4 top-2 cursor-pointer  btn-primary rounded">
 				<svg class="size-8" xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24">
 					<path fill="currentColor" d="M6.4 19L5 17.6l5.6-5.6L5 6.4L6.4 5l5.6 5.6L17.6 5L19 6.4L13.4 12l5.6 5.6l-1.4 1.4l-5.6-5.6z"/>
 				</svg>
 			</button>
-			<form method="post" class="modal-form-js  relative flex flex-col h-full justify-around gap-2 text-color py-4 mt-2">
+			<form method="post" aria-label="formulaire pour l'avis" class="modal-form-js  relative flex flex-col h-full justify-around gap-2 text-color py-4 mt-2">
 				<label class="font-montserrat font-medium" for="pseudo">pseudo</label>
 				<input autofocus minlength="3" class="modal-pseudo-js w-full h-10 p-2 border-color outline-0 rounded bg-border
-				 invalid:border-red-500" type="text" name="pseudo" id="pseudo" class="form-control">
+					invalid:border-red-500" type="text" name="pseudo" id="pseudo">
 				<label class=" mt-2 font-montserrat font-medium" for="advice">avis</label>
 				<textarea minlength="10" class="modal-text-js w-full h-40 p-2 border-color outline-0 rounded bg-border resize-none
-				 invalid:border-red-500" name="advice" id="advice"></textarea>
+					invalid:border-red-500" name="advice" id="advice"></textarea>
 				<input class='modal-csrf-js' type="hidden" name="_csrf_token" value="{{ csrf_token('send_advice') }}">
 				<label class="flex gap-1 justify-start items-start " for="agree">
 					<input class="" type="checkbox" required name="agree" id="agree">
-					<p class="text-xs">
+					<small class="text-xs">
 						En cochant cette case, je consens à envoyer mon avis. Voir
 						<a class="text-color--btn underline" href="{{ url('app_mentions') }}">mentions légales</a>
 						pour plus d'informations sur la collecte et l'utilisation de mes données.
-					</p>
+					</small>
 				</label>
 				<button disabled class="modal-submit-js w-full h-11 rounded text-sm p-3 px-3 btn-primary mt-6 disabled:opacity-50" type="submit">
 					envoyer mon avis
@@ -30,5 +30,6 @@
 		</div>
 	</div>
 </dialog>
+
 
 
