@@ -16,6 +16,10 @@ class HabitatController extends AbstractController
         try {
             $page = $request->get('page', '1');
 
+            if (!intval($page)) {
+                throw new \Exception('la page doit être un entier');
+            }
+
             $data = $habitatRepository->findHabitatsByPage($page);
 
             return $this->json(['success' => true, 'data' => $data]);
@@ -29,6 +33,10 @@ class HabitatController extends AbstractController
     {
         try {
             $page = $request->get('page', '1');
+
+            if (!intval($page)) {
+                throw new \Exception('la page doit être un entier');
+            }
 
             $data = $habitatRepository->findAnimalsByHabitatAndByPage($page, $slug);
 

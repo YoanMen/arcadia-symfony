@@ -284,7 +284,8 @@ export default class CardsManager {
 
   // when data is loaded use loading cards placeholder
   showLoadingCards() {
-    for (let index = 0; index < 5; index++) {
+    this.cardsContainer.innerHTML = "";
+    for (let index = 0; index < 6; index++) {
       const loadingElement = document.createElement("article");
       loadingElement.className =
         "size-80 max-md:w-full md:rounded  bg-slate-100 animate-pulse";

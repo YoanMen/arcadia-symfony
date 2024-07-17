@@ -107,6 +107,6 @@ class AnimalFoodCrudController extends AbstractCrudController
             }
         }
 
-        parent::updateEntity($entityManager, $entityInstance);
+        parent::persistEntity($entityManager, $entityInstance);
     }
 }

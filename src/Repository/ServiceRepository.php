@@ -31,7 +31,6 @@ class ServiceRepository extends ServiceEntityRepository
                 GROUP BY name
                 LIMIT 6 OFFSET $first";
 
-        $conn->prepare($sql);
         $result['data'] = $conn->executeQuery($sql)
             ->fetchAllAssociative();
         $result['totalPage'] = $totalPages;
