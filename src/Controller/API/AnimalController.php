@@ -17,6 +17,10 @@ class AnimalController extends AbstractController
             $search = $request->get('search', '');
             $page = $request->get('page', '1');
 
+            if (!intval($page)) {
+                throw new \Exception('la page doit être un entier');
+            }
+
             $data = $animalRepository->findAnimalBySearch($search, $page);
 
             return $this->json(['success' => true, 'data' => $data]);

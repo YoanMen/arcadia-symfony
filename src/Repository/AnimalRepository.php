@@ -41,13 +41,13 @@ class AnimalRepository extends ServiceEntityRepository
      */
     public function findAnimalBySearch(string $search, int $page): array
     {
-        $search = '%'.$search.'%';
+        $search = '%' . $search . '%';
 
         $totalPages = ceil($this->getCountBySearch($search) / 6);
         $first = ($page - 1) * 6;
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT DISTINCT animal.name, animal.slug, habitat.slug as habitat_slug, animal_information.description, image_name, alt FROM animal
+        $sql = "SELECT animal.name, animal.slug, habitat.slug as habitat_slug, animal_information.description, image_name, alt FROM animal
                 INNER JOIN animal_image ON animal.id = animal_image.animal_id
                 INNER JOIN animal_information ON animal_information.id = animal.information_id
                 INNER JOIN species ON species.id= animal_information.species_id
@@ -75,10 +75,10 @@ class AnimalRepository extends ServiceEntityRepository
      */
     public function getPredictive(string $search): array
     {
-        $search = '%'.$search.'%';
+        $search = '%' . $search . '%';
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = 'SELECT DISTINCT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
+        $sql = 'SELECT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
                 LEFT JOIN animal_image ON animal.id = animal_image.animal_id
                 LEFT JOIN animal_information ON animal_information.id = animal.information_id
                 LEFT JOIN species ON species.id= animal_information.species_id
