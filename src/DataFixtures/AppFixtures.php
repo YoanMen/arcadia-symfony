@@ -123,7 +123,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 6; ++$i) {
             $advice = new Advice();
             $advice->setAdvice('test d\'un avis poster par un utilisateur');
-            $advice->setPseudo('Nom' . strval($i));
+            $advice->setPseudo('Nom'.strval($i));
             $advice->setApproved(true);
 
             $advices[] = $advice;
@@ -152,8 +152,8 @@ class AppFixtures extends Fixture
             $image->setAlt('image alt');
 
             $animal->addAnimalImage($image);
-            $animal->setName('animal' . strval($i));
-            $animal->setSlug('animal' . strval($i));
+            $animal->setName('animal'.strval($i));
+            $animal->setSlug('animal'.strval($i));
 
             $specie = new Species();
             $specie->setCommunName('nom commun');
@@ -197,7 +197,7 @@ class AppFixtures extends Fixture
         $advice = new Advice();
         $advice->setAdvice("<script>alert('XSS')</script>");
         $advice->setPseudo("<script>alert('XSS')</script>");
-        $advice->setApproved(1);
+        $advice->setApproved(true);
 
         $manager->persist($advice);
         $manager->flush();
