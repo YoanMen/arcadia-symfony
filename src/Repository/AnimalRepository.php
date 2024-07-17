@@ -31,8 +31,6 @@ class AnimalRepository extends ServiceEntityRepository
                 OR habitat.name LIKE :search
                 OR species.commun_name LIKE :search;';
 
-        $conn->prepare($sql);
-
         return $conn->executeQuery($sql, ['search' => $search])->fetchOne();
     }
 
@@ -41,7 +39,7 @@ class AnimalRepository extends ServiceEntityRepository
      */
     public function findAnimalBySearch(string $search, int $page): array
     {
-        $search = '%' . $search . '%';
+        $search = '%'.$search.'%';
 
         $totalPages = ceil($this->getCountBySearch($search) / 6);
         $first = ($page - 1) * 6;
@@ -61,8 +59,6 @@ class AnimalRepository extends ServiceEntityRepository
                 GROUP BY name
                 LIMIT 6 OFFSET $first;";
 
-        $conn->prepare($sql);
-
         $result['data'] = $conn->executeQuery($sql, ['search' => $search])
             ->fetchAllAssociative();
         $result['totalPage'] = intval($totalPages);
@@ -75,7 +71,7 @@ class AnimalRepository extends ServiceEntityRepository
      */
     public function getPredictive(string $search): array
     {
-        $search = '%' . $search . '%';
+        $search = '%'.$search.'%';
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = 'SELECT animal.name, habitat.name AS habitat, region.region, species.family , species.commun_name FROM animal
@@ -90,8 +86,6 @@ class AnimalRepository extends ServiceEntityRepository
                 OR habitat.name LIKE :search
                 OR species.commun_name LIKE :search
                 GROUP BY name;';
-
-        $conn->prepare($sql);
 
         $result['data'] = $conn->executeQuery($sql, ['search' => $search])
             ->fetchAllAssociative();

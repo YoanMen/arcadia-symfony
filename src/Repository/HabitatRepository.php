@@ -77,8 +77,6 @@ class HabitatRepository extends ServiceEntityRepository
                 GROUP BY name
                 LIMIT 6 OFFSET $first";
 
-        $conn->prepare($sql);
-
         $result['data'] = $conn->executeQuery($sql, ['habitat' => $habitat->getId()])
             ->fetchAllAssociative();
         $result['totalPage'] = intval($totalPages);

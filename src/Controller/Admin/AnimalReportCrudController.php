@@ -87,7 +87,7 @@ class AnimalReportCrudController extends AbstractCrudController
                 ->setSortable(true)
                 ->setRequired(true)
                 ->setFormTypeOption('choice_label', function ($animal) {
-                    return $animal->getName() . ' (' . $animal->getHabitat()->getName() . ')';
+                    return $animal->getName().' ('.$animal->getHabitat()->getName().')';
                 }),
             TextField::new('statut', 'État de l\'animal')
                 ->setSortable(false)
@@ -103,7 +103,7 @@ class AnimalReportCrudController extends AbstractCrudController
                 ->setRequired(true),
             TextField::new('quantity', 'Quantité')
                 ->formatValue(function ($value) {
-                    return $value . ' Kg';
+                    return $value.' Kg';
                 })
                 ->setSortable(false),
             NumberField::new('quantity', 'Quantité')

@@ -15,7 +15,7 @@ class SecurityController extends AbstractController
         // redirect user to back office
         if ($this->getUser()) {
             return $this->redirectToRoute(route: 'app_admin');
-        }   
+        }
         // get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
