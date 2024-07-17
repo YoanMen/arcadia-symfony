@@ -54,6 +54,7 @@ class CompressImageService
 
                 // delete image to cache
                 imagedestroy($image);
+                imagedestroy($resize);
             } else {
                 throw new \Exception("Can't format image");
             }

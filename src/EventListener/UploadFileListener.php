@@ -10,7 +10,7 @@ use Vich\UploaderBundle\Event\Events;
 class UploadFileListener
 {
     #[AsEventListener(event: Events::POST_UPLOAD)]
-    public function onVichUploaderPreUpload(Event $event): void
+    public function onVichUploaderUpload(Event $event): void
     {
         $compressImage = new CompressImageService();
         $compressImage->compress($event);
