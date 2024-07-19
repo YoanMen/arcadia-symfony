@@ -67,7 +67,10 @@ jobs:
           done
 
       - name: Set up .env.test.local
-        run: echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/database" > .env.test.local
+        run: |
+          echo "DATABASE_URL=mysql://root:root@127.0.0.1:3306/database" > .env.test.local
+          echo "CONTACT_MAIL=test@example.com" >> .env.test.local
+          echo "NOREPLY_MAIL=no-reply-test@example.com" >> .env.test.local
 
       - name: create database
         run: php bin/console doctrine:database:create --no-interaction --env=test
