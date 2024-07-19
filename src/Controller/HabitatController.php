@@ -29,19 +29,31 @@ class HabitatController extends AbstractController
             ]);
         }
 
-        return $this->render('error.html.twig', []);
+        return $this->render(
+            'error.html.twig',
+            [
+                'app_url' => 'app_habitat'
+            ]
+        );
     }
 
     #[Route('/habitats/{slug}/{slugAnimal}', name: 'app_habitat.animalShow')]
-    public function showAnimal(AnimalRepository $animalRepository, string $slug, string $slugAnimal): Response
+    public function showAnimal(HabitatRepository $habitatRepository, AnimalRepository $animalRepository, string $slug, string $slugAnimal): Response
     {
+        $habitat = $habitatRepository->findOneBy(['slug' => $slug]);
         $animal = $animalRepository->findOneBy(['slug' => $slugAnimal]);
-        if ($animal) {
+        if ($animal && $habitat) {
             return $this->render('animal/show.html.twig', [
                 'animal' => $animal,
             ]);
         }
 
-        return $this->render('error.html.twig', []);
+        return $this->render(
+            'error.html.twig',
+            [
+                'app_url' => 'app_habitat.show',
+                'slug' => $habitat->getSlug(),
+            ]
+        );
     }
 }

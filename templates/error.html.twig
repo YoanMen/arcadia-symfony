@@ -4,11 +4,16 @@
 {% endblock %}
 
 {% block main %}
+	<main class="min-h-screen flex justify-center items-center">
 
-	<main class="">
-	
-	
-	
+		<section aria-label="section sevices" name="services" class='max-w-screen-lg w-full mx-auto py-2 max-2xl:mt-20'>
+			<div class="bg-secondary min-h-20 mx-2 flex items-center justify-between px-2 sm:px-6 max-sm:flex-col rounded max-sm:mx-2 max-sm:py-4 max-sm:gap-4">
+				<p class="uppercase font-montserrat text-xl text-primary font-medium">Vous vous êtes perdu ?</p>
+				<a class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='redirection vers les services' href="{{ (slug is defined) ? url(app_url, { 'slug': slug }) : url(app_url) }}">
+					retour
+				</a>
+			</div>
+		</section>
 	</main>
 
 {% endblock %}

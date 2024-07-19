@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="description" content="Le site officiel du Zoo Arcadian, un lieu de rêve et d'excitement pour les animaux.">
+		<title>
+			Arcadia | erreur 404
+		</title>
+		<link rel="icon" href="{{ asset('images/logo/arcadia_favicon.svg') }}"> {% block stylesheets %}{% endblock %}
+
+		{% block javascripts %}
+
+			{% block importmap %}
+				{# the csp_nonce() function is defined by the NelmioSecurityBundle #}
+				{{ importmap('app') }}
+			{% endblock %}
+			{% block scripts %}{% endblock %}
+
+		{% endblock %}
+	</head>
+
+	<body>
+		{%  block menu %}
+			{% include 'partials/_menu.html.twig' %}
+		{%  endblock %}
+		{% block main %}{% endblock %}
+		<main class="min-h-screen flex justify-center items-center">
+
+			<section aria-label="section sevices" name="services" class='max-w-screen-lg w-full mx-auto py-2 max-2xl:mt-20'>
+				<div class="bg-secondary min-h-20 mx-2 flex items-center justify-between px-2 sm:px-6 max-sm:flex-col rounded max-sm:mx-2 max-sm:py-4 max-sm:gap-4">
+					<p class="uppercase font-montserrat text-xl text-primary font-medium">Vous vous êtes perdu ?</p>
+					<a class="btn-primary w-40 max-sm:w-full text-center p-3 rounded" aria-label='redirection vers les services' href="/">
+						retour
+					</a>
+				</div>
+			</section>
+		</main>
+		{% block footer %}
+			{% include 'partials/_footer.html.twig' %}
+		{% endblock %}
+
+	</body>
+</html>

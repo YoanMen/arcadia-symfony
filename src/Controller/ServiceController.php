@@ -28,6 +28,8 @@ class ServiceController extends AbstractController
             ]);
         }
 
-        return $this->render('error.html.twig', []);
+        return $this->render('error.html.twig', [
+            'app_url' => 'app_service'
+        ]);
     }
 }
