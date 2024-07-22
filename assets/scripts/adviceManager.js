@@ -101,7 +101,7 @@ async function getAdvice() {
       },
     });
 
-    if(!response.ok) {
+    if (!response.ok) {
       throw new Error('Impossible de récupérer l\'avis, une erreur interne est survenu');
     }
 
@@ -146,7 +146,7 @@ function showAdvice(advice) {
 }
 
 function showError(error) {
-  
+
   container.textContent = error;
   container.classList.add("flex", "items-center", "justify-center");
 }
@@ -186,3 +186,10 @@ function showLoadingAdvice() {
   container.appendChild(avatarContainer);
   container.appendChild(textContainer);
 }
+
+
+
+module.exports = getAdvicesCount;
+module.exports = getAdvice;
+
+

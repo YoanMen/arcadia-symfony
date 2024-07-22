@@ -31,6 +31,10 @@ jobs:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
       - name: 🔧 Set up PHP
         uses: shivammathur/setup-php@v2
         with:

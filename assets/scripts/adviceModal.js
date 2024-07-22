@@ -190,3 +190,4 @@ class AdviceModal {
 }
 
 new AdviceModal();
+export default AdviceModal;

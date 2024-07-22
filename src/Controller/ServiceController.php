@@ -29,7 +29,7 @@ class ServiceController extends AbstractController
         }
 
         return $this->render('error.html.twig', [
-            'app_url' => 'app_service'
+            'app_url' => 'app_service',
         ]);
     }
 }

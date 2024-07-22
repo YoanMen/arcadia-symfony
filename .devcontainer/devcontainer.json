@@ -31,7 +31,8 @@
         "zobo.php-intellisense",
         "MehediDracula.php-namespace-resolver",
         "kokororin.vscode-phpfmt",
-        "mongodb.mongodb-vscode"
+        "mongodb.mongodb-vscode",
+        "MrChetan.phpstorm-parameter-hints-in-vscode"
       ]
     }
   },
