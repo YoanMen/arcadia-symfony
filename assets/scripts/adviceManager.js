@@ -189,7 +189,3 @@ function showLoadingAdvice() {
 
 
 
-module.exports = getAdvicesCount;
-module.exports = getAdvice;
-
-

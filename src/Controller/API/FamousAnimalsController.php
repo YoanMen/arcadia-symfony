@@ -11,14 +11,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class FamousAnimalsController extends AbstractController
 {
-    #[Route('api/clickToAnimal/{name}', name: 'api_incrementClickAnimal', methods: ['GET'])]
+    #[Route('api/clickToAnimal/{id}', name: 'api_incrementClickAnimal', methods: ['GET'])]
     public function index(
         Request $request,
         AnimalRepository $animalRepository,
         FamousAnimalService $famousAnimalService
     ): JsonResponse {
-        $name = $request->get('name');
-        $animal = $animalRepository->findOneBy(['name' => $name]);
+        $id = $request->get('id');
+        $animal = $animalRepository->findOneBy(['id' => $id]);
 
         try {
             if ($animal) {
@@ -27,7 +27,7 @@ class FamousAnimalsController extends AbstractController
                 return $this->json(['message' => 'ok'], 200);
             }
 
-            return $this->json(['message' => 'no animal with this name'], 404);
+            return $this->json(['message' => 'no animal with this id'], 404);
         } catch (\Exception $e) {
             return $this->json(['message' => 'error'], 500);
         }

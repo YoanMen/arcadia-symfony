@@ -70,7 +70,7 @@ class HabitatRepository extends ServiceEntityRepository
 
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT name, slug, description, image_name, alt FROM animal
+        $sql = "SELECT animal.id, name, slug, description, image_name, alt FROM animal
                 INNER JOIN animal_image ON animal.id = animal_image.animal_id
                 INNER JOIN animal_information ON animal.information_id = animal_information.id
                 WHERE animal.habitat_id = :habitat

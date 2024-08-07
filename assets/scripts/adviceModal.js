@@ -41,7 +41,7 @@ class AdviceModal {
     const adviceLength = this.adviceInput.value.length;
     const pseudoLength = this.pseudoInput.value.length;
 
-    let pseudoIsValid = true; 
+    let pseudoIsValid = true;
     let adviceIsValid = true;
 
     this.removeError(this.adviceInput);
@@ -53,16 +53,16 @@ class AdviceModal {
         this.pseudoInput,
         "Le pseudo doit faire au minimum 3 caractères"
       );
-    } 
+    }
     if (pseudoLength > 60) {
       pseudoIsValid = false;
       this.errorMessage(
         this.pseudoInput,
         "Le pseudo doit faire moins de 60 caractères"
       );
-    } 
-    
-    if(adviceLength < 10) {
+    }
+
+    if (adviceLength < 10) {
       adviceIsValid = false;
       this.errorMessage(
         this.adviceInput,
@@ -190,4 +190,3 @@ class AdviceModal {
 }
 
 new AdviceModal();
-export default AdviceModal;

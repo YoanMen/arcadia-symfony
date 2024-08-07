@@ -25,7 +25,7 @@ export default class CardsManager {
     this.initialize();
   }
 
-  // initialise pagination and datas
+  // initialize pagination and data
   initialize() {
     this.pagination = new Pagination(
       () => {
@@ -155,13 +155,15 @@ export default class CardsManager {
       this.pagination.setTotalPages(data.totalPage);
 
       data.data.forEach((element) => {
+
         const card = new Card(
           `${this.imagePath}${element.image_name}`,
           element.alt,
           `${this.href}/${element.slug}`,
           element.name,
           element.description,
-          this.className
+          this.className,
+          element.id
         );
 
         // add card to container
@@ -190,7 +192,8 @@ export default class CardsManager {
           `/habitats/${element.habitat_slug}/${element.slug}`,
           element.name,
           element.description,
-          "button-listen"
+          "button-listen",
+          element.id
         );
 
         // add card to container
@@ -309,9 +312,9 @@ export default class CardsManager {
 
         event.preventDefault();
         const href = button.querySelector("a").href;
-        const name = button.querySelector(".button-title").textContent;
+        const id = button.dataset.id;
 
-        await fetch(`/api/clickToAnimal/${name}`, {
+        await fetch(`/api/clickToAnimal/${id}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -345,7 +348,7 @@ export default class CardsManager {
     const titleElement = document.createElement("h3");
     titleElement.textContent = card.getTitle();
     titleElement.className =
-      "button-title text-xl font-semibold uppercase text-primary";
+      "text-xl font-semibold uppercase text-primary";
 
     const descriptionElement = document.createElement("p");
     descriptionElement.textContent = card.getDescription();
@@ -356,6 +359,7 @@ export default class CardsManager {
     anchorElement.appendChild(imageElement);
     anchorElement.appendChild(textContainer);
     articleElement.appendChild(anchorElement);
+    articleElement.dataset.id = card.getId();
 
     return articleElement;
   }
