@@ -45,7 +45,7 @@ class AnimalRepository extends ServiceEntityRepository
         $first = ($page - 1) * 6;
         $conn = $this->getEntityManager()->getConnection();
 
-        $sql = "SELECT animal.name, animal.slug, habitat.slug as habitat_slug, animal_information.description, image_name, alt FROM animal
+        $sql = "SELECT animal.id, animal.name, animal.slug, habitat.slug as habitat_slug, animal_information.description, image_name, alt FROM animal
                 INNER JOIN animal_image ON animal.id = animal_image.animal_id
                 INNER JOIN animal_information ON animal_information.id = animal.information_id
                 INNER JOIN species ON species.id= animal_information.species_id

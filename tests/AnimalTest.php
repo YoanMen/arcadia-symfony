@@ -40,4 +40,17 @@ class AnimalTest extends KernelTestCase
 
         $this->assertCount(0, $errors);
     }
+
+    public function testAnimalIsInvalid(): void
+    {
+        self::bootKernel();
+        $container = $this->getContainer();
+        $animal = new Animal();
+        $animal->setName('');
+        $animal->setSlug('');
+        $animal->setHabitat(new Habitat());
+        $animal->addAnimalImage(new AnimalImage());
+        $errors = $container->get('validator')->validate($animal);
+        $this->assertCount(2, $errors);
+    }
 }

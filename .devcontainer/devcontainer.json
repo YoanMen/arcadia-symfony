@@ -31,9 +31,10 @@
         "zobo.php-intellisense",
         "MehediDracula.php-namespace-resolver",
         "kokororin.vscode-phpfmt",
-        "mongodb.mongodb-vscode"
+        "mongodb.mongodb-vscode",
+        "MrChetan.phpstorm-parameter-hints-in-vscode"
       ]
     }
   },
-  "forwardPorts": ["mailer:8025", "phpmyadmin:8102"]
+  "forwardPorts": ["mailer:8026", "phpmyadmin:8102"]
 }

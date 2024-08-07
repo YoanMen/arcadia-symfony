@@ -32,7 +32,7 @@ class HabitatController extends AbstractController
         return $this->render(
             'error.html.twig',
             [
-                'app_url' => 'app_habitat'
+                'app_url' => 'app_habitat',
             ]
         );
     }

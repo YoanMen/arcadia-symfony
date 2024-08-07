@@ -45,7 +45,7 @@ services:
     image: axllent/mailpit
     ports:
       - "1025"
-      - 8025:8025
+      - 8026:8025
 
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1
@@ -63,6 +63,7 @@ services:
       - mongo_db:/data/db
     networks:
       - symfony_app
+
 networks:
   symfony_app:
 
