@@ -28,6 +28,8 @@ class FamousAnimalService
 
             $this->documentManager->persist($animal);
             $this->documentManager->flush();
+        } else {
+            throw new \Exception('cant add click to animal');
         }
     }
 
