@@ -6,7 +6,7 @@ use Vich\UploaderBundle\Event\Event;
 
 class CompressImageService
 {
-    public function compress(Event $event, int $quality = 20): void
+    public function compress(Event $event, int $quality = 40): void
     {
         try {
             $object = $event->getObject();
