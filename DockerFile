@@ -35,6 +35,12 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 RUN wget https://get.symfony.com/cli/installer -O - | bash \
     && mv /root/.symfony*/bin/symfony /usr/local/bin/symfony
 
+RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash && \
+    export NVM_DIR="$HOME/.nvm" && \
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+    nvm install 22 && \
+    nvm use 22
+
 # Working directory
 WORKDIR /workspace
 
