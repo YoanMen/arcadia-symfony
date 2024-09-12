@@ -15,22 +15,22 @@ class AnimalImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-          ->add('imageFile', VichImageType::class, [
-              'label' => 'Image',
-              'allow_delete' => false,
-              'constraints' => [
-                  new Assert\File(
-                      maxSize: '5M',
-                      mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
-                      maxSizeMessage: "L'image ne doit pas dépassée 5M.",
-                      mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpg, jpeg, webp",
-                  ),
-              ],
-          ])->add('alt', TextType::class, [
-              'label' => 'Description',
-              'help' => 'description de l\'image pour l\'accessibilité',
-              'required' => false,
-          ]);
+            ->add('imageFile', VichImageType::class, [
+                'label' => 'Image',
+                'allow_delete' => false,
+                'constraints' => [
+                    new Assert\File(
+                        maxSize: '5M',
+                        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
+                        maxSizeMessage: "L'image ne doit pas dépassée 5M.",
+                        mimeTypesMessage: "Format d'image non supporté, utilisez - png, jpg, jpeg, webp",
+                    ),
+                ],
+            ])->add('alt', TextType::class, [
+                'label' => 'Description',
+                'help' => 'description de l\'image pour l\'accessibilité',
+                'required' => false,
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

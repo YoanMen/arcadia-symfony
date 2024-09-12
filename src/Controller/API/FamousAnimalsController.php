@@ -13,7 +13,7 @@ class FamousAnimalsController extends AbstractController
     #[Route('api/clickToAnimal/{id}', name: 'api_incrementClickAnimal', methods: ['GET'])]
     public function index(
         Request $request,
-        FamousAnimalService $famousAnimalService
+        FamousAnimalService $famousAnimalService,
     ): JsonResponse {
         $id = $request->get('id');
 

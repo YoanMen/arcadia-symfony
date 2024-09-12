@@ -20,7 +20,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 class AnimalCrudController extends AbstractCrudController
 {
     public function __construct(
-        private FamousAnimalService $famousAnimalService
+        private FamousAnimalService $famousAnimalService,
     ) {
     }
 

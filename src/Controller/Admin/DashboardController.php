@@ -30,7 +30,7 @@ class DashboardController extends AbstractDashboardController
         private FamousAnimalService $famousAnimalService,
         private ChartBuilderInterface $chartBuilder,
         private HabitatCommentRepository $habitatCommentRepository,
-        private AnimalReportRepository $animalReportRepository
+        private AnimalReportRepository $animalReportRepository,
     ) {
     }
 

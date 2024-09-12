@@ -12,7 +12,7 @@ class FamousAnimalService
 {
     public function __construct(
         private DocumentManager $documentManager,
-        private AnimalRepository $animalRepository
+        private AnimalRepository $animalRepository,
     ) {
     }
 

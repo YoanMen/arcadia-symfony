@@ -79,13 +79,16 @@ export default class CardsManager {
 
       const result = await response.json();
 
-      if (result.success) {
-        this.showCards(result.data);
-      } else if (result.error) {
-        throw new Error(result.error);
-      } else {
+      if (!result.success) {
+        if (result.error) {
+          throw new Error(result.error);
+        }
+
         throw new Error(result.detail);
       }
+
+      this.showCards(result.data);
+
     } catch (error) {
       console.error(error);
     }

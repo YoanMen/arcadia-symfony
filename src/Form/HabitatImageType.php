@@ -24,7 +24,7 @@ class HabitatImageType extends AbstractType
                       maxSize: '5M',
                       mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
                       maxSizeMessage: "L'image ne doit pas dépassée 5M.",
-                      mimeTypesMessage: "Format d'image non supporter, utilisez - png, jpg, jpeg, webp",
+                      mimeTypesMessage: "Format d'image non supporté, utilisez - png, jpg, jpeg, webp",
                   ),
               ],
           ])
