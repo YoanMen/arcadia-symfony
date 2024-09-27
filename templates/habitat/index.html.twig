@@ -24,7 +24,8 @@ new CardsManager('/api/habitat', '/habitats', '/images/habitats/');
 		</div>
 	</header>
 
-	<main aria-label="contenu principal" class="min-h-screen">
+	<main
+		aria-label="contenu principal" class="min-h-screen">
 		{# BREADCRUMB #}
 		<nav aria-label="breadcrumb" class="px-2 mt-10 ">
 			<ul class="flex items-center gap-2 px-3 text-primary max-w-screen-lg mx-auto w-full h-10 bg-secondary rounded lowercase">
@@ -50,7 +51,7 @@ new CardsManager('/api/habitat', '/habitats', '/images/habitats/');
 			<h2 class="text-2xl text-center mb-2">Vous cherchez un animal ?</h2>
 			<form method="GET" class="cards-search-form-js min-h-10 flex max-sm:flex-col max-sm:gap-4">
 				<div>
-					<input role="search"" aria-label="champ de recherche" type="text" autocomplete="off" name="search" list='prediction' class="cards-search-js h-10 p-2 border-color outline-0 rounded bg-border w-80 font-normal mr-1 max-sm:w-full" placeholder="nom, espèce, habitat, race, région...">
+					<input role="search" aria-label="champ de recherche" type="text" autocomplete="off" name="search" list='prediction' class="cards-search-js h-10 p-2 border-color outline-0 rounded bg-border w-80 font-normal mr-1 max-sm:w-full" placeholder="nom, espèce, habitat, race, région...">
 					<datalist id="prediction" class="cards-search-datalist-js"></datalist>
 				</div>
 				<button class="btn-primary size-10 max-sm:w-full rounded cards-search-submit-js">
@@ -60,7 +61,7 @@ new CardsManager('/api/habitat', '/habitats', '/images/habitats/');
 		</section>
 
 		{# CARDS CONTAINER #}
-		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg max-lg:max-w-[688px] mx-auto flex flex-wrap md:gap-4 my-10 px-4">
+		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg max-lg:max-w-[688px] lg:min-h-[656px] max-lg:min-h-[992px] max-md:min-h-fit h-full  mx-auto flex flex-wrap md:gap-4 my-10 px-4">
 			{% include "partials/_cardsLoading.html.twig" %}
 		</section>
 
