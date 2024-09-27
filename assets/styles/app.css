@@ -72,16 +72,7 @@ h4 {
     rgba(255, 255, 255, 0) 100%
   );
 }
-.cards {
-  border-color: var(--secondary);
-  background-color: var(--secondary);
-  transition: all ease-in-out 150ms;
-}
 
-.cards:hover {
-  background-color: var(--btn-color);
-  border-color: var(--btn-color);
-}
 
 /* background */
 .bg-primary {
@@ -151,4 +142,28 @@ h4 {
 
 .bg-border {
   background: #dbe3df20;
+}
+
+.cards {
+  border-color: var(--secondary);
+  background-color: var(--secondary);
+  transition: all ease-in-out 150ms;
+}
+
+.cards:hover {
+  background-color: var(--btn-color);
+  border-color: var(--btn-color);
+}
+
+.fade-in {
+  animation: fade-in linear 150ms;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }

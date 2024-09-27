@@ -337,12 +337,17 @@ export default class CardsManager {
 
     const anchorElement = document.createElement("a");
     anchorElement.href = card.getHref();
-
+    anchorElement.className = "hidden";
     const imageElement = document.createElement("img");
     imageElement.src = card.getImageName();
     imageElement.alt = card.getAlt();
     imageElement.className =
       "object-cover rounded-sm w-full h-full group-hover:scale-105 transition-all ease-in-out duration-150";
+
+    imageElement.addEventListener("load", () => {
+      anchorElement.classList.remove("hidden")
+      anchorElement.classList.add("fade-in")
+    })
 
     const textContainer = document.createElement("div");
     textContainer.className =
