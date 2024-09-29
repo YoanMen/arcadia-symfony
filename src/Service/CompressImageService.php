@@ -6,7 +6,7 @@ use Vich\UploaderBundle\Event\Event;
 
 class CompressImageService
 {
-    public function compress(Event $event, int $quality = 40): void
+    public function compress(Event $event, int $quality = 60): void
     {
         try {
             $object = $event->getObject();
@@ -14,7 +14,7 @@ class CompressImageService
 
             $destination = $mapping->getUploadDestination();
             $nameFile = $object->getImageName();
-            $imageSize = getimagesize($destination.'/'.$nameFile);
+            $imageSize = getimagesize($destination . '/' . $nameFile);
 
             $imageWidth = $imageSize['0'];
             $imageHeight = $imageSize['1'];
@@ -22,13 +22,18 @@ class CompressImageService
 
             switch ($extension) {
                 case 'image/png':
-                    $image = imagecreatefrompng($destination.'/'.$nameFile);
+                    $image = imagecreatefrompng($destination . '/' . $nameFile);
                     $newNameFile = str_replace('.png', '.webp', $nameFile);
                     break;
 
                 case 'image/jpeg':
-                    $image = imagecreatefromjpeg($destination.'/'.$nameFile);
+                    $image = imagecreatefromjpeg($destination . '/' . $nameFile);
                     $newNameFile = str_replace(['.jpeg', '.jpg'], '.webp', $nameFile);
+                    break;
+
+                case 'image/webp':
+                    $image = imagecreatefromwebp($destination . '/' . $nameFile);
+                    $newNameFile = $nameFile; // Keep the same name for WebP files
                     break;
 
                 default:
@@ -37,29 +42,31 @@ class CompressImageService
                     break;
             }
 
-            if ('image/webp' == $extension) {
-                return;
-            }
-
             if ($image) {
-                $object->setImageName($newNameFile);
-
+                // Resize and compress image
                 $resize = $this->resizeImage($quality, $image, $imageWidth, $imageHeight);
 
-                // format image to webp
-                imagewebp($resize, $destination.'/'.$newNameFile, $quality);
+                // Save image as webp
+                imagewebp($resize, $destination . '/' . $newNameFile, $quality);
 
-                // remove image when formatted
-                unlink($destination.'/'.$nameFile);
+                // If the image format is not WebP, delete the original image
+                if ($extension !== 'image/webp') {
+                    unlink($destination . '/' . $nameFile);
+                }
 
-                // delete image to cache
+                // Clean up memory
                 imagedestroy($image);
                 imagedestroy($resize);
+
+                // Update the image name if necessary
+                if ($extension !== 'image/webp') {
+                    $object->setImageName($newNameFile);
+                }
             } else {
                 throw new \Exception("Can't format image");
             }
         } catch (\Throwable $th) {
-            throw new \Exception('Error formatting image '.$th->getMessage());
+            throw new \Exception('Error formatting image: ' . $th->getMessage());
         }
     }
 
