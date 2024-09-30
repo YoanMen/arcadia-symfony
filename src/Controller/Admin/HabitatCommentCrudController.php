@@ -37,7 +37,7 @@ class HabitatCommentCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         if ($this->isGranted('ROLE_ADMIN')) {
-            $filters->add(VeterinaryFilter::new('veterinary'));
+            $filters->add(VeterinaryFilter::new('veterinary', "Vétérinaire"));
         }
 
         return $filters->add('date')
