@@ -10,7 +10,8 @@
 
 {% block main %}
 	{% include "partials/_homeCarousel.html.twig" %}
-	<main	aria-label="contenu principal">
+	<main
+		aria-label="contenu principal">
 		{# SECTION ABOUT #}
 		<section aria-label="section à propos" name="a propos" class="max-w-screen-lg mx-auto mb-40 mt-20 max-md:my-20 px-2">
 			<header aria-label="titre" class="max-sm:mx-auto max-w-fit">
@@ -21,13 +22,17 @@
 				Situé en Bretagne, en France, au cœur de la légendaire Forêt de Brocéliande, le zoo Arcadia accueille les visiteurs depuis 1960.
 				<br>
 				Notre zoo est le refuge d'une grande variété d'animaux, soigneusement regroupés par habitat.
-				Au cœur d'Arcadia, le bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend visite à chaque espèce pour s'assurer de leur santé et de leur bonheur, qui sont au sommet de nos préoccupations. Nos soigneurs travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin qu'ils reçoivent le bon équilibre de nutriments. Grâce à notre équipe déterminée et à notre engagement envers l'excellence, Arcadia est un endroit où nos animaux vivent leur vie au mieux.
-				Nous sommes fiers de notre zoo et nous voudrions vous le partager. Venez explorer les merveilles du zoo Arcadia !
+				<br><br>
+				Au cœur d'Arcadia, le bien-être animal est notre priorité absolue. Tous les jours, notre équipe de vétérinaires rend visite à chaque espèce pour s'assurer de leur santé et de leur bonheur, qui sont au sommet de nos préoccupations.
+				<br><br>
+				Nos soigneurs travaillent également sans relâche pour concevoir des régimes personnalisés pour chaque animal, afin qu'ils reçoivent le bon équilibre de nutriments. Grâce à notre équipe déterminée et à notre engagement envers l'excellence, Arcadia est un endroit où nos animaux vivent leur vie au mieux.
+				Nous sommes fiers de notre zoo et nous voudrions vous le partager.
+				<br><br> Venez explorer les merveilles du zoo Arcadia !
 			</p>
-			<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.webp')  }}" alt="portrait de josé le créateur du Zoo, regardant au loin">
+			<img class="mx-auto w-44 my-10 rounded border-color grayscale" src="{{ asset('images/portrait.webp') }}" alt="portrait de josé le créateur du Zoo, regardant au loin">
 			<p aria-label="citation" class="mx-auto text-sm max-w-screen-md font-medium text-center">
 				“Les animaux sont les gardiens de notre planète. Il est donc essentiel de les protéger et de préserver leur habitat pour un
-				meilleure futur”
+								meilleure futur”
 			</p>
 		</section>
 
