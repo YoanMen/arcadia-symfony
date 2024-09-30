@@ -35,7 +35,7 @@ class AnimalReport
     private ?string $quantity = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(max: 60, maxMessage: 'Le detail  est trop long, 255 caractères maximum')]
+    #[Assert\Length(max: 255, maxMessage: 'Le detail  est trop long, 255 caractères maximum')]
     private ?string $detail = null;
 
     #[ORM\ManyToOne(inversedBy: 'animalReports')]

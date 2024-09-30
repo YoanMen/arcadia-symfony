@@ -14,6 +14,7 @@ nelmio_security:
                 - 'unsafe-inline'
                 - 'blob:'
                 - 'https://ga.jspm.io/'
+                - 'https://unpkg.com/'
             style-src:
                 - 'self'
                 - 'unsafe-inline'
@@ -23,6 +24,8 @@ nelmio_security:
                 - 'https://api.dicebear.com'
             connect-src:
                 - 'self'
+                - 'https://api.websitecarbon.com/'
+
             frame-src:
                 - 'https://www.openstreetmap.org'
                 - 'self'
