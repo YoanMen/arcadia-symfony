@@ -6,7 +6,6 @@ use App\Document\Animal;
 use App\Document\Animal as DocumentAnimal;
 use App\Repository\AnimalRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
-use Doctrine\ODM\MongoDB\Iterator\CachingIterator;
 
 class FamousAnimalService
 {
@@ -92,10 +91,6 @@ class FamousAnimalService
             ->getQuery()
             ->execute();
 
-        if ($result instanceof CachingIterator) {
-            return $result->toArray();
-        }
-
-        return [];
+        return $result->toArray();
     }
 }

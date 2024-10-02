@@ -14,7 +14,7 @@ class CompressImageService
 
             $destination = $mapping->getUploadDestination();
             $nameFile = $object->getImageName();
-            $imageSize = getimagesize($destination . '/' . $nameFile);
+            $imageSize = getimagesize($destination.'/'.$nameFile);
 
             $imageWidth = $imageSize['0'];
             $imageHeight = $imageSize['1'];
@@ -22,17 +22,17 @@ class CompressImageService
 
             switch ($extension) {
                 case 'image/png':
-                    $image = imagecreatefrompng($destination . '/' . $nameFile);
+                    $image = imagecreatefrompng($destination.'/'.$nameFile);
                     $newNameFile = str_replace('.png', '.webp', $nameFile);
                     break;
 
                 case 'image/jpeg':
-                    $image = imagecreatefromjpeg($destination . '/' . $nameFile);
+                    $image = imagecreatefromjpeg($destination.'/'.$nameFile);
                     $newNameFile = str_replace(['.jpeg', '.jpg'], '.webp', $nameFile);
                     break;
 
                 case 'image/webp':
-                    $image = imagecreatefromwebp($destination . '/' . $nameFile);
+                    $image = imagecreatefromwebp($destination.'/'.$nameFile);
                     $newNameFile = $nameFile; // Keep the same name for WebP files
                     break;
 
@@ -47,11 +47,11 @@ class CompressImageService
                 $resize = $this->resizeImage($quality, $image, $imageWidth, $imageHeight);
 
                 // Save image as webp
-                imagewebp($resize, $destination . '/' . $newNameFile, $quality);
+                imagewebp($resize, $destination.'/'.$newNameFile, $quality);
 
                 // If the image format is not WebP, delete the original image
-                if ($extension !== 'image/webp') {
-                    unlink($destination . '/' . $nameFile);
+                if ('image/webp' !== $extension) {
+                    unlink($destination.'/'.$nameFile);
                 }
 
                 // Clean up memory
@@ -59,14 +59,14 @@ class CompressImageService
                 imagedestroy($resize);
 
                 // Update the image name if necessary
-                if ($extension !== 'image/webp') {
+                if ('image/webp' !== $extension) {
                     $object->setImageName($newNameFile);
                 }
             } else {
                 throw new \Exception("Can't format image");
             }
         } catch (\Throwable $th) {
-            throw new \Exception('Error formatting image: ' . $th->getMessage());
+            throw new \Exception('Error formatting image: '.$th->getMessage());
         }
     }
 
