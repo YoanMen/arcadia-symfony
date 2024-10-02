@@ -6,14 +6,14 @@ use App\Document\Animal;
 use App\Document\Animal as DocumentAnimal;
 use App\Repository\AnimalRepository;
 use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ODM\MongoDB\Iterator\CachingIterator;
 
 class FamousAnimalService
 {
     public function __construct(
         private DocumentManager $documentManager,
         private AnimalRepository $animalRepository,
-    ) {
-    }
+    ) {}
 
     public function incrementAnimalClick(int $animalId): void
     {
@@ -91,6 +91,10 @@ class FamousAnimalService
             ->getQuery()
             ->execute();
 
-        return $result->toArray();
+        if ($result instanceof CachingIterator) {
+            return $result->toArray();
+        }
+
+        return [];
     }
 }
