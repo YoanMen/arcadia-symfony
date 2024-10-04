@@ -3,10 +3,11 @@
 namespace App\Tests;
 
 use App\Document\Animal;
-use App\Service\FamousAnimalService;
+use Psr\Log\LoggerInterface;
 use PHPUnit\Framework\TestCase;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use App\Repository\AnimalRepository;
+use App\Service\FamousAnimalService;
+use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ODM\MongoDB\Repository\DocumentRepository;
 
 class FamousAnimalServiceTest extends TestCase
@@ -17,6 +18,7 @@ class FamousAnimalServiceTest extends TestCase
         $repository = $this->createMock(DocumentRepository::class);
         $animalRepository = $this->createMock(AnimalRepository::class);
         $documentManager = $this->createMock(DocumentManager::class);
+        $logger = $this->createMock(LoggerInterface::class);
 
         $animal = new Animal();
         $animal->setClick(0);
@@ -33,7 +35,7 @@ class FamousAnimalServiceTest extends TestCase
             ->with(Animal::class)
             ->willReturn($repository);
 
-        $animalService = new FamousAnimalService($documentManager, $animalRepository);
+        $animalService = new FamousAnimalService($documentManager, $animalRepository, $logger);
         $animalService->incrementAnimalClick($animalId);
 
         $this->assertEquals(1, $animal->getClick());
