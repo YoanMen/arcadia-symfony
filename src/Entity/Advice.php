@@ -17,14 +17,23 @@ class Advice
     private ?int $id = null;
 
     #[ORM\Column(length: 60)]
-    #[Assert\Length(max: 60, maxMessage: 'Le pseudo est trop long, 60 caractères maximum')]
+    #[Assert\Length(
+        min: 3,
+        max: 60,
+        maxMessage: 'Le pseudo est trop long, 60 caractères maximum'
+    )]
     #[Assert\NotBlank()]
     #[Groups(['advice.approved', 'advice.create'])]
     private ?string $pseudo = null;
 
     #[ORM\Column(type: Types::TEXT)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 10, minMessage: 'L\'avis doit faire 10 caractères minimum', max: 300, maxMessage: 'L\'avis est trop long, 300 caractères maximum')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'L\'avis doit faire 10 caractères minimum',
+        max: 300,
+        maxMessage: 'L\'avis est trop long, 300 caractères maximum'
+    )]
     #[Groups(['advice.approved', 'advice.create'])]
     private ?string $advice = null;
 

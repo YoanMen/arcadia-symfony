@@ -40,8 +40,11 @@ class AdviceController extends AbstractController
     }
 
     #[Route('api/advice', name: 'api_sendAdvice', methods: ['POST'])]
-    public function sendAdvice(Request $request, #[MapRequestPayload(serializationContext: ['groups' => ['advice.create']], acceptFormat: 'json')] Advice $advice, EntityManagerInterface $entityManagerInterface): JsonResponse
-    {
+    public function sendAdvice(
+        Request $request,
+        #[MapRequestPayload(serializationContext: ['groups' => ['advice.create']], acceptFormat: 'json')] Advice $advice,
+        EntityManagerInterface $entityManagerInterface,
+    ): JsonResponse {
         try {
             $csrf = json_decode($request->getContent(), true)['csrf'];
 

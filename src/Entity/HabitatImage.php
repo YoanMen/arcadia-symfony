@@ -18,6 +18,12 @@ class HabitatImage
     private ?int $id = null;
 
     #[Vich\UploadableField(mapping: 'habitats', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Assert\File(
+        maxSize: '5M',
+        mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
+        maxSizeMessage: "L'image ne doit pas dépasser 5M.",
+        mimeTypesMessage: "Format d'image non supporté, utilisez - png, jpg, jpeg, webp",
+    )]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true, length: 160)]

@@ -16,7 +16,9 @@ class ContactDTO
     public string $name = '';
 
     #[Assert\NotBlank]
-    #[Assert\Email]
+    #[Assert\Email(
+        message: "L'adresse email n'est pas valide"
+    )]
     #[Assert\Length(
         min: 3,
         max: 320,

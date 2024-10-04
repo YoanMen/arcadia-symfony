@@ -13,7 +13,8 @@ class FamousAnimalService
     public function __construct(
         private DocumentManager $documentManager,
         private AnimalRepository $animalRepository,
-    ) {}
+    ) {
+    }
 
     public function incrementAnimalClick(int $animalId): void
     {

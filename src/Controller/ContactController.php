@@ -17,9 +17,7 @@ class ContactController extends AbstractController
     public function index(Request $request, EventDispatcherInterface $dispatcher): Response
     {
         $data = new ContactDTO();
-
         $contactForm = $this->createForm(ContactType::class, $data);
-
         $csrf = $request->get('_csrf_token', '');
 
         $contactForm->handleRequest($request);
