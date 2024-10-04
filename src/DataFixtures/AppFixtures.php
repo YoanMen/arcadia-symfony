@@ -144,7 +144,7 @@ class AppFixtures extends Fixture
     {
         $animals = [];
 
-        for ($i = 0; $i < 10; ++$i) {
+        for ($i = 0; $i < 30; ++$i) {
             $animal = new Animal();
 
             $image = new AnimalImage();

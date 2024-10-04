@@ -86,14 +86,14 @@ new CardsManager('/api/habitat/{{ habitat.slug }}', '/habitats/{{ habitat.slug }
 			</form>
 		</section>
 
-		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg max-lg:max-w-[688px] lg:min-h-[656px] max-lg:min-h-[992px] max-md:min-h-fit h-full mx-auto flex flex-wrap md:gap-4 my-10 px-4">
+		<section aria-label="grille de sélection" class="cards-container-js max-w-screen-lg w-full md:w-fit mx-auto grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 md:gap-4 my-10 px-4">
 			{% include "partials/_cardsLoading.html.twig" %}
 		</section>
 
 		<nav aria-label="pagination" class="pagination-container-js mx-auto w-full max-w-screen-lg px-4 mb-10">
 			<ul class="flex w-full max-md:justify-center justify-end">
 				<li>
-					<button class="hidden pagination-previous-js btn-primary w-40 p-3 rounded mr-1 last:mr-0">précédent</button>
+					<button class="hidden pagination-previous-js btn-primary w-40 p-3 rounded mr-1 ">précédent</button>
 				</li>
 				<li>
 					<button class="pagination-upper-js btn-primary size-12 p-3 rounded max-md:hidden mr-1">2</button>
