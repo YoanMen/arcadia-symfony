@@ -21,7 +21,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Orm\EntityRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -93,8 +92,9 @@ class UserCrudController extends AbstractCrudController
                     'Vétérinaire' => 'ROLE_VETERINARY',
                     'Employé' => 'ROLE_EMPLOYEE',
                 ])
-                ->setFormTypeOption('constraints', new Assert\NotBlank(message: 'Vous devez sélectionnez un rôle'))
-                ->allowMultipleChoices(false)->renderExpanded()
+                ->allowMultipleChoices(false)
+                ->renderExpanded()
+                ->setRequired(true)
                 ->onlyWhenCreating(),
         ];
     }
