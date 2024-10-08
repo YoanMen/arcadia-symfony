@@ -105,47 +105,38 @@ class AdviceModal {
   }
 
   alertMessage(message) {
-    let alert = this.modal.querySelector(".modal-message-js");
 
-    if (!alert) {
-      alert = document.createElement("div");
-      alert.className =
-        "modal-message-js bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-10";
+    const alert = document.createElement("div");
+    alert.className =
+      "modal-message-js bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mt-10";
 
-      const alertMessage = document.createElement("span");
-      alertMessage.className = "block sm:inline";
-      alertMessage.textContent = message;
+    const alertMessage = document.createElement("span");
+    alertMessage.className = "block sm:inline";
+    alertMessage.textContent = message;
 
-      alert.appendChild(alertMessage);
-      this.form.insertAdjacentElement("afterbegin", alert);
-    } else {
-      const newMessage = alert.closest("span");
-      newMessage.textContent = message;
-    }
+    alert.appendChild(alertMessage);
+    this.form.insertAdjacentElement("afterbegin", alert);
+
   }
 
   successMessage(message) {
-    let alert = this.modal.querySelector(".modal-message-js");
+    const alert = document.createElement("div");
+    alert.className =
+      "modal-message-js bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-10";
 
-    if (!alert) {
-      alert = document.createElement("div");
-      alert.className =
-        "modal-message-js bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mt-10";
+    const alertMessage = document.createElement("span");
+    alertMessage.className = "block sm:inline";
+    alertMessage.textContent = message;
 
-      const alertMessage = document.createElement("span");
-      alertMessage.className = "block sm:inline";
-      alertMessage.textContent = message;
+    alert.appendChild(alertMessage);
+    this.form.insertAdjacentElement("afterbegin", alert);
 
-      alert.appendChild(alertMessage);
-      this.form.insertAdjacentElement("afterbegin", alert);
-    } else {
-      const newMessage = alert.closest("span");
-      newMessage.textContent = message;
-    }
   }
 
   async sendAdvice() {
     this.isSendAdvice = true;
+    const alert = this.modal.querySelector(".modal-message-js");
+    if (alert) alert.remove();
 
     // show loading icon
     this.submitBtn.innerHTML =
@@ -178,8 +169,11 @@ class AdviceModal {
       this.isSendAdvice = false;
     } catch (error) {
       this.alertMessage(error);
+      this.isSendAdvice = false;
+      this.submitBtn.innerText = 'envoyer mon avis';
     }
   }
+
 
   disableFormInputs() {
     this.submitBtn.disabled = true;
