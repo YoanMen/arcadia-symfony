@@ -4,7 +4,7 @@ defaul: check
 
 deploy: vendor/autoload.php
 
-	cd public &&	rm -R assets/
+	cd public &&	rm -R assets/ || echo "directory not exist	"
 	php bin/console cache:clear
 	php bin/console tailwind:build --minify
 	php bin/console asset-map:compile
