@@ -9,23 +9,6 @@ on:
     branches: [master]
 
 jobs:
-
-  ssh-test-connection: 
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-    - name: ssh key passphrase
-      uses: appleboy/ssh-action@v1.1.0
-      with:
-        host: ${{ secrets.SSH_HOST }}
-        username: ${{ secrets.SSH_USERNAME }}
-        key: ${{ secrets.SSH }}
-        port: ${{ secrets.SSH_PORT }}
-        passphrase: ${{ secrets.SSH_PASSPHRASE }}
-        script: |
-          whoami
-          ls -al
-
   symfony-tests:
     name: 🛠️ Build and Test
     runs-on: ubuntu-latest
