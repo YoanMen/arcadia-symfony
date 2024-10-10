@@ -10,6 +10,8 @@ use App\Entity\Habitat;
 use App\Entity\HabitatImage;
 use App\Entity\Region;
 use App\Entity\Schedules;
+use App\Entity\Service;
+use App\Entity\ServiceImage;
 use App\Entity\Species;
 use App\Entity\UICN;
 use App\Entity\User;
@@ -19,9 +21,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
-    {
-    }
+    public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
     public function load(ObjectManager $manager): void
     {
@@ -31,6 +31,7 @@ class AppFixtures extends Fixture
         $this->createAnimals($manager, $habitats);
         $this->createAdvices($manager);
         $this->createAdviceWithJavascript($manager);
+        $this->createServices($manager);
     }
 
     private function createSchedules(ObjectManager $manager): void
@@ -123,7 +124,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 6; ++$i) {
             $advice = new Advice();
             $advice->setAdvice('test d\'un avis poster par un utilisateur');
-            $advice->setPseudo('Nom'.strval($i));
+            $advice->setPseudo('Nom' . strval($i));
             $advice->setApproved(true);
 
             $advices[] = $advice;
@@ -152,8 +153,8 @@ class AppFixtures extends Fixture
             $image->setAlt('image alt');
 
             $animal->addAnimalImage($image);
-            $animal->setName('animal'.strval($i));
-            $animal->setSlug('animal'.strval($i));
+            $animal->setName('animal' . strval($i));
+            $animal->setSlug('animal' . strval($i));
 
             $specie = new Species();
             $specie->setCommunName('nom commun');
@@ -200,6 +201,29 @@ class AppFixtures extends Fixture
         $advice->setApproved(true);
 
         $manager->persist($advice);
+        $manager->flush();
+    }
+
+    private function createServices(ObjectManager $manager)
+    {
+
+        for ($i = 0; $i < 10; $i++) {
+            $service = new Service();
+
+            $image = new ServiceImage();
+
+            $image->setImageName('placeholder.svg');
+            $image->setAlt('image alt');
+
+            $service->addServiceImage($image);
+            $service->setName("service" . $i);
+            $service->setDescription("description du service");
+            $service->setInformation("information du service");
+            $service->setSlug("service" . $i);
+
+            $manager->persist($service);
+        }
+
         $manager->flush();
     }
 }
