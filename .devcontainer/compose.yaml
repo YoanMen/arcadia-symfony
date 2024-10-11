@@ -13,6 +13,7 @@ services:
       MAILER_DSN: "smtp://mailer:1025"
       DATABASE_URL: "mysql://root:${MYSQL_ROOT_PASS}@db_server:3306/${MYSQL_DB}?serverVersion=11.2.4-MariaDB&charset=utf8mb4"
       MONGODB_URL: "mongodb://root:rootpassword@mongo:27017"
+      MONGODB_DB: "arcadia"
     networks:
       - symfony_app
 
@@ -46,6 +47,8 @@ services:
     ports:
       - "1025"
       - 8026:8025
+    networks:
+      - symfony_app
 
     environment:
       MP_SMTP_AUTH_ACCEPT_ANY: 1

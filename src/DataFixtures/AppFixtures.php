@@ -23,15 +23,70 @@ class AppFixtures extends Fixture
 {
     public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
 
+    public function init() {}
     public function load(ObjectManager $manager): void
     {
+        $this->initializeProject($manager);
+        // $this->createSchedules($manager);
+        // $this->createUsers($manager);
+        // $habitats = $this->createHabitats($manager);
+        // $this->createAnimals($manager, $habitats);
+        // $this->createAdvices($manager);
+        // $this->createAdviceWithJavascript($manager);
+        // $this->createServices($manager);
+    }
+
+    private function initializeProject(ObjectManager $manager)
+    {
         $this->createSchedules($manager);
-        $this->createUsers($manager);
-        $habitats = $this->createHabitats($manager);
-        $this->createAnimals($manager, $habitats);
-        $this->createAdvices($manager);
-        $this->createAdviceWithJavascript($manager);
-        $this->createServices($manager);
+
+        // create admin
+
+        $admin = new User();
+
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setUsername('josé');
+        $admin->setEmail('jose@arcadia.com');
+
+        $hashPassword = $this->passwordHasher->hashPassword($admin, 'JoséArcadia@1960');
+        $admin->setPassword($hashPassword);
+
+        $manager->persist($admin);
+        $manager->flush();
+
+        // insert needed data
+
+        $uicns = [
+            'Non applicable',
+            'Données insuffisantes',
+            'Préocupation mineure',
+            'Quasi menacée',
+            'Vulnérable',
+            'En danger',
+            'En danger critique',
+            'Disparue au niveau régional',
+            'Eteinte à l\état sauvage',
+            'Eteinte au niveau mondiale'
+        ];
+
+        foreach ($uicns as $uicn) {
+            $data = new UICN();
+
+            $data->setUicn($uicn);
+            $manager->persist(object: $data);
+        }
+
+        $manager->flush();
+
+        $regions = ['Afrique', 'Asie', 'Europe', 'Océanie', 'Amérique du Nord', 'Amérique du sud'];
+
+        foreach ($regions as $region) {
+            $data = new Region();
+            $data->setRegion($region);
+            $manager->persist(object: $data);
+        }
+
+        $manager->flush();
     }
 
     private function createSchedules(ObjectManager $manager): void

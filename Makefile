@@ -1,6 +1,6 @@
 .PHONY:  deploy 
 
-defaul: check
+default: check
 
 deploy: vendor/autoload.php
 
