@@ -21,12 +21,14 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher) {}
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
+    {
+    }
 
-    public function init() {}
     public function load(ObjectManager $manager): void
     {
         $this->initializeProject($manager);
+
         // $this->createSchedules($manager);
         // $this->createUsers($manager);
         // $habitats = $this->createHabitats($manager);
@@ -36,7 +38,7 @@ class AppFixtures extends Fixture
         // $this->createServices($manager);
     }
 
-    private function initializeProject(ObjectManager $manager)
+    private function initializeProject(ObjectManager $manager): void
     {
         $this->createSchedules($manager);
 
@@ -66,7 +68,7 @@ class AppFixtures extends Fixture
             'En danger critique',
             'Disparue au niveau régional',
             'Eteinte à l\état sauvage',
-            'Eteinte au niveau mondiale'
+            'Eteinte au niveau mondiale',
         ];
 
         foreach ($uicns as $uicn) {
@@ -98,6 +100,7 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+    // @phpstan-ignore-next-line
     private function createUsers(ObjectManager $manager): void
     {
         $users = [];
@@ -135,6 +138,7 @@ class AppFixtures extends Fixture
      *
      * @return array<Habitat>
      */
+    // @phpstan-ignore-next-line
     private function createHabitats(ObjectManager $manager): array
     {
         $habitats = [];
@@ -172,6 +176,7 @@ class AppFixtures extends Fixture
         return $habitats;
     }
 
+    // @phpstan-ignore-next-line
     private function createAdvices(ObjectManager $manager): void
     {
         $advices = [];
@@ -179,7 +184,7 @@ class AppFixtures extends Fixture
         for ($i = 0; $i < 6; ++$i) {
             $advice = new Advice();
             $advice->setAdvice('test d\'un avis poster par un utilisateur');
-            $advice->setPseudo('Nom' . strval($i));
+            $advice->setPseudo('Nom'.strval($i));
             $advice->setApproved(true);
 
             $advices[] = $advice;
@@ -196,6 +201,7 @@ class AppFixtures extends Fixture
      *
      * @param array<Habitat> $habitats
      */
+    // @phpstan-ignore-next-line
     private function createAnimals(ObjectManager $manager, array $habitats): void
     {
         $animals = [];
@@ -208,8 +214,8 @@ class AppFixtures extends Fixture
             $image->setAlt('image alt');
 
             $animal->addAnimalImage($image);
-            $animal->setName('animal' . strval($i));
-            $animal->setSlug('animal' . strval($i));
+            $animal->setName('animal'.strval($i));
+            $animal->setSlug('animal'.strval($i));
 
             $specie = new Species();
             $specie->setCommunName('nom commun');
@@ -248,6 +254,7 @@ class AppFixtures extends Fixture
         }
     }
 
+    // @phpstan-ignore-next-line
     private function createAdviceWithJavascript(ObjectManager $manager): void
     {
         $advice = new Advice();
@@ -259,10 +266,10 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    private function createServices(ObjectManager $manager)
+    // @phpstan-ignore-next-line
+    private function createServices(ObjectManager $manager): void
     {
-
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10; ++$i) {
             $service = new Service();
 
             $image = new ServiceImage();
@@ -271,10 +278,10 @@ class AppFixtures extends Fixture
             $image->setAlt('image alt');
 
             $service->addServiceImage($image);
-            $service->setName("service" . $i);
-            $service->setDescription("description du service");
-            $service->setInformation("information du service");
-            $service->setSlug("service" . $i);
+            $service->setName('service'.$i);
+            $service->setDescription('description du service');
+            $service->setInformation('information du service');
+            $service->setSlug('service'.$i);
 
             $manager->persist($service);
         }
