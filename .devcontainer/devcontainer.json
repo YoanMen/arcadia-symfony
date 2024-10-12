@@ -36,5 +36,5 @@
       ]
     }
   },
-  "forwardPorts": ["mailer:8026", "phpmyadmin:8102"]
+  "forwardPorts": ["mailer:8026", "phpmyadmin:8102", "mongo:27017"]
 }

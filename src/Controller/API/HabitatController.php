@@ -42,7 +42,7 @@ class HabitatController extends AbstractController
 
             return $this->json(['success' => true, 'data' => $data]);
         } catch (\Throwable $th) {
-            return $this->json(['success' => false, 'error' => $th->getMessage()]);
+            return $this->json(['success' => false, 'error' => $th->getMessage()], 400);
         }
     }
 }

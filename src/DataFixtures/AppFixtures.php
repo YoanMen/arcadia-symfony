@@ -10,6 +10,8 @@ use App\Entity\Habitat;
 use App\Entity\HabitatImage;
 use App\Entity\Region;
 use App\Entity\Schedules;
+use App\Entity\Service;
+use App\Entity\ServiceImage;
 use App\Entity\Species;
 use App\Entity\UICN;
 use App\Entity\User;
@@ -25,12 +27,68 @@ class AppFixtures extends Fixture
 
     public function load(ObjectManager $manager): void
     {
+        $this->initializeProject($manager);
+
+        // $this->createSchedules($manager);
+        // $this->createUsers($manager);
+        // $habitats = $this->createHabitats($manager);
+        // $this->createAnimals($manager, $habitats);
+        // $this->createAdvices($manager);
+        // $this->createAdviceWithJavascript($manager);
+        // $this->createServices($manager);
+    }
+
+    private function initializeProject(ObjectManager $manager): void
+    {
         $this->createSchedules($manager);
-        $this->createUsers($manager);
-        $habitats = $this->createHabitats($manager);
-        $this->createAnimals($manager, $habitats);
-        $this->createAdvices($manager);
-        $this->createAdviceWithJavascript($manager);
+
+        // create admin
+
+        $admin = new User();
+
+        $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setUsername('josé');
+        $admin->setEmail('jose@arcadia.com');
+
+        $hashPassword = $this->passwordHasher->hashPassword($admin, 'JoséArcadia@1960');
+        $admin->setPassword($hashPassword);
+
+        $manager->persist($admin);
+        $manager->flush();
+
+        // insert needed data
+
+        $uicns = [
+            'Non applicable',
+            'Données insuffisantes',
+            'Préocupation mineure',
+            'Quasi menacée',
+            'Vulnérable',
+            'En danger',
+            'En danger critique',
+            'Disparue au niveau régional',
+            'Eteinte à l\état sauvage',
+            'Eteinte au niveau mondiale',
+        ];
+
+        foreach ($uicns as $uicn) {
+            $data = new UICN();
+
+            $data->setUicn($uicn);
+            $manager->persist(object: $data);
+        }
+
+        $manager->flush();
+
+        $regions = ['Afrique', 'Asie', 'Europe', 'Océanie', 'Amérique du Nord', 'Amérique du sud'];
+
+        foreach ($regions as $region) {
+            $data = new Region();
+            $data->setRegion($region);
+            $manager->persist(object: $data);
+        }
+
+        $manager->flush();
     }
 
     private function createSchedules(ObjectManager $manager): void
@@ -42,6 +100,7 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
+    // @phpstan-ignore-next-line
     private function createUsers(ObjectManager $manager): void
     {
         $users = [];
@@ -79,6 +138,7 @@ class AppFixtures extends Fixture
      *
      * @return array<Habitat>
      */
+    // @phpstan-ignore-next-line
     private function createHabitats(ObjectManager $manager): array
     {
         $habitats = [];
@@ -116,6 +176,7 @@ class AppFixtures extends Fixture
         return $habitats;
     }
 
+    // @phpstan-ignore-next-line
     private function createAdvices(ObjectManager $manager): void
     {
         $advices = [];
@@ -140,6 +201,7 @@ class AppFixtures extends Fixture
      *
      * @param array<Habitat> $habitats
      */
+    // @phpstan-ignore-next-line
     private function createAnimals(ObjectManager $manager, array $habitats): void
     {
         $animals = [];
@@ -192,6 +254,7 @@ class AppFixtures extends Fixture
         }
     }
 
+    // @phpstan-ignore-next-line
     private function createAdviceWithJavascript(ObjectManager $manager): void
     {
         $advice = new Advice();
@@ -200,6 +263,29 @@ class AppFixtures extends Fixture
         $advice->setApproved(true);
 
         $manager->persist($advice);
+        $manager->flush();
+    }
+
+    // @phpstan-ignore-next-line
+    private function createServices(ObjectManager $manager): void
+    {
+        for ($i = 0; $i < 10; ++$i) {
+            $service = new Service();
+
+            $image = new ServiceImage();
+
+            $image->setImageName('placeholder.svg');
+            $image->setAlt('image alt');
+
+            $service->addServiceImage($image);
+            $service->setName('service'.$i);
+            $service->setDescription('description du service');
+            $service->setInformation('information du service');
+            $service->setSlug('service'.$i);
+
+            $manager->persist($service);
+        }
+
         $manager->flush();
     }
 }
