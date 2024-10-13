@@ -26,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Event\AfterEntityPersistedEvent;
 
 class EventSubscriberTest extends TestCase
 {
+
     public function testEventSubscriptions(): void
     {
         $this->assertArrayHasKey(KernelEvents::RESPONSE, SecurityHeadersSubscriber::getSubscribedEvents());

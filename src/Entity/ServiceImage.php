@@ -18,6 +18,7 @@ class ServiceImage
     private ?int $id = null;
 
     #[Vich\UploadableField(mapping: 'services', fileNameProperty: 'imageName', size: 'imageSize')]
+    #[Assert\Image()]
     #[Assert\File(
         maxSize: '5M',
         mimeTypes: ['image/png', 'image/jpg', 'image/jpeg', 'image/webp'],
