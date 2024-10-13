@@ -24,7 +24,7 @@ class PersistAnimalSubscriber implements EventSubscriberInterface
         $this->famousAnimalService->createAnimal($entity->getId());
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             AfterEntityPersistedEvent::class => ['createAnimalDocument'],

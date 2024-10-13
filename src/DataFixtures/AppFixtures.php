@@ -28,14 +28,12 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $this->initializeProject($manager);
-
-        // $this->createSchedules($manager);
-        // $this->createUsers($manager);
-        // $habitats = $this->createHabitats($manager);
-        // $this->createAnimals($manager, $habitats);
-        // $this->createAdvices($manager);
-        // $this->createAdviceWithJavascript($manager);
-        // $this->createServices($manager);
+        $this->createSchedules($manager);
+        $habitats = $this->createHabitats($manager);
+        $this->createAnimals($manager, $habitats);
+        $this->createAdvices($manager);
+        $this->createAdviceWithJavascript($manager);
+        $this->createServices($manager);
     }
 
     private function initializeProject(ObjectManager $manager): void
@@ -138,7 +136,6 @@ class AppFixtures extends Fixture
      *
      * @return array<Habitat>
      */
-    // @phpstan-ignore-next-line
     private function createHabitats(ObjectManager $manager): array
     {
         $habitats = [];
@@ -176,7 +173,6 @@ class AppFixtures extends Fixture
         return $habitats;
     }
 
-    // @phpstan-ignore-next-line
     private function createAdvices(ObjectManager $manager): void
     {
         $advices = [];
@@ -201,7 +197,6 @@ class AppFixtures extends Fixture
      *
      * @param array<Habitat> $habitats
      */
-    // @phpstan-ignore-next-line
     private function createAnimals(ObjectManager $manager, array $habitats): void
     {
         $animals = [];
@@ -254,7 +249,6 @@ class AppFixtures extends Fixture
         }
     }
 
-    // @phpstan-ignore-next-line
     private function createAdviceWithJavascript(ObjectManager $manager): void
     {
         $advice = new Advice();
@@ -266,7 +260,6 @@ class AppFixtures extends Fixture
         $manager->flush();
     }
 
-    // @phpstan-ignore-next-line
     private function createServices(ObjectManager $manager): void
     {
         for ($i = 0; $i < 10; ++$i) {
