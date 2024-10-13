@@ -31,7 +31,7 @@ The client contact my agence to make a website to get visitors informed about Ar
 Clone the project
 
 ```bash
-  git clone https://github.com/YoanMen/Arcadia.git
+  git clone https://github.com/YoanMen/Arcadia.git](https://github.com/YoanMen/arcadia-symfony.git
 ```
 
 Go to the project directory and reopen in Container
